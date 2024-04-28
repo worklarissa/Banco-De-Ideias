@@ -4,7 +4,7 @@ import RotaExemplo from "../pages/pageExample";
 
 const router = createBrowserRouter([
   {
-    path: "/ideias",
+    path: "/",
     element: <Ideas />,
   },
   {
