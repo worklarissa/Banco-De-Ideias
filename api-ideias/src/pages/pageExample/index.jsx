@@ -1,7 +1,16 @@
+
+import Header from "../../components/header";
+
 export const RotaExemplo = () => {
+
+
+  
+
   return (
     <div>
-      <h1> Rota de exemplo </h1>
+      <Header title='Pagina de exemplos' to1='/' link1='Home'/>
+     
+      <h1>teste</h1>
     </div>
   );
 };
