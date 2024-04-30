@@ -1,16 +1,16 @@
-import { createBrowserRouter } from "react-router-dom";
-import Ideas from "../pages/pageIdea";
-import RotaExemplo from "../pages/pageExample";
+  import { createBrowserRouter } from "react-router-dom";
+  import Ideas from "../pages/pageIdea";
+  import RotaExemplo from "../pages/pageExample";
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Ideas />,
-  },
-  {
-     path:"/example",
-     element: <RotaExemplo/>
-  },
-]);
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element:  <RotaExemplo/>,
+    },
+    {
+      path:"/ideias",
+      element:<Ideas/>
+    },
+  ]);
 
-export default router;
+  export default router;

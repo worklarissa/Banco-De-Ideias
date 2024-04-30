@@ -1,0 +1,70 @@
+@keyframes float{
+    0%{
+        transform: translateY(0px);
+    }
+    50%{
+        transform: translateY(-20px)
+    }
+    100%{
+        transform: translateY(0px)
+    }
+  }
+  
+  .modal-header {
+    border: none;
+    color: #FFFFFF;
+  }
+  .modal-body {
+    border: none;
+    color: #FFFFFF;
+  }
+  .modal-footer{
+        border: none;
+        color: #FFFFFF;
+      
+  }
+  .card{
+      margin: 40px;
+      padding: 10px;
+      width: 292px;
+      height: 300px;
+      background-color: #FFD602;
+      animation: float 2s ease-in-out infinite;
+      
+       
+  } 
+  
+  .card-title{
+    color: white;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+  .card-text{
+    color: #FFFFFF;
+    padding: 10px;
+    font-size: 1.3rem;
+    overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+       -webkit-line-clamp: 5;
+      -webkit-box-orient: vertical;
+  }
+  .modal-content{
+    background-color: hsl(50, 100%, 50%)
+  }
+  .star{
+      color: black;
+  } 
+  .modal-title{
+    color: white;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+.modal-body p{
+    margin: 10px;
+    font-size: 1.3rem;
+}
