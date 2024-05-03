@@ -17,7 +17,7 @@ export const Ideas = () => {
       <h1 className="title">Ideias</h1>
 
       <h2 className="title2">Explore ideias de projetos!</h2>
-      <IdeaCard/>
+      <IdeaCard cards={4}/>
     
     </div>
   );

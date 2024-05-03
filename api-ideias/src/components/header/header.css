@@ -16,3 +16,12 @@ h1{
     padding: 10px;
     justify-content: space-between;
 }
+@media (max-width: 600px) {
+    .link {
+        font-size: 1rem; /* Reduz o tamanho da fonte */
+        margin: 5px; /* Reduz a margem */
+    }
+    .navbar {
+        flex-direction: column; /* Muda a direção do flex para coluna */
+    }
+}

@@ -25,14 +25,24 @@
   }
   .card{
       margin: 40px;
-      padding: 10px;
+      padding: 15px;
       width: 292px;
-      height: 300px;
+      height: auto;
+      max-width: 500px;
+      max-height: 500px;
       background-color: #FFD602;
       animation: float 2s ease-in-out infinite;
-      
+        
        
   } 
+  .save{
+    font-size:  1.25rem;
+    border: 2px solid black;
+    height: 5vh;
+    width: 50vw;  
+    border-radius: 9%;
+    color:white
+  }
   
   .card-title{
     color: white;
@@ -41,15 +51,25 @@
     justify-content: space-between;
     margin-bottom: 10px;
 }
-  .card-text{
+  .text{
     color: #FFFFFF;
     padding: 10px;
     font-size: 1.3rem;
     overflow: hidden;
       text-overflow: ellipsis;
       display: -webkit-box;
-       -webkit-line-clamp: 5;
+       -webkit-line-clamp: 4;
       -webkit-box-orient: vertical;
+     
+  }
+  .text2{
+    color: #FFFFFF;
+    font-size: 1.3rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+     -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
   }
   .modal-content{
     background-color: hsl(50, 100%, 50%)
@@ -64,7 +84,45 @@
     justify-content: space-between;
     margin-bottom: 10px;
   }
+  .colors{
+    margin-top: 30px;
+  }
+  .dificulty{
+    margin-top:30px;
+
+  }
 .modal-body p{
     margin: 10px;
     font-size: 1.3rem;
+}
+.edit{
+  width: 2rem;
+  height: 2rem;
+}
+.delete{
+  width: 2rem;
+  height: 2rem;
+}
+@media (max-width: 600px) {
+  .card{
+      width: auto; 
+      height: auto;
+      margin: 20px;
+  }
+  .card-title, .text,.text2 .modal-body p {
+      font-size: 13px; 
+  }
+  .edit,.delete{
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .modal,.modal-content,.modal-title,.modal-body,.modal-header,.modal-footer{
+    width: 60vw;
+    height: auto;
+    font-size: 0.78rem;
+    margin:0; 
+    
+  }
+
 }
