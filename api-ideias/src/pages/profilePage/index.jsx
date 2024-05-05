@@ -1,15 +1,23 @@
 import { useState, useEffect } from "react";
 import IdeaCard from "../../components/ideaCard";
 import Header from "../../components/header";
+
 import "./profilePage.css";
 import { Link } from "react-router-dom";
+import { FetchApi } from "../../utils/Fetch";
 
 const ProfilePage = () => {
-  const [user, setUser] = useState(null);
-  
+  const [countIdeas, setCount] = useState(0);
+
   useEffect(() => {
-    
-    setUser({ name: "Jonas Leite", ideaCount: 10 });
+    FetchApi("GET", '', "", null).then((data) => {
+      setCount(25);
+    });
+  }, []);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    setUser({ name: "Jonas Leite" });
   }, []);
 
   return (
@@ -23,16 +31,19 @@ const ProfilePage = () => {
           <div className="profile-info">
             <div className="infos">
               <h2 className="subtitle">{user?.name}</h2>
-              <p>Numero de ideias : {user?.ideaCount} </p>
+              <p>Numero de ideias : {countIdeas} </p>
               <Link className="btn">Criar ideia</Link>
             </div>
           </div>
           <div className="profile-ideas">
-             <div className="ideas">
-             <span className="subtitle idea">Suas ideias de projetos</span>     
-             <IdeaCard url={`https:/getPostUser/${user}`} editable={true} cards={2}/>
-             </div>
-         
+            <div className="ideas">
+              <span className="subtitle idea">Suas ideias de projetos</span>
+              <IdeaCard
+                url={`https:/getPostUser/${user}`}
+                editable={true}
+                cards={2}
+              />
+            </div>
           </div>
         </div>
       </div>

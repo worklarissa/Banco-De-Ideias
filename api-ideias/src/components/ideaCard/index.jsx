@@ -1,14 +1,13 @@
 import { useState, useEffect } from "react";
+import { FaEdit, FaTrash } from "react-icons/fa";
+import { FetchApi } from "../../utils/Fetch";
+import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import { FaEdit, FaTrash } from "react-icons/fa";
-import { FetchApi } from "../../utils/Fetch";
 import ContentEditable from "react-contenteditable";
-import { Form } from "react-bootstrap";
-
 import "./ideaCard.css";
 
 function IdeaCard({ url, editable, cards }) {
@@ -29,24 +28,24 @@ function IdeaCard({ url, editable, cards }) {
     setShow(true);
   };
 
-  function handleEdit(event, post) {
+  const handleEdit = (event, post) => {
     event.stopPropagation();
     handleShow(post);
     setIsEditing(true);
-  }
+  };
 
-  function handleDelete(event, post) {
+  const handleDelete = (event, post) => {
     event.stopPropagation();
     FetchApi("DELETE", `http://delete/${post.id}`, "", null)
       .then(() => {
-        alert('Projeto deletado com sucesso!');
+        alert("Projeto deletado com sucesso!");
         setPosts(posts.filter((p) => p.id !== post.id));
       })
       .catch((error) => {
         console.error("Erro ao deletar o post:", error);
       });
-  }
-  function renderStars(difficulty) {
+  };
+  const renderStars = (difficulty) => {
     let stars = "";
     for (let i = 0; i < difficulty; i++) {
       stars += "★";
@@ -55,9 +54,9 @@ function IdeaCard({ url, editable, cards }) {
       stars += "☆";
     }
     return stars;
-  }
+  };
 
-  function handleSave() {
+  const handleSave = () => {
     console.log(editPost);
     FetchApi("PUT", `https://project/update/${editPost.id}`, "", editPost);
     try {
@@ -69,9 +68,9 @@ function IdeaCard({ url, editable, cards }) {
     } catch (error) {
       console.error("Erro ao salvar o post:", error);
     }
-  }
+  };
   useEffect(() => {
-    FetchApi("GET", {url}, "", null).then((data) => {
+    FetchApi("GET", { url }, "", null).then((data) => {
       setPosts([
         {
           id: 1,
@@ -139,7 +138,11 @@ function IdeaCard({ url, editable, cards }) {
                       onClick={(event) => handleEdit(event, post)}
                       className="edit"
                     />
-                   <FaTrash onClick={(event) => handleDelete(event, post)} className="delete" />.
+                    <FaTrash
+                      onClick={(event) => handleDelete(event, post)}
+                      className="delete"
+                    />
+                    .
                   </div>
                 )}
                 <Card.Title>

@@ -1,0 +1,69 @@
+.form{
+    width: 40%;
+    height: 120%;
+    padding: 20px;
+    border: 1px solid black;
+    box-shadow: 5px 5px 10px 3px rgba(47, 45, 45, 1);
+    border-radius: 3%;
+    margin-left: 20px
+}
+.form-floating{
+    width: auto;
+    height: auto;
+}
+.input {
+    background-color: #FFD602;
+    padding: 20px;
+}
+.cores{
+    display: flex;
+    margin-top: 20px;
+    font-size: 1.2rem;
+    color: white;
+    padding: 20px;
+     
+}
+.radios{
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    
+}
+.salvar{
+    width: 6rem;
+    height: 2.5rem;
+    font-size: 1.3rem;
+    margin-top: 15px;
+    border-radius: 15%;
+    color: white;
+    background-color: #FFD602;
+}
+.salvar:hover{
+    background-color: #00000000;
+}
+@media (max-width: 600px) {
+     .cores{
+        width: auto;
+        height: auto;
+        font-size: 0.75rem;
+        flex-direction: column;
+        margin: 0;
+    }
+    .check{
+        width: auto;
+        height: auto;
+        margin: 0;
+    }
+    .banner{
+        width: 40vw;
+        height: 60vh;
+        margin-left: 1rem;
+    }
+    .salvar{
+        width: auto;
+        height: auto;
+        font-size: 0.75rem;
+        margin: 0;
+    }
+
+} 

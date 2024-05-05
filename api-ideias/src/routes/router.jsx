@@ -1,23 +1,37 @@
-  import { createBrowserRouter } from "react-router-dom";
-  import Ideas from "../pages/pageIdea";
-  import RotaExemplo from "../pages/pageExample";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import RequireAuth from '@auth-kit/react-router/RequireAuth'
+import Ideas from "../pages/pageIdea";
+import RotaExemplo from "../pages/pageExample";
 import ProfilePage from "../pages/profilePage";
+import PageCreateIdea from "../pages/pageCreateIdea";
 
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element:  <RotaExemplo/>,
-    },
-    {
-      path:"/ideias",
-      element:<Ideas/>
-    },
+const Router = () => {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/login" element={<RotaExemplo />} />
+        <Route path="/ideas" element={<Ideas />} />
+        <Route
+          path="/perfil"
+          element={
+            <RequireAuth fallbackPath="/login">
+              <ProfilePage />
+            </RequireAuth>
+          }
+        />
+        <Route path="/ideas" element={<Ideas />} />
+        <Route
+          path="/criar"
+          element={
+            <RequireAuth fallbackPath="/login">
+              {" "}
+              <PageCreateIdea />
+            </RequireAuth>
+          }
+        />
+      </Routes>
+    </BrowserRouter>
+  );
+};
 
-    {
-      path:"/perfil",
-      element:<ProfilePage/>
-
-    }
-  ]);
-
-  export default router;
+export default Router;
