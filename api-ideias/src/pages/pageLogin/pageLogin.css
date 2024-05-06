@@ -1,0 +1,43 @@
+.middle-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.page-login-title {
+    width: 100%;
+    text-align: center;
+    font-size: 3.2rem;
+    font-weight: bold;
+}
+
+.imagem-login {
+    max-height: 400px;
+    max-width: 400px;
+}
+
+.login-page-container {
+    display: flex;
+    justify-content: center;
+    gap: 200px;
+    flex-direction: row;
+    flex-wrap: wrap-reverse;
+    margin-top: 70px;
+}
+
+.cad-message {
+    color: white;
+    font: bold;
+    font-size: 1.1rem;
+    margin-top: 10px;
+}
+
+@media screen and (max-width:1000px) {
+    .login-page-container {
+        gap: 100px;
+        margin-top: 100px;
+    }
+    .imagem-login{
+        width: 250px;
+    }
+}

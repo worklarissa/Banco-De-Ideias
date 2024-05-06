@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const FetchApi = async (method, url, data = null, authToken = null) => {
+export const FetchApi = async (method, url, body = null, authToken = null) => {
   const headers = authToken
     ? {
         "x-acess-token": authToken,
@@ -10,7 +10,7 @@ export const FetchApi = async (method, url, data = null, authToken = null) => {
   const response = await axios({
     method,
     url,
-    data,
+    data: body,
     headers,
   });
 
