@@ -12,9 +12,9 @@ const store = createStore({
 });
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
+
     <AuthProvider store={store}>
       <Router />
     </AuthProvider>
-  </React.StrictMode>
+
 );
