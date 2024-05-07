@@ -13,11 +13,7 @@ const ProfilePage = () => {
   const headers = useAuthHeader();
   const Token = headers.replace("x-acess-token", "");
   const authUser = useAuthUser();
-  useEffect(() => {
-    FetchApi("GET", `https://railway/get/,´${authUser}`, Token).then((data) => {
-      setCount(data);
-    });
-  }, [Token, authUser]);
+ 
   return (
     <div>
       <Header to1="/" link1="Home" to2="/ideias" link2="Todas ideias"/>
@@ -26,8 +22,8 @@ const ProfilePage = () => {
         <div className="profile-page">
           <div className="profile-info">
             <div className="infos">
-              <h2 className="subtitle">{authUser}</h2>
-              <p>Numero de ideias : {countIdeas} </p>
+              <h2 className="subtitle">{authUser.name}</h2>
+              <p>Numero de ideias : {authUser.numberOfIdeas} </p>
               <Link className="btn">Criar ideia</Link>
               <Link className="btn">Ideias a serem Aprovadas</Link>
             </div>
@@ -36,7 +32,7 @@ const ProfilePage = () => {
             <div className="ideas">
               <span className="subtitle idea">Suas ideias de projetos</span>
               <IdeaCard
-                url={ `https://railway/posts/get/${authUser}`}
+                url={ `show-my?limit=1&offset=0`}
                 editable={true}
                 cards={2}
               />

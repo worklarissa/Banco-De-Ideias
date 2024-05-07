@@ -11,9 +11,9 @@ import ContentEditable from "react-contenteditable";
 import "./ideaCard.css";
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 
-function IdeaCard({ editable, cards }) {
+function IdeaCard({ editable, cards, url}) {
   const [posts, setPosts] = useState([]);
-  const [newUrl, setNewUrl] = useState("/project/show-valid?limit=6&offset=0")
+  const [newUrl, setNewUrl] = useState(`/project/${url}?`)
   const [previousUrl, setPreviousUrl] = useState('')
   const [show, setShow] = useState(false);
   const [editPost, setEditPost] = useState(null);
@@ -22,9 +22,7 @@ function IdeaCard({ editable, cards }) {
   const [isEditing, setIsEditing] = useState(null);
   const headers = useAuthHeader();
 
-  if (headers) {
-    const cleanToken = headers.replace("x-acess-token", "");
-  }
+ 
 
   const handleClose = () => setShow(false);
 
@@ -46,7 +44,9 @@ function IdeaCard({ editable, cards }) {
 
   const getData = async () => {
     try {
-      const get = await FetchApi("GET", `https://banco-de-ideiasapi.up.railway.app${newUrl}`)
+      let cleanToken = headers.replace("x-acess-token", "");
+      const get = await FetchApi("GET", `https://banco-de-ideiasapi.up.railway.app${newUrl}`,'',cleanToken)
+      console.log(get)
       const projects = get.projects.filter(project => !posts.some(post => post.id === project.id))
       
       console.log(newUrl)

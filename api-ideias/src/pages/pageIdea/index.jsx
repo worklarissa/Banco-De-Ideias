@@ -18,7 +18,7 @@ export const Ideas = () => {
       <h1 className="title">Ideias</h1>
 
       <h2 className="title2">Explore ideias de projetos!</h2>
-      <IdeaCard cards={4} />
+      <IdeaCard cards={4}  url="show-valid?limit=6&offset=0`" />
     
     </div>
   );
