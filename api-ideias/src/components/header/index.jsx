@@ -45,12 +45,6 @@ const Header = ({ to1, link1, to2, link2, to3, link3, to4, link4 }) => {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" className="custom-toggler"/>
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-            <Link className="link" to={to1}>
-              {link1}
-            </Link>
-            <Link className="link" to={to2}>
-              {link2}
-            </Link>
             
               <Link className="dropdown-item" to={to3}>
                 {link3}
