@@ -2,6 +2,7 @@ import * as Yup from 'yup'
 import useSignIn from 'react-auth-kit/hooks/useSignIn';
 import { useState, useRef } from "react"
 import { FetchApi } from "../../utils/Fetch"
+import {useNavigate } from "react-router-dom";
 
 import "./login.css"
 
@@ -12,6 +13,7 @@ function LoginForm() {
 
     const loginForm = useRef(null)
     const signIn = useSignIn()
+    const navigate = useNavigate()
 
     const yupValidation = Yup.object({
         email: Yup.string().required('Preencha este Campo!'),
@@ -38,11 +40,14 @@ function LoginForm() {
                 },
                 userState: {
                     name: request.result.name,
-                    uid: request.result.id
+                    uid: request.result.id,
+                    numberOfIdeas:request.result.ideasNumber
                 }
             })
 
             setErrors([])
+            navigate('/perfil')
+            
         } catch (error) {
             const newErrors = {}
 

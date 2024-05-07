@@ -12,10 +12,10 @@ import "./ideaCard.css";
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 import useAuthUser from "react-auth-kit/hooks/useAuthHeader";
 
-function IdeaCard({ editable, cards }) {
+function IdeaCard({ editable, cards, url}) {
   const [posts, setPosts] = useState([]);
-  const [reqInfo, setReqInfos] = useState({});
-  const [newUrl, setNewUrl] = useState("/project/show-valid?limit=6&offset=0");
+  const [newUrl, setNewUrl] = useState(`/project/${url}?`)
+  const [previousUrl, setPreviousUrl] = useState('')
   const [show, setShow] = useState(false);
   const [editPost, setEditPost] = useState(null);
   const [editColor, setEditColor] = useState("");
@@ -25,6 +25,8 @@ function IdeaCard({ editable, cards }) {
   const authUser = useAuthUser();
   const cleanToken = headers ? headers.replace("x-acess-token", "") : "";
 
+ 
+
   const handleClose = () => setShow(false);
 
   const handleShow = (post) => {
@@ -33,31 +35,76 @@ function IdeaCard({ editable, cards }) {
     setEditDifficulty(post.difficultLevel);
     setIsEditing(false);
     setShow(true);
-    console.log(post.postColor);
+    console.log(post.id)
   };
 
-  const handleShowMoreButton = () => {
-    console.log(newUrl);
-    getData();
-  };
 
   const handleEdit = (event, post) => {
     event.stopPropagation();
     handleShow(post);
     setIsEditing(true);
   };
-
   const getData = async () => {
-    const get = await FetchApi(
-      "GET",
-      `https://banco-de-ideiasapi.up.railway.app${newUrl}`
-    );
-    const projects = get.projects;
-    console.log(get.nextUrl);
+    try {
+      let cleanToken = headers.replace("x-acess-token", "");
+      const get = await FetchApi("GET", `https://banco-de-ideiasapi.up.railway.app${newUrl}`,'',cleanToken)
+      console.log(get)
+      const projects = get.projects.filter(project => !posts.some(post => post.id === project.id))
+      
+      console.log(newUrl)
+      setPreviousUrl(get.previousUrl)
+
+     if(get.nextUrl !== null){
+      setNewUrl(get.nextUrl)
+     }
+      setPosts((prevPosts) => [...prevPosts, ...projects])
+  
+      
+    } catch (error) {
+      console.log(error)
+    }
 
     console.log(posts);
     setPosts(projects);
   };
+
+  // const handleScroll = () => {
+  //   const { scrollTop, clientHeight, scrollHeight } = document.documentElement
+  //   const roundedScrollTop = Math.round(scrollTop);
+  //   if (roundedScrollTop + clientHeight + 1>= scrollHeight) {
+  //       getData();
+  //   }
+
+  // }
+
+  // função que carrega mais posts de acordo com a rolagem de barra do usuario, o scrollTop é o tanto que o usuario desceu a barra comparado ao começo,
+  // o clientHeight é tamanho que a tela esta visivel no momento, o scrollHeith é o tamanho total da pagina,
+  // dai a função handscroll faz o seguinte: se o tanto que o usuario desceu somado ao tamanho visivel da tela for maior ou igual ao tamanho total da pagina ele pega mais dados pois chegou no fim da tela
+  // dai tem um event listner ali pra chamar essa função ai sempre que o usuario ir descendo a barra de rolagem e verificar se ele chegou embaixo da tela
+  useEffect(() => {
+    let scrollTimeout;
+
+    const handleScroll = () => {
+      clearTimeout(scrollTimeout); // Limpa o timeout anterior
+      scrollTimeout = setTimeout(() => {
+        const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
+        if (scrollTop + clientHeight + 1 >= scrollHeight) {
+          getData();
+        }
+      }, 200); // Define um atraso de 200ms antes de chamar getData()
+    };
+  
+    window.addEventListener('scroll', handleScroll);
+  
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      clearTimeout(scrollTimeout); // Limpa o timeout ao desmontar o componente
+    };
+    // window.addEventListener('scroll', handleScroll)
+    // return () => {
+    //   window.removeEventListener("scroll", handleScroll)
+    // }
+  }, [getData])
 
   const handleDelete = (event, post) => {
     event.stopPropagation();
