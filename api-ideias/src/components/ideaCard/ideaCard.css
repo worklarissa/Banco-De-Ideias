@@ -123,6 +123,7 @@
   color: #FFFFFF;
   font-size: 1.3rem;
   padding: 2px;
+  font-weight: 700                          
 }
 @media (max-width: 600px) {
   .card{

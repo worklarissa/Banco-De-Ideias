@@ -10,7 +10,7 @@ import Button from "react-bootstrap/Button";
 import ContentEditable from "react-contenteditable";
 import "./ideaCard.css";
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
-import useAuthUser from "react-auth-kit/hooks/useAuthHeader";
+import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 
 function IdeaCard({ editable, cards, url}) {
   const [posts, setPosts] = useState([]);
@@ -22,8 +22,7 @@ function IdeaCard({ editable, cards, url}) {
   const [editDifficulty, setEditDifficulty] = useState(1);
   const [isEditing, setIsEditing] = useState(null);
   const headers = useAuthHeader();
-  const authUser = useAuthUser();
-  const cleanToken = headers ? headers.replace("x-acess-token", "") : "";
+  const authUser = useAuthUser()
 
  
 
@@ -44,6 +43,7 @@ function IdeaCard({ editable, cards, url}) {
     handleShow(post);
     setIsEditing(true);
   };
+
   const getData = async () => {
     try {
       let cleanToken = headers.replace("x-acess-token", "");
@@ -64,9 +64,7 @@ function IdeaCard({ editable, cards, url}) {
       console.log(error)
     }
 
-    console.log(posts);
-    setPosts(projects);
-  };
+  }
 
   // const handleScroll = () => {
   //   const { scrollTop, clientHeight, scrollHeight } = document.documentElement
@@ -146,7 +144,8 @@ function IdeaCard({ editable, cards, url}) {
     }
   };
   useEffect(() => {
-    getData();
+    getData()
+
   }, []);
 
   return (
@@ -169,7 +168,6 @@ function IdeaCard({ editable, cards, url}) {
                       onClick={(event) => handleDelete(event, post)}
                       className="delete"
                     />
-                    .
                   </div>
                 )}
                 <Card.Title>
@@ -221,7 +219,7 @@ function IdeaCard({ editable, cards, url}) {
         <Modal.Body style={{ backgroundColor: `#${editPost?.postColor}` }}>
           {isEditing ? (
             <>
-              <h2 className="userName"> Autor: {authUser}</h2>
+              <h2 className="userName"> Autor : {authUser.name}</h2>
               <ContentEditable
                 tagName="p"
                 html={editPost?.text}
@@ -229,7 +227,6 @@ function IdeaCard({ editable, cards, url}) {
                   setEditPost({ ...editPost, text: e.target.value })
                 }
               />
-
               <ContentEditable
                 tabIndex="p"
                 html={editPost?.hashtags ? editPost.hashtags.join(" ") : ""}
