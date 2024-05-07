@@ -1,33 +1,41 @@
-import { useState } from "react";
+mport { useState } from "react";
 import { Form, Button, FloatingLabel } from "react-bootstrap";
 import "./form.css";
+import { FetchApi } from "../../utils/Fetch";
+import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 
 export const IdeaForm = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [hashtags, setHashtags] = useState([]);
   const [difficultyLevel, setDifficulty] = useState("");
-  const [color, setColor] = useState("");
+  const [Postcolor, setColor] = useState("");
+  const headers = useAuthHeader();
+  const Token = headers.replace('x-acess-token','')
 
   const handleHashtagsChange = (event) => {
     const value = event.target.value
-    .split(" ")
-    .map((word) => (word.startsWith("#") ? word : "#" + word));
+      .split(" ")
+      .map((word) => (word.startsWith("#") ? word : "#" + word));
     setHashtags(value);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    alert("Ideia criada com sucesso!");
-    console.log({
-      title,
-      description,
-      hashtags,
-      difficultyLevel,
-      color,
-    });
+    try {
+      const formData = {
+        title: title,
+        text: description,
+        hashtags: hashtags,
+        difficultyLevel: difficultyLevel,
+        Postcolor: Postcolor,
+      };
+      FetchApi("POST", "https//railway/posts/", formData,Token);
+      alert("Ideia criada com sucesso!");
+    } catch (error) {
+      console.log(error)
+    }
   };
-  
 
   return (
     <Form onSubmit={handleSubmit} className="form">
@@ -55,7 +63,7 @@ export const IdeaForm = () => {
       </FloatingLabel>
 
       <FloatingLabel controlId="hashtags" label="Hashtags" className="mb-3">
-       <Form.Control
+        <Form.Control
           type="text"
           placeholder="Hashtags"
           value={hashtags.join(" ")}
