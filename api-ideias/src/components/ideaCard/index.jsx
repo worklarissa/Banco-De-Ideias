@@ -10,19 +10,20 @@ import Button from "react-bootstrap/Button";
 import ContentEditable from "react-contenteditable";
 import "./ideaCard.css";
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
+import useAuthUser from "react-auth-kit/hooks/useAuthHeader";
 
 function IdeaCard({ editable, cards }) {
   const [posts, setPosts] = useState([]);
-  const [reqInfo, setReqInfos] = useState({})
-  const [newUrl, setNewUrl] = useState("/project/show-valid?limit=6&offset=0")
+  const [reqInfo, setReqInfos] = useState({});
+  const [newUrl, setNewUrl] = useState("/project/show-valid?limit=6&offset=0");
   const [show, setShow] = useState(false);
   const [editPost, setEditPost] = useState(null);
   const [editColor, setEditColor] = useState("");
   const [editDifficulty, setEditDifficulty] = useState(1);
   const [isEditing, setIsEditing] = useState(null);
   const headers = useAuthHeader();
-
-  const cleanToken = headers.replace("x-acess-token", "");
+  const authUser = useAuthUser();
+  const cleanToken = headers ? headers.replace("x-acess-token", "") : "";
 
   const handleClose = () => setShow(false);
 
@@ -32,13 +33,13 @@ function IdeaCard({ editable, cards }) {
     setEditDifficulty(post.difficultLevel);
     setIsEditing(false);
     setShow(true);
-    console.log(post.postColor)
+    console.log(post.postColor);
   };
 
-  const handleShowMoreButton = () =>{
-    console.log(newUrl)
-    getData()
-  }
+  const handleShowMoreButton = () => {
+    console.log(newUrl);
+    getData();
+  };
 
   const handleEdit = (event, post) => {
     event.stopPropagation();
@@ -47,15 +48,16 @@ function IdeaCard({ editable, cards }) {
   };
 
   const getData = async () => {
-    const get = await FetchApi("GET", `https://banco-de-ideiasapi.up.railway.app${newUrl}`)
-    const projects = get.projects
-    console.log(get.nextUrl)
-    
-    console.log(posts)
-    setPosts(projects)
-   
+    const get = await FetchApi(
+      "GET",
+      `https://banco-de-ideiasapi.up.railway.app${newUrl}`
+    );
+    const projects = get.projects;
+    console.log(get.nextUrl);
 
-  }
+    console.log(posts);
+    setPosts(projects);
+  };
 
   const handleDelete = (event, post) => {
     event.stopPropagation();
@@ -97,8 +99,7 @@ function IdeaCard({ editable, cards }) {
     }
   };
   useEffect(() => {
-    getData()
-
+    getData();
   }, []);
 
   return (
@@ -173,6 +174,7 @@ function IdeaCard({ editable, cards }) {
         <Modal.Body style={{ backgroundColor: `#${editPost?.postColor}` }}>
           {isEditing ? (
             <>
+              <h2 className="userName"> Autor: {authUser}</h2>
               <ContentEditable
                 tagName="p"
                 html={editPost?.text}
@@ -231,24 +233,25 @@ function IdeaCard({ editable, cards }) {
                 aria-label="Nivel de dificuldade"
               >
                 <option>Selecione o nivel de dificuldade</option>
-                <option value={1}>1</option>
+                <option value={1}>
+                  1como alterar o layout do telcado no ubuntu
+                </option>
                 <option value={2}>2</option>
                 <option value={3}>3</option>
               </Form.Select>
             </>
           ) : (
             <>
-              <Card.Text bsPrefix="text">{editPost?.text}</Card.Text>
-              <Card.Text bsPrefix="text2">
-                {editPost?.hashtags.map((hashtag,idx) =>(
+              <Card.Text className="modalText">{editPost?.text}</Card.Text>
+              <Card.Text className="modalText">
+                {editPost?.hashtags.map((hashtag, idx) => (
                   <span key={idx}>{hashtag.hashtag}</span>
-                  
-                  ))}
-             </Card.Text>
+                ))}
+              </Card.Text>
             </>
           )}
         </Modal.Body>
-        <Modal.Footer style={{ backgroundColor: editPost?.postColor }}>
+        <Modal.Footer style={{ backgroundColor: `#${editPost?.postColor}` }}>
           {isEditing ? (
             <Button
               bsPrefix="save"

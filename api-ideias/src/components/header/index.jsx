@@ -6,7 +6,7 @@ import useIsAuthenticated from "react-auth-kit/hooks/useIsAuthenticated";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 import useSignOut from "react-auth-kit/hooks/useSignOut";
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
-import "../../styles/customNavBar.css"
+import "../../styles/customNavBar.css";
 import "./header.css";
 import "../../styles/global.css";
 
@@ -42,26 +42,35 @@ const Header = ({ to1, link1, to2, link2, to3, link3, to4, link4 }) => {
             <img width={100} height={100} src={logo} alt="Logo" />
           </Link>
         </Navbar.Brand>
-        <Navbar.Toggle aria-controls="responsive-navbar-nav" className="custom-toggler" />
+        <Navbar.Toggle
+          aria-controls="responsive-navbar-nav"
+          className="custom-toggler"
+        />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-            <Link className="link" to="/ideas">
-              Ideias
+            <Link className="link" to={to1}>
+              {link1}
             </Link>
-            <Link className="link" to="/perfil">
-              Perfil
+            <Link className="link" to={to2}>
+              {link2}
+            </Link>
+            <Link className="link" to={to3}>
+              {link3}
+            </Link>
+            <Link className="link" to={to4}>
+              {link4}
             </Link>
           </Nav>
           <Nav>
             {!isAuth ? (
-              <>
+              <Nav className="me-auto">
                 <Link className="link" to="/login">
                   Login
                 </Link>
-                <Link className="link" to="/registro">
+                <Link className="link" to="/Cadastro">
                   Cadastro
                 </Link>
-              </>
+              </Nav>
             ) : (
               <>
                 <Link className="link" to="/perfil">

@@ -15,6 +15,7 @@
     gap: 100px;
 
   }
+  
   .modal-header {
     border: none;
     color: #FFFFFF;
@@ -22,6 +23,7 @@
   .modal-body {
     border: none;
     color: #FFFFFF;
+   
   }
   .modal-footer{
         border: none;
@@ -67,8 +69,12 @@
       -webkit-box-orient: vertical;
       
     }
-           
-
+  
+    .modal-dialog {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   
 
   .text2{
@@ -81,7 +87,8 @@
     -webkit-box-orient: vertical;
   }
   .modal-content{
-    background-color: hsl(50, 100%, 50%)
+    background-color: hsl(50, 100%, 50%);
+    width: 100vw;
   }
   .star{
       color: black;
@@ -98,11 +105,11 @@
   }
   .dificulty{
     margin-top:30px;
-
   }
 .modal-body p{
     margin: 10px;
     font-size: 1.3rem;
+    width:40vw;  
 }
 .edit{
   width: 2rem;
@@ -111,6 +118,11 @@
 .delete{
   width: 2rem;
   height: 2rem;
+}
+.userName{
+  color: #FFFFFF;
+  font-size: 1.3rem;
+  padding: 2px;
 }
 @media (max-width: 600px) {
   .card{

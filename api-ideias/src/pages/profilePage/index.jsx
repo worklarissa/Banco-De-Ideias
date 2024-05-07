@@ -11,7 +11,7 @@ import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 const ProfilePage = () => {
   const [countIdeas, setCount] = useState(0);
   const headers = useAuthHeader();
-  const Token = headers.replace("x-acess-token", "");
+  const Token = headers ? headers.replace("x-acess-token", ""): null;
   const authUser = useAuthUser();
   useEffect(() => {
     FetchApi("GET", `https://railway/get/,´${authUser}`, Token).then((data) => {
