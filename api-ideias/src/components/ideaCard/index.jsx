@@ -9,6 +9,7 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import ContentEditable from "react-contenteditable";
 import "./ideaCard.css";
+import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 
 function IdeaCard({ url, editable, cards }) {
   const [posts, setPosts] = useState([]);
@@ -17,6 +18,9 @@ function IdeaCard({ url, editable, cards }) {
   const [editColor, setEditColor] = useState("");
   const [editDifficulty, setEditDifficulty] = useState(1);
   const [isEditing, setIsEditing] = useState(null);
+  const headers = useAuthHeader();
+
+  const cleanToken = headers.replace("x-acess-token", "");
 
   const handleClose = () => setShow(false);
 
@@ -36,7 +40,7 @@ function IdeaCard({ url, editable, cards }) {
 
   const handleDelete = (event, post) => {
     event.stopPropagation();
-    FetchApi("DELETE", `http://delete/${post.id}`, "", null)
+    FetchApi("DELETE", `http://delete/${post.id}`, "", cleanToken)
       .then(() => {
         alert("Projeto deletado com sucesso!");
         setPosts(posts.filter((p) => p.id !== post.id));
@@ -57,8 +61,12 @@ function IdeaCard({ url, editable, cards }) {
   };
 
   const handleSave = () => {
-    console.log(editPost);
-    FetchApi("PUT", `https://project/update/${editPost.id}`, "", editPost);
+    FetchApi(
+      "PATCH",
+      `https://project/update/${editPost.id}`,
+      editPost,
+      cleanToken
+    );
     try {
       setPosts(
         posts.map((post) => (post.id === editPost.id ? editPost : post))
@@ -71,60 +79,13 @@ function IdeaCard({ url, editable, cards }) {
   };
   useEffect(() => {
     FetchApi("GET", { url }, "", null).then((data) => {
-      setPosts([
-        {
-          id: 1,
-          title: "Projeto criar sua identidade em java",
-          text: "Através deste projeto eu te ensino a criar um backend perfeito em java tudo sem você precisar saber muito!",
-          difficultyLevel: 2,
-          postColor: "#02FFD1",
-          hashtags: [
-            "#java",
-            "#Javascript",
-            "#Teste",
-            "#Javascript",
-            "#Javascript",
-          ],
-        },
-        {
-          id: 2,
-          title: "Projeto criar sua identidade em java",
-          text: "Através deste projeto eu te ensino a criar um backend perfeito em java tudo sem você precisar saber muito!",
-          difficultyLevel: 3,
-          postColor: "#FF02C7",
-          hashtags: [
-            "#java",
-            "#Javascript",
-            "#Teste",
-            "#Javascript",
-            "#Javascript",
-            "#Javascript",
-            "#Javascript",
-          ],
-        },
-        {
-          id: 3,
-          title: "Projeto criar sua identidade em java",
-          text: "Através deste projeto eu te ensino a criar um backend perfeito em java tudo sem você precisar saber muito!",
-          difficultyLevel: 1,
-          hashtags: [
-            "#java",
-            "#Javascript",
-            "#Teste",
-            "#Javascript",
-            "#Javascript",
-            "#Javascript",
-            "#Javascript",
-            "#Javascript",
-          ],
-        },
-      ]);
+      setPosts(data);
     });
   }, []);
 
   return (
     <>
-      <Row xs={1} md={cards} className="g-4">
+      <Row xs={1} md={cards} className="main">
         {posts.map((post, idx) => (
           <Col key={idx}>
             <Card
@@ -184,7 +145,6 @@ function IdeaCard({ url, editable, cards }) {
             ) : (
               editPost?.title
             )}
-
             <span className="star">
               {renderStars(editPost?.difficultyLevel)}
             </span>

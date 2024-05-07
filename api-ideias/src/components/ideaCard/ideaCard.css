@@ -9,7 +9,12 @@
         transform: translateY(0px)
     }
   }
-  
+  .main{
+    display: flex;
+    justify-content: center;
+    gap: 100px;
+
+  }
   .modal-header {
     border: none;
     color: #FFFFFF;
@@ -32,8 +37,8 @@
       max-height: 500px;
       background-color: #FFD602;
       animation: float 2.5s ease-in-out infinite;
-        
-       
+      
+      
   } 
   .save{
     font-size:  1.25rem;
@@ -108,6 +113,7 @@
       width: auto; 
       height: auto;
       margin: 20px;
+      animation: none;
   }
   .card-title, .text,.text2 .modal-body p {
       font-size: 13px; 

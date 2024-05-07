@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import RequireAuth from '@auth-kit/react-router/RequireAuth'
+import RequireAuth from "@auth-kit/react-router/RequireAuth";
 import Ideas from "../pages/pageIdea";
 import RotaExemplo from "../pages/pageExample";
 import ProfilePage from "../pages/profilePage";
@@ -10,7 +10,7 @@ const Router = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<RotaExemplo />} />
-        <Route path="/ideas" element={<Ideas />} />
+        <Route path="/ideias" element={<Ideas />} />
         <Route
           path="/perfil"
           element={
@@ -19,12 +19,10 @@ const Router = () => {
             </RequireAuth>
           }
         />
-        <Route path="/ideas" element={<Ideas />} />
         <Route
           path="/criar"
           element={
             <RequireAuth fallbackPath="/login">
-              {" "}
               <PageCreateIdea />
             </RequireAuth>
           }
