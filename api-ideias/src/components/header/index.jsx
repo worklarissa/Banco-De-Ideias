@@ -42,17 +42,15 @@ const Header = ({ to1, link1, to2, link2, to3, link3, to4, link4 }) => {
             <img width={100} height={100} src={logo} alt="Logo" />
           </Link>
         </Navbar.Brand>
-        <Navbar.Toggle aria-controls="responsive-navbar-nav" className="custom-toggler"/>
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" className="custom-toggler" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-            
-              <Link className="dropdown-item" to={to3}>
-                {link3}
-              </Link>
-              <Link className="dropdown-item" to={to4}>
-                {link4}
-              </Link>
-            
+            <Link className="link" to="/ideas">
+              Ideias
+            </Link>
+            <Link className="link" to="/perfil">
+              Perfil
+            </Link>
           </Nav>
           <Nav>
             {!isAuth ? (

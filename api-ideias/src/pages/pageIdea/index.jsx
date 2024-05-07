@@ -3,6 +3,8 @@ import "./pageIdea.css";
 import IdeaCard from "../../components/ideaCard";
 
 export const Ideas = () => {
+
+
   return (
     <div>
       <Header
@@ -16,7 +18,7 @@ export const Ideas = () => {
       <h1 className="title">Ideias</h1>
 
       <h2 className="title2">Explore ideias de projetos!</h2>
-      <IdeaCard cards={4}/>
+      <IdeaCard cards={4} />
     
     </div>
   );

@@ -11,8 +11,10 @@ import ContentEditable from "react-contenteditable";
 import "./ideaCard.css";
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 
-function IdeaCard({ url, editable, cards }) {
+function IdeaCard({ editable, cards }) {
   const [posts, setPosts] = useState([]);
+  const [reqInfo, setReqInfos] = useState({})
+  const [newUrl, setNewUrl] = useState("/project/show-valid?limit=6&offset=0")
   const [show, setShow] = useState(false);
   const [editPost, setEditPost] = useState(null);
   const [editColor, setEditColor] = useState("");
@@ -27,16 +29,33 @@ function IdeaCard({ url, editable, cards }) {
   const handleShow = (post) => {
     setEditPost({ ...post });
     setEditColor(post.postColor);
-    setEditDifficulty(post.difficultyLevel);
+    setEditDifficulty(post.difficultLevel);
     setIsEditing(false);
     setShow(true);
+    console.log(post.postColor)
   };
+
+  const handleShowMoreButton = () =>{
+    console.log(newUrl)
+    getData()
+  }
 
   const handleEdit = (event, post) => {
     event.stopPropagation();
     handleShow(post);
     setIsEditing(true);
   };
+
+  const getData = async () => {
+    const get = await FetchApi("GET", `https://banco-de-ideiasapi.up.railway.app${newUrl}`)
+    const projects = get.projects
+    console.log(get.nextUrl)
+    
+    console.log(posts)
+    setPosts(projects)
+   
+
+  }
 
   const handleDelete = (event, post) => {
     event.stopPropagation();
@@ -78,9 +97,8 @@ function IdeaCard({ url, editable, cards }) {
     }
   };
   useEffect(() => {
-    FetchApi("GET", { url }, "", null).then((data) => {
-      setPosts(data);
-    });
+    getData()
+
   }, []);
 
   return (
@@ -90,7 +108,7 @@ function IdeaCard({ url, editable, cards }) {
           <Col key={idx}>
             <Card
               onClick={() => handleShow(post)}
-              style={{ backgroundColor: post.postColor }}
+              style={{ backgroundColor: `#${post.postColor}` }}
             >
               <Card.Body>
                 {editable && (
@@ -109,7 +127,7 @@ function IdeaCard({ url, editable, cards }) {
                 <Card.Title>
                   <span>{post.title}</span>
                   <span className="star">
-                    {renderStars(post.difficultyLevel)}
+                    {renderStars(post.difficultLevel)}
                   </span>
                 </Card.Title>
                 <Card.Text bsPrefix="text">{post.text}</Card.Text>
@@ -121,7 +139,9 @@ function IdeaCard({ url, editable, cards }) {
                     whiteSpace: "nowrap",
                   }}
                 >
-                  {post.hashtags}
+                  {post.hashtags.map((hashtag, idx) => (
+                    <span key={idx}>{hashtag.hashtag}</span>
+                  ))}
                 </Card.Text>
               </Card.Body>
             </Card>
@@ -132,7 +152,7 @@ function IdeaCard({ url, editable, cards }) {
       <Modal bsPrefix="modal" show={show} onHide={handleClose} animation="true">
         <Modal.Header
           closeButton
-          style={{ backgroundColor: editPost?.postColor }}
+          style={{ backgroundColor: `#${editPost?.postColor}` }}
         >
           <Modal.Title>
             {isEditing ? (
@@ -146,11 +166,11 @@ function IdeaCard({ url, editable, cards }) {
               editPost?.title
             )}
             <span className="star">
-              {renderStars(editPost?.difficultyLevel)}
+              {renderStars(editPost?.difficultLevel)}
             </span>
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body style={{ backgroundColor: editPost?.postColor }}>
+        <Modal.Body style={{ backgroundColor: `#${editPost?.postColor}` }}>
           {isEditing ? (
             <>
               <ContentEditable
@@ -219,7 +239,12 @@ function IdeaCard({ url, editable, cards }) {
           ) : (
             <>
               <Card.Text bsPrefix="text">{editPost?.text}</Card.Text>
-              <Card.Text bsPrefix="text2">{editPost?.hashtags}</Card.Text>
+              <Card.Text bsPrefix="text2">
+                {editPost?.hashtags.map((hashtag,idx) =>(
+                  <span key={idx}>{hashtag.hashtag}</span>
+                  
+                  ))}
+             </Card.Text>
             </>
           )}
         </Modal.Body>

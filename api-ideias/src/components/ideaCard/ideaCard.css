@@ -35,7 +35,7 @@
       height: auto;
       max-width: 500px;
       max-height: 500px;
-      background-color: #FFD602;
+     
       animation: float 2.5s ease-in-out infinite;
       
       
@@ -60,13 +60,17 @@
     color: #FFFFFF;
     padding: 10px;
     font-size: 1.3rem;
-    overflow: hidden;
+    overflow-y: auto;
       text-overflow: ellipsis;
       display: -webkit-box;
        -webkit-line-clamp: 4;
       -webkit-box-orient: vertical;
-     
-  }
+      
+    }
+           
+
+  
+
   .text2{
     color: #FFFFFF;
     font-size: 1.3rem;
