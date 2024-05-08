@@ -61,6 +61,7 @@
     box-shadow: 0 0 2px;
     text-align: center;
     font-size:2rem;
+    height: fit-content;
 }
 
 .btn:hover{

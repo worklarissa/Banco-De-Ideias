@@ -20,17 +20,21 @@ export const IdeaForm = () => {
     setHashtags(value);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     try {
       const formData = {
         title: title,
         text: description,
         hashtags: hashtags,
-        difficultyLevel: difficultyLevel,
+        difficultLevel: difficultyLevel,
         Postcolor: Postcolor,
       };
-      FetchApi("POST", "https//railway/posts/", formData,Token);
+
+
+      const request = await FetchApi("POST", "https://banco-de-ideiasapi.up.railway.app/project/create", formData,Token);
+
+      console.log(request)
       alert("Ideia criada com sucesso!");
     } catch (error) {
       console.log(error)
