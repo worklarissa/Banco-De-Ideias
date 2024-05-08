@@ -12,6 +12,7 @@
   .main{
     display: flex;
     justify-content: center;
+    margin-left: 100px;
     gap: 100px;
 
   }
