@@ -141,60 +141,66 @@ function IdeaCard({ editable, cards, url }) {
     return stars;
   };
 
-  const handleSave = async () => {
-    try {
-      console.log("esses são os dados do post ", editPost)
-      const postData = {
-        title: editPost.title,
-        text: editPost.text,
-        postColor: editPost.postColor,
-        difficultLevel: editPost.difficultLevel,
-        hashtags: editPost.hashtags
+
+ 
+    const handleSave = async () => {
+      try {
+        console.log("esses são os dados do post ", editPost)
+        editPost.postColor = editColor || editPost.postColor; 
+    
+        const postData = {
+          title: editPost.title || posts.title,
+          text: editPost.text || posts.text,
+          postColor: editPost.postColor || posts.postColor,
+          difficultLevel: editPost.difficultLevel || posts.difficultLevel,
+          hashtags: editPost.hashtags || posts.hashtags
+          
+        }
   
+        if(!validateHashtag(editPost.hashtags)){
+          throw "Hashtag validation failed"
+        }
+        await yupValidation.validate( postData, { abortEarly: false })
+        const data = await FetchApi(
+          "PATCH",
+          `https://banco-de-ideiasapi.up.railway.app/project/update-my/${editPost.id}`,
+          postData,
+          cleanToken
+        );
+        console.log(data)
+  
+        setPosts(
+          posts.map((post) => (post.id === editPost.id ? editPost : post))
+        );
+  
+        setErrors([])
+        setHashtagErrors('')
+        handleClose();
+       
+        setEditPost({});
+      } catch (error) {
+        console.log(error)
+        if (error.response?.status === 401) {
+          unlogUser()
+        }
+  
+        if(error === "Hashtag validation failed"){
+          return setHashtagErrors(error)
+        }
+        const newErrors = {}
+        if (error.inner) {
+          error.inner.forEach(err => {
+              newErrors[err.path] = err.message
+          })
+          setErrors(newErrors)
+          console.log(errors)
+          console.log(errors.label)
+          return 
       }
-
-      if(!validateHashtag(editPost.hashtags)){
-        throw "Hashtag validation failed"
       }
-      await yupValidation.validate( postData, { abortEarly: false })
-      const data = await FetchApi(
-        "PATCH",
-        `https://banco-de-ideiasapi.up.railway.app/project/update-my/${editPost.id}`,
-        postData,
-        cleanToken
-      );
-      console.log(data)
-
-      setPosts(
-        posts.map((post) => (post.id === editPost.id ? editPost : post))
-      );
-
-      setErrors([])
-      setHashtagErrors('')
-      handleClose();
-     
-      setEditPost({});
-    } catch (error) {
-      console.log(error)
-      if (error.response?.status === 401) {
-        unlogUser()
-      }
-
-      if(error === "Hashtag validation failed"){
-        return setHashtagErrors(error)
-      }
-      const newErrors = {}
-      if (error.inner) {
-        error.inner.forEach(err => {
-            newErrors[err.path] = err.message
-        })
-        setErrors(newErrors)
-        console.log(errors)
-        console.log(errors.label)
-        return 
-    }
-    }
-  };
+    };
+    
+      
   useEffect(() => {
     getData()
 
