@@ -71,7 +71,7 @@ const Header = ({ to1, link1, to2, link2, to3, link3, to4, link4 }) => {
                   {authUser.name}
                 </Link>
                 <Link className="link" to="">
-                  <button onClick={() => handleLogout()}>Logout</button>
+                  <button onClick={() => handleLogout()} className="logout-button">Logout</button>
                 </Link>
               </>
             )}

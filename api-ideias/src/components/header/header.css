@@ -18,6 +18,25 @@ h1{
     background-color: #0E1618;
     color: white;
 }
+
+.navbar-nav{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+.logout-button{
+    padding: 10px;
+    border: none;
+    transition: 1s;
+}
+
+.logout-button:hover{
+    background-color: rgb(144, 144, 144);
+}
+
 @media (max-width: 600px) {
     .link {
         font-size: 1rem; /* Reduz o tamanho da fonte */

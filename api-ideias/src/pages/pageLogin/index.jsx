@@ -1,14 +1,22 @@
 import Header from "../../components/header"
 import loginPng from "../../assets/login.png"
+import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated'
 import { Container } from "react-bootstrap"
 import LoginForm from "../../components/loginForm"
 import { useNavigate, Link } from "react-router-dom"
 import "./pageLogin.css"
+import { useEffect } from "react"
 
 const PageLogin = () => {
 
     const navigate = useNavigate()
- 
+    const isAuth = useIsAuthenticated()
+
+   useEffect(()=>{
+    if(isAuth){
+        navigate("/ideias")
+    }
+   }, [])
 
     return (
         <div className="login-page">
