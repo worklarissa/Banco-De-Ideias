@@ -34,7 +34,7 @@ const PageLogin = () => {
 
                 <div className="form-login">
                     <LoginForm />
-                    <p className="cad-message">Já tem login ? <Link to="/Cadastro" >Cadastre-se</Link></p>
+                    <p className="cad-message">Não tem uma conta ? <Link to="/cadastro" >Cadastre-se</Link></p>
                 </div>
 
 

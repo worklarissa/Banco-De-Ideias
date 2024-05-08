@@ -4,12 +4,14 @@ import Ideas from "../pages/pageIdea";
 import ProfilePage from "../pages/profilePage";
 import PageCreateIdea from "../pages/pageCreateIdea";
 import PageLogin from "../pages/pageLogin";
+import PageRegister from "../pages/pageRegister";
 
 const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<PageLogin />} />
+        <Route path="/cadastro" element={<PageRegister />} />
         <Route path="/ideias" element={<Ideas />} />
         <Route
           path="/perfil"

@@ -3,6 +3,7 @@ import useSignIn from 'react-auth-kit/hooks/useSignIn';
 import { useState, useRef } from "react"
 import { FetchApi } from "../../utils/Fetch"
 import {useNavigate } from "react-router-dom";
+import eye from "../../assets/eyeSvg.svg"
 
 import "./login.css"
 
@@ -10,7 +11,7 @@ import "./login.css"
 
 function LoginForm() {
     const [errors, setErrors] = useState([])
-
+    const [showPassword, setShowPassword] = useState(false)
     const loginForm = useRef(null)
     const signIn = useSignIn()
     const navigate = useNavigate()
@@ -20,6 +21,10 @@ function LoginForm() {
         password: Yup.string().required('Preencha Este Campo!')
 
     })
+
+    const handleTogglePassword = () =>{
+        setShowPassword(!showPassword)
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -76,7 +81,12 @@ function LoginForm() {
                 <div className="input-login">
                     <label>Senha</label>
                     {errors.password && <div className='error-input-register'>{errors.password}</div>}
-                    <input type="password" name="password" />
+                    <input type={showPassword ? 'text': 'password'} name="password" />
+                    <div className='show-password'>
+                        <img src={eye} alt="mostra" onClick={handleTogglePassword} className='toggle-password'/>
+                        <p>mostra senha</p>
+
+                    </div>
 
                 </div>
 

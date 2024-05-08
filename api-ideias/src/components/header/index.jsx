@@ -21,8 +21,8 @@ const Header = ({ to1, link1, to2, link2, to3, link3, to4, link4 }) => {
     try {
       const token = useHeader.replace("x-acess-token ", "");
       await FetchApi(
-        "get",
-        "https://localhost:7777/user/logout-user",
+        "POST",
+        "https://banco-de-ideiasapi.up.railway.app/user/logout",
         "",
         token
       );
