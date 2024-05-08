@@ -12,7 +12,14 @@ const Router = () => {
       <Routes>
         <Route path="/login" element={<PageLogin />} />
         <Route path="/cadastro" element={<PageRegister />} />
-        <Route path="/ideias" element={<Ideas />} />
+        <Route 
+        path="/ideias" 
+        element={
+        <RequireAuth>
+        <Ideas />
+        </RequireAuth>
+        } 
+        />
         <Route
           path="/perfil"
           element={
