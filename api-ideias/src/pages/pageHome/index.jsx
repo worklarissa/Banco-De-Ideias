@@ -1,4 +1,4 @@
-import IdeaCarousel from "../../components/carousel"
+// import IdeaCarousel from "../../components/carousel"
 import Header from "../../components/header/index"
 
 export default function Home (){
@@ -17,13 +17,12 @@ export default function Home (){
         </div>
 
         <div>
-            <h2>Visualize as <h2>ideias</h2> mais <h2>populares</h2> no momento!</h2> 
+            <h2>Visualize as <span>ideias</span>mais<span>populares</span>no momento!</h2> 
 
-            <IdeaCarousel/>
         </div>
 
         <div>
-            <h2><h2>Aprenda Mais</h2> com esses <h2>artigos</h2>!</h2>
+            <h2>Aprenda Mais com esses artigos!</h2>
 
             <div>
             

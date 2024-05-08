@@ -23,8 +23,9 @@ function IdeaCard({ editable, cards, url }) {
   const [editColor, setEditColor] = useState("");
   const [editDifficulty, setEditDifficulty] = useState(1);
   const [errors, setErrors] = useState([])
+  const [requestErros, setRequestErrors] = useState([])
   const [isEditing, setIsEditing] = useState(null);
-  const [hashtagErros, setHashtagErrors] = useState([])
+  const [hashtagErros, setHashtagErrors] = useState('')
   const headers = useAuthHeader();
   const authUser = useAuthUser()
   const unlogUser = useUnlog()
@@ -61,6 +62,9 @@ function IdeaCard({ editable, cards, url }) {
 
   const handleEdit = (event, post) => {
     event.stopPropagation();
+    if(!isEditing){
+      setHashtagErrors('')
+    }
     handleShow(post);
     setIsEditing(true);
 
@@ -73,7 +77,6 @@ function IdeaCard({ editable, cards, url }) {
       console.log(get)
       const projects = get.projects.filter(project => !posts.some(post => post.id === project.id))
 
-      console.log(newUrl)
       setPreviousUrl(get.previousUrl)
 
       if (get.nextUrl !== null) {
@@ -85,6 +88,10 @@ function IdeaCard({ editable, cards, url }) {
     } catch (error) {
       if (error.response?.status === 401) {
         unlogUser()
+      }
+
+      if(error.response?.status === 404){
+        return setRequestErrors('nenhum post encontrado')
       }
     }
 
@@ -208,6 +215,7 @@ function IdeaCard({ editable, cards, url }) {
 
   return (
     <>
+    {requestErros && <div className='error-notFound'>Nenhum post encontrado</div>}
       <Row xs={1} md={cards} className="main" >
         {posts.map((post, idx) => (
           <Col key={idx} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
