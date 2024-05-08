@@ -136,14 +136,15 @@ function IdeaCard({ editable, cards, url }) {
 
   const handleSave = () => {
     console.log("esses são os dados do post ", editPost)
+    editPost.postColor = editColor || editPost.postColor; 
 
     const postData = {
-      title: editPost.title,
-      text: editPost.text,
-      postColor: editPost.postColor,
-      difficultLevel: editPost.difficultLevel,
-      hashtags: editPost.hashtags
-
+      title: editPost.title || posts.title,
+      text: editPost.text || posts.text,
+      postColor: editPost.postColor || posts.postColor,
+      difficultLevel: editPost.difficultLevel || posts.difficultLevel,
+      hashtags: editPost.hashtags || posts.hashtags
+      
     }
     console.log(postData)
 
