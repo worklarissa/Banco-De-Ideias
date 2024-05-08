@@ -278,7 +278,6 @@ function IdeaCard({ editable, cards, url}) {
               >
                 <option>Selecione o nivel de dificuldade</option>
                 <option value={1}>
-                  1como alterar o layout do telcado no ubuntu
                 </option>
                 <option value={2}>2</option>
                 <option value={3}>3</option>
