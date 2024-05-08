@@ -300,7 +300,6 @@ function IdeaCard({ editable, cards, url }) {
               >
                 <option>Selecione o nivel de dificuldade</option>
                 <option value={1}>
-                  1como alterar o layout do telcado no ubuntu
                 </option>
                 <option value={2}>2</option>
                 <option value={3}>3</option>
@@ -308,6 +307,7 @@ function IdeaCard({ editable, cards, url }) {
             </>
           ) : (
             <>
+              <h2 className="userName"> Autor : {editPost?.user.name}</h2>
               <Card.Text className="modalText">{editPost?.text}</Card.Text>
               <Card.Text className="modalText">
                 {editPost?.hashtags.map((hashtag, idx) => (
