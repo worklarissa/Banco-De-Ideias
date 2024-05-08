@@ -11,8 +11,9 @@ import ContentEditable from "react-contenteditable";
 import "./ideaCard.css";
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
+import { useUnlog } from "../../utils/Logout";
 
-function IdeaCard({ editable, cards, url}) {
+function IdeaCard({ editable, cards, url }) {
   const [posts, setPosts] = useState([]);
   const [newUrl, setNewUrl] = useState(`/project/${url}?`)
   const [previousUrl, setPreviousUrl] = useState('')
@@ -23,8 +24,9 @@ function IdeaCard({ editable, cards, url}) {
   const [isEditing, setIsEditing] = useState(null);
   const headers = useAuthHeader();
   const authUser = useAuthUser()
+  const unlogUser = useUnlog()
 
- 
+  const cleanToken = headers.replace("x-acess-token", "");
 
   const handleClose = () => setShow(false);
 
@@ -42,26 +44,29 @@ function IdeaCard({ editable, cards, url}) {
     event.stopPropagation();
     handleShow(post);
     setIsEditing(true);
+
   };
 
   const getData = async () => {
     try {
-      let cleanToken = headers.replace("x-acess-token", "");
-      const get = await FetchApi("GET", `https://banco-de-ideiasapi.up.railway.app${newUrl}`,'',cleanToken)
+
+      const get = await FetchApi("GET", `https://banco-de-ideiasapi.up.railway.app${newUrl}`, '', cleanToken)
       console.log(get)
       const projects = get.projects.filter(project => !posts.some(post => post.id === project.id))
-      
+
       console.log(newUrl)
       setPreviousUrl(get.previousUrl)
 
-     if(get.nextUrl !== null){
-      setNewUrl(get.nextUrl)
-     }
+      if (get.nextUrl !== null) {
+        setNewUrl(get.nextUrl)
+      }
       setPosts((prevPosts) => [...prevPosts, ...projects])
-  
-      
+
+
     } catch (error) {
-      console.log(error)
+      if(error.response.status === 401){
+        unlogUser()
+    }
     }
 
   }
@@ -91,9 +96,9 @@ function IdeaCard({ editable, cards, url}) {
         }
       }, 200); // Define um atraso de 200ms antes de chamar getData()
     };
-  
+
     window.addEventListener('scroll', handleScroll);
-  
+
     return () => {
       window.removeEventListener('scroll', handleScroll);
       clearTimeout(scrollTimeout); // Limpa o timeout ao desmontar o componente
@@ -104,16 +109,19 @@ function IdeaCard({ editable, cards, url}) {
     // }
   }, [getData])
 
-  const handleDelete = (event, post) => {
-    event.stopPropagation();
-    FetchApi("DELETE", `http://delete/${post.id}`, "", cleanToken)
-      .then(() => {
-        alert("Projeto deletado com sucesso!");
-        setPosts(posts.filter((p) => p.id !== post.id));
-      })
-      .catch((error) => {
-        console.error("Erro ao deletar o post:", error);
-      });
+  const handleDelete = async (event, post) => {
+    try {
+      event.stopPropagation();
+      const request = await FetchApi("DELETE", `https://banco-de-ideiasapi.up.railway.app/project/delete-my/${post.id}`, "", cleanToken)
+      alert("Post deletado com sucesso!");
+      setPosts(posts.filter(item => item.id !== post.id))
+    } catch (error) {
+      if(error.response.status === 401){
+          unlogUser()
+      }
+    }
+   
+
   };
   const renderStars = (difficulty) => {
     let stars = "";
@@ -127,10 +135,22 @@ function IdeaCard({ editable, cards, url}) {
   };
 
   const handleSave = () => {
+    console.log("esses são os dados do post ", editPost)
+
+    const postData = {
+      title: editPost.title,
+      text: editPost.text,
+      postColor: editPost.postColor,
+      difficultLevel: editPost.difficultLevel,
+      hashtags: editPost.hashtags
+
+    }
+    console.log(postData)
+
     FetchApi(
       "PATCH",
-      `https://project/update/${editPost.id}`,
-      editPost,
+      `https://banco-de-ideiasapi.up.railway.app/project/update-my/${editPost.id}`,
+      postData,
       cleanToken
     );
     try {
@@ -140,7 +160,9 @@ function IdeaCard({ editable, cards, url}) {
       handleClose();
       setEditPost({});
     } catch (error) {
-      console.error("Erro ao salvar o post:", error);
+      if(error.response.status === 401){
+        unlogUser()
+    }
     }
   };
   useEffect(() => {
@@ -150,9 +172,9 @@ function IdeaCard({ editable, cards, url}) {
 
   return (
     <>
-      <Row xs={1} md={cards} className="main">
+      <Row xs={1} md={cards} className="main" >
         {posts.map((post, idx) => (
-          <Col key={idx}>
+          <Col key={idx} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <Card
               onClick={() => handleShow(post)}
               style={{ backgroundColor: `#${post.postColor}` }}

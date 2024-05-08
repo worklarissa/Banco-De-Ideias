@@ -13,6 +13,17 @@ const ProfilePage = () => {
   const headers = useAuthHeader();
   const Token = headers ? headers.replace("x-acess-token", ""): null;
   const authUser = useAuthUser();
+  const getData = async()=>{
+    const data = await FetchApi("GET", `https://banco-de-ideiasapi.up.railway.app/project/show-my?limit=0`, '', Token)
+    console.log(data.totalOfProjects)
+    setCount(data.totalOfProjects)
+    
+  }
+  useEffect(()=>{
+   
+    getData()
+
+  },[])
  
   return (
     <div>
@@ -23,7 +34,7 @@ const ProfilePage = () => {
           <div className="profile-info">
             <div className="infos">
               <h2 className="subtitle">{authUser.name}</h2>
-              <p>Numero de ideias : {authUser.numberOfIdeas} </p>
+              <p>Numero de ideias : {countIdeas} </p>
               <Link className="btn">Criar ideia</Link>
               <Link className="btn">Ideias a serem Aprovadas</Link>
             </div>

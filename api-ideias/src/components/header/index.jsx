@@ -48,17 +48,11 @@ const Header = ({ to1, link1, to2, link2, to3, link3, to4, link4 }) => {
         />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-            <Link className="link" to={to1}>
-              {link1}
+            <Link className="link" to="/ideias">
+              Ideias
             </Link>
-            <Link className="link" to={to2}>
-              {link2}
-            </Link>
-            <Link className="link" to={to3}>
-              {link3}
-            </Link>
-            <Link className="link" to={to4}>
-              {link4}
+            <Link className="link" to="/perfil">
+              Perfil
             </Link>
           </Nav>
           <Nav>

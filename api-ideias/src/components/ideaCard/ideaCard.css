@@ -12,7 +12,8 @@
   .main{
     display: flex;
     justify-content: center;
-    margin-left: 100px;
+    align-items: center;
+    
     gap: 100px;
 
   }
@@ -99,6 +100,7 @@
     font-weight: bold;
     display: flex;
     justify-content: space-between;
+    width: 100%;
     margin-bottom: 10px;
   }
   .colors{
@@ -126,14 +128,27 @@
   padding: 2px;
   font-weight: 700                          
 }
-@media (max-width: 600px) {
+
+.edit:hover{
+  cursor: pointer;
+}
+
+.delete:hover{
+  cursor: pointer;
+}
+/* @media screen and (max-width: 900px) {
   .card{
       width: auto; 
       height: auto;
       margin: 20px;
       animation: none;
   }
-  .card-title, .text,.text2 .modal-body p {
+
+  .main{
+    margin-left: 80px;
+    text-align: center;
+  }
+  /* .card-title, .text,.text2 .modal-body p {
       font-size: 13px; 
   }
   .edit,.delete{
@@ -147,6 +162,5 @@
     font-size: 0.78rem;
     margin:0; 
     
-  }
+  } */
 
-}
