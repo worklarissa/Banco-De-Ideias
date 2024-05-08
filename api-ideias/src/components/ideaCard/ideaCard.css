@@ -17,6 +17,13 @@
     gap: 100px;
 
   }
+  .error-input-edit{
+    color: black;
+    font-size: bold;
+   text-align: center;
+   background-color: orange;
+   padding: 5px;
+  }
   
   .modal-header {
     border: none;

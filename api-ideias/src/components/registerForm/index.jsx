@@ -1,5 +1,4 @@
 import * as Yup from 'yup'
-import useSignIn from 'react-auth-kit/hooks/useSignIn';
 import { useState, useRef } from "react"
 import { FetchApi } from "../../utils/Fetch"
 import {useNavigate } from "react-router-dom";
@@ -14,7 +13,6 @@ function RegisterForm() {
     const [showPassword, setShowPassword] = useState(false)
 
     const registerForm = useRef(null)
-    const signIn = useSignIn()
     const navigate = useNavigate()
 
     const yupValidation = Yup.object({

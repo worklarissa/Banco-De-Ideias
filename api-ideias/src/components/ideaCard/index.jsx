@@ -1,3 +1,4 @@
+import * as Yup from 'yup'
 import { useState, useEffect } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { FetchApi } from "../../utils/Fetch";
@@ -21,7 +22,9 @@ function IdeaCard({ editable, cards, url }) {
   const [editPost, setEditPost] = useState(null);
   const [editColor, setEditColor] = useState("");
   const [editDifficulty, setEditDifficulty] = useState(1);
+  const [errors, setErrors] = useState([])
   const [isEditing, setIsEditing] = useState(null);
+  const [hashtagErros, setHashtagErrors] = useState([])
   const headers = useAuthHeader();
   const authUser = useAuthUser()
   const unlogUser = useUnlog()
@@ -29,6 +32,22 @@ function IdeaCard({ editable, cards, url }) {
   const cleanToken = headers.replace("x-acess-token", "");
 
   const handleClose = () => setShow(false);
+
+
+
+  const yupValidation = Yup.object({
+    title: Yup.string().min(10, "O titulo deve ter pelo menos 10 caracteres ").max(50, "O titulo deve ter no máximo 50 caracteres"),
+    text: Yup.string().min(50, "A descrição deve ter pelo menos 50 caracteres").max(1000, "A descrição deve ter no máximo 1000 caracteres"),
+    difficultLevel: Yup.number().min(1, "Deve ser um número de 1 a 3").max(3, "deve ser um número de 1 a 3"),
+    Postcolor: Yup.string().oneOf(['FFD602', 'FF02C7', '02FFD1'], 'A cor do post deve ser vermelho, azul ou verde')
+  })
+
+
+  const validateHashtag = (hashtags) => {
+
+    const validatedHashtags = hashtags.every(hashtag => hashtag.length >= 4)
+    return validatedHashtags
+  }
 
   const handleShow = (post) => {
     setEditPost({ ...post });
@@ -49,7 +68,7 @@ function IdeaCard({ editable, cards, url }) {
 
   const getData = async () => {
     try {
-
+      
       const get = await FetchApi("GET", `https://banco-de-ideiasapi.up.railway.app${newUrl}`, '', cleanToken)
       console.log(get)
       const projects = get.projects.filter(project => !posts.some(post => post.id === project.id))
@@ -64,21 +83,12 @@ function IdeaCard({ editable, cards, url }) {
 
 
     } catch (error) {
-      if(error.response.status === 401){
+      if (error.response?.status === 401) {
         unlogUser()
-    }
+      }
     }
 
   }
-
-  // const handleScroll = () => {
-  //   const { scrollTop, clientHeight, scrollHeight } = document.documentElement
-  //   const roundedScrollTop = Math.round(scrollTop);
-  //   if (roundedScrollTop + clientHeight + 1>= scrollHeight) {
-  //       getData();
-  //   }
-
-  // }
 
   // função que carrega mais posts de acordo com a rolagem de barra do usuario, o scrollTop é o tanto que o usuario desceu a barra comparado ao começo,
   // o clientHeight é tamanho que a tela esta visivel no momento, o scrollHeith é o tamanho total da pagina,
@@ -103,10 +113,7 @@ function IdeaCard({ editable, cards, url }) {
       window.removeEventListener('scroll', handleScroll);
       clearTimeout(scrollTimeout); // Limpa o timeout ao desmontar o componente
     };
-    // window.addEventListener('scroll', handleScroll)
-    // return () => {
-    //   window.removeEventListener("scroll", handleScroll)
-    // }
+
   }, [getData])
 
   const handleDelete = async (event, post) => {
@@ -116,11 +123,11 @@ function IdeaCard({ editable, cards, url }) {
       alert("Post deletado com sucesso!");
       setPosts(posts.filter(item => item.id !== post.id))
     } catch (error) {
-      if(error.response.status === 401){
-          unlogUser()
+      if (error.response?.status === 401) {
+        unlogUser()
       }
     }
-   
+
 
   };
   const renderStars = (difficulty) => {
@@ -134,34 +141,57 @@ function IdeaCard({ editable, cards, url }) {
     return stars;
   };
 
-  const handleSave = () => {
-    console.log("esses são os dados do post ", editPost)
-
-    const postData = {
-      title: editPost.title,
-      text: editPost.text,
-      postColor: editPost.postColor,
-      difficultLevel: editPost.difficultLevel,
-      hashtags: editPost.hashtags
-
-    }
-    console.log(postData)
-
-    FetchApi(
-      "PATCH",
-      `https://banco-de-ideiasapi.up.railway.app/project/update-my/${editPost.id}`,
-      postData,
-      cleanToken
-    );
+  const handleSave = async () => {
     try {
+      console.log("esses são os dados do post ", editPost)
+      const postData = {
+        title: editPost.title,
+        text: editPost.text,
+        postColor: editPost.postColor,
+        difficultLevel: editPost.difficultLevel,
+        hashtags: editPost.hashtags
+  
+      }
+
+      if(!validateHashtag(editPost.hashtags)){
+        throw "Hashtag validation failed"
+      }
+      await yupValidation.validate( postData, { abortEarly: false })
+      const data = await FetchApi(
+        "PATCH",
+        `https://banco-de-ideiasapi.up.railway.app/project/update-my/${editPost.id}`,
+        postData,
+        cleanToken
+      );
+      console.log(data)
+
       setPosts(
         posts.map((post) => (post.id === editPost.id ? editPost : post))
       );
+
+      setErrors([])
+      setHashtagErrors('')
       handleClose();
+     
       setEditPost({});
     } catch (error) {
-      if(error.response.status === 401){
+      console.log(error)
+      if (error.response?.status === 401) {
         unlogUser()
+      }
+
+      if(error === "Hashtag validation failed"){
+        return setHashtagErrors(error)
+      }
+      const newErrors = {}
+      if (error.inner) {
+        error.inner.forEach(err => {
+            newErrors[err.path] = err.message
+        })
+        setErrors(newErrors)
+        console.log(errors)
+        console.log(errors.label)
+        return 
     }
     }
   };
@@ -224,7 +254,10 @@ function IdeaCard({ editable, cards, url }) {
         >
           <Modal.Title>
             {isEditing ? (
+              
+              
               <ContentEditable
+              
                 html={editPost?.title}
                 onChange={(e) =>
                   setEditPost({ ...editPost, title: e.target.value })
@@ -238,6 +271,8 @@ function IdeaCard({ editable, cards, url }) {
             </span>
           </Modal.Title>
         </Modal.Header>
+        {errors.title && <div className='error-input-edit'>{errors.title}</div>}
+        {errors.text && <div className='error-input-edit'>{errors.text}</div>}
         <Modal.Body style={{ backgroundColor: `#${editPost?.postColor}` }}>
           {isEditing ? (
             <>
@@ -249,6 +284,7 @@ function IdeaCard({ editable, cards, url }) {
                   setEditPost({ ...editPost, text: e.target.value })
                 }
               />
+              {hashtagErros && <div className='error-input-edit'>As hashtags precisam ter pelo menos 4 caracteres</div>}
               <ContentEditable
                 tabIndex="p"
                 html={editPost?.hashtags ? editPost.hashtags.join(" ") : ""}
@@ -274,21 +310,21 @@ function IdeaCard({ editable, cards, url }) {
                   name="color"
                   value="#FFD602"
                   label="Amarelo"
-                  style={{ backgroundColor: "#FFD602" }}
+                  style={{ backgroundColor: "#FFD602", border: '1px solid black', display: 'flex', alignItems: 'center' }}
                 />
                 <Form.Check
                   type="radio"
                   name="color"
                   label="Rosa Neon"
                   value="#FF02C7"
-                  style={{ backgroundColor: "#FF02C7" }}
+                  style={{ backgroundColor: "#FF02C7", border: '1px solid black', display: 'flex', alignItems: 'center' }}
                 />
                 <Form.Check
                   type="radio"
                   name="color"
                   label="Azul Neon"
                   value="#02FFD1"
-                  style={{ backgroundColor: "#02FFD1" }}
+                  style={{ backgroundColor: "#02FFD1", border: '1px solid black', display: 'flex', alignItems: 'center' }}
                 />
               </Form.Group>
 
