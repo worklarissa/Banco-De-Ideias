@@ -1,4 +1,4 @@
-# Mental-Space 💡​🗃️​
+# Banco de ideias 💡​🗃️​
 
 ## Tecnologias utilizadas 👾​
 
