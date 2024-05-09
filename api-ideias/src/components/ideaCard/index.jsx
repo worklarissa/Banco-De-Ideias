@@ -84,32 +84,38 @@ function IdeaCard({ editable, cards, url }) {
         "",
         cleanToken
       );
+      console.log(newUrl)
       console.log(get);
-      if (
-        get.message ===
-        "project não encontrado, tente novamente com outros valores!"
-      ) {
-        throw "nenhum project";
+      if (get.message === "project não encontrado, tente novamente com outros valores!"){
+       
+        throw "nenhum project";      
       }
+
+   
       const projects = get.projects.filter(
         (project) => !posts.some((post) => post.id === project.id)
       );
-
+     
       setPreviousUrl(get.previousUrl);
       setRequestErrors("");
       if (get.nextUrl !== null) {
         setNewUrl(get.nextUrl);
       }
-      setPosts((prevPosts) => [...prevPosts, ...projects]);
+      // setPosts((prevPosts) => [...prevPosts, ...projects]);
+      setPosts((prevPosts) => {
+        const uniqueProjects = projects.filter((project) => (
+          !prevPosts.some((prevPost) => prevPost.id === project.id)
+        ));
+        return [...prevPosts, ...uniqueProjects];
+      });
+    
     } catch (error) {
       console.log(error);
       if (error.response?.status === 401) {
         unlogUser();
       }
 
-      if (error === "nenhum project") {
-        return setRequestErrors("nenhum post encontrado");
-      }
+     
     }
   };
 
