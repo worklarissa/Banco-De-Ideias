@@ -146,6 +146,39 @@ and (max-device-width : 480px) {
 
 }
 
+/*   landscape no celular  */
+@media only screen and (max-width: 1000px) and (min-device-width:320px) and (orientation: landscape) {
+    .main-title{
+        font-size:1rem;
+    }
+   
+
+    .text-middle-page{
+        font-size:1.3rem;
+
+    }
+
+    .carrosel-title1{
+        font-size: 1rem;
+    }
+
+    .articles{
+        gap: 100px;
+    }
+    .card-article{
+        height: 80px;
+        width: 80px;
+    }
+ }
+
+
+/* pcs */
+@media only screen 
+and (min-width : 1224px) {
+
+}
+
+
 /*media  (min-width:menor que a tela do pc){
     flex-wrap: wrap;
 }*/
