@@ -31,6 +31,7 @@ h1{
 
 
 
+
 .logout-button{
     padding: 10px;
     border: none;
@@ -48,5 +49,17 @@ h1{
     }
     .navbar {
         flex-direction: column; /* Muda a direção do flex para coluna */
+    }
+
+    .me-auto{
+        margin: 0!important;
+    }
+    .navbar-toggler {
+        background-color: white; /* Defina a cor do ícone para branco */
+      }
+
+      .custom-toggler.navbar-toggler {
+        border-color: transparent;
+        color: white;
     }
 }

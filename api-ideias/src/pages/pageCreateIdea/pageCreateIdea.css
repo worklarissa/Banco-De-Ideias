@@ -28,3 +28,32 @@
         margin-bottom: 40px;
         animation: pulse 6s infinite;
     }
+
+    .title-create-idea{
+      color: #FFD602;
+      font-size: 1.5rem;
+    }
+
+
+    @media only screen 
+and (min-device-width : 320px) 
+and (max-device-width : 480px) {
+
+  .title-create-idea{
+    font-size: 1rem;
+    margin: 10px;
+    color: #FFD602;
+  }
+  
+    .create{
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      gap: 100px;
+    }
+
+    .banner{
+      margin: 0;
+    }
+}
