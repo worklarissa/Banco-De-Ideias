@@ -57,7 +57,7 @@ export default function Home() {
           <span className="yellow-text">artigos!</span>
         
         </h1>
-        {/* essa parte e opcional se ficar mt dificil de fazer descarta */}
+        
         <div className="articles">
           <div className="double-article">
             <div className="card-article">

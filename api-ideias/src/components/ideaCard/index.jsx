@@ -84,60 +84,58 @@ function IdeaCard({ editable, cards, url }) {
         "",
         cleanToken
       );
-      if (
-        get.message ===
-        "project não encontrado, tente novamente com outros valores!"
-      ) {
-        throw "nenhum project";
+      if (get.message === "project não encontrado, tente novamente com outros valores!"){
+       
+        throw "nenhum project";      
       }
 
+   
       const projects = get.projects.filter(
         (project) => !posts.some((post) => post.id === project.id)
       );
-
+     
       setPreviousUrl(get.previousUrl);
       setRequestErrors("");
       if (get.nextUrl !== null) {
         setNewUrl(get.nextUrl);
       }
-      // setPosts((prevPosts) => [...prevPosts, ...projects]);
+    
       setPosts((prevPosts) => {
-        const uniqueProjects = projects.filter(
-          (project) => !prevPosts.some((prevPost) => prevPost.id === project.id)
-        );
+        const uniqueProjects = projects.filter((project) => (
+          !prevPosts.some((prevPost) => prevPost.id === project.id)
+        ));
         return [...prevPosts, ...uniqueProjects];
       });
+    
     } catch (error) {
       console.log(error);
       if (error.response?.status === 401) {
         unlogUser();
       }
+
+     
     }
   };
 
-  // função que carrega mais posts de acordo com a rolagem de barra do usuario, o scrollTop é o tanto que o usuario desceu a barra comparado ao começo,
-  // o clientHeight é tamanho que a tela esta visivel no momento, o scrollHeith é o tamanho total da pagina,
-  // dai a função handscroll faz o seguinte: se o tanto que o usuario desceu somado ao tamanho visivel da tela for maior ou igual ao tamanho total da pagina ele pega mais dados pois chegou no fim da tela
-  // dai tem um event listner ali pra chamar essa função ai sempre que o usuario ir descendo a barra de rolagem e verificar se ele chegou embaixo da tela
   useEffect(() => {
     let scrollTimeout;
 
     const handleScroll = () => {
-      clearTimeout(scrollTimeout); // Limpa o timeout anterior
+      clearTimeout(scrollTimeout); 
       scrollTimeout = setTimeout(() => {
         const { scrollTop, clientHeight, scrollHeight } =
           document.documentElement;
         if (scrollTop + clientHeight + 1 >= scrollHeight) {
           getData();
         }
-      }, 200); // Define um atraso de 200ms antes de chamar getData()
+      }, 200); 
     };
 
     window.addEventListener("scroll", handleScroll);
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      clearTimeout(scrollTimeout); // Limpa o timeout ao desmontar o componente
+      clearTimeout(scrollTimeout); 
     };
   }, [getData]);
 
@@ -191,7 +189,6 @@ function IdeaCard({ editable, cards, url }) {
         postData,
         cleanToken
       );
-     
       setPosts(posts.filter((item) => item.id !== editPost.id));
       setErrors([]);
 
@@ -325,26 +322,24 @@ function IdeaCard({ editable, cards, url }) {
                 </div>
               )}
               <ContentEditable
-                tabIndex="p"
-                html={
-                  editPost?.hashtags
-                    ? editPost.hashtags
-                        .map((hashtag) => hashtag.hashtag)
-                        .join(" ")
-                    : ""
-                }
-                onChange={(e) => {
-                  const hashtags = e.target.value
-                    .split(" ")
-                    .map((word) => ({
-                      hashtag: word.startsWith("#") ? word : "#" + word,
-                    }));
-                  setEditPost({
-                    ...editPost,
-                    hashtags: hashtags,
-                  });
-                }}
-              />
+  tabIndex="p"
+  html={
+    editPost?.hashtags
+      ? editPost.hashtags
+          .map((hashtag) => hashtag.hashtag)
+          .join(" ")
+      : ""
+  }
+  onChange={(e) => {
+    const hashtags = e.target.value
+      .split(" ")
+      .map((word) => ({ hashtag: word.startsWith("#") ? word : "#" + word }));
+    setEditPost({
+      ...editPost,
+      hashtags: hashtags,
+    });
+  }}
+/>
 
               <Form.Group
                 className="colors"
@@ -405,9 +400,7 @@ function IdeaCard({ editable, cards, url }) {
           ) : (
             <>
               <h2 className="userName"> Autor : {editPost?.user.name}</h2>
-              <Card.Text bsPrefix="custom-cardText" className="modalText">
-                {editPost?.text}
-              </Card.Text>
+              <Card.Text bsPrefix="custom-cardText" className="modalText">{editPost?.text}</Card.Text>
               <Card.Text className="modalText">
                 {editPost?.hashtags.map((hashtag, idx) => (
                   <span key={idx}>{hashtag.hashtag}</span>
