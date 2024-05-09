@@ -167,6 +167,10 @@
   align-items: center;
   flex-direction: column;
 }
+p{
+  word-break: break-all;
+}
+ 
 
 
 
@@ -186,6 +190,38 @@ and (max-device-width : 480px) {
   .modal-body p{
       width: 100%;
   }
+
+  .title2{
+    font-size: 1.5rem;
+  }
+  .card-title{
+    flex-direction: column-reverse;
+  }
+  
+
+  .text2{
+    margin-top: 5px;
+    font-size: 1rem;
+  }
+  .post-title{
+    font-size: 1rem;
+    width: 100%;
+  }
+
+  .star{
+    text-align: end;
+  }
+  .card{
+    width: 190px;
+  }
+
+  .form-check-input{
+    padding: 15px;
+}
+
+p{
+  word-break: break-all;
+}
  
 
 }
