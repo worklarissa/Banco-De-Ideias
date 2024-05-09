@@ -88,7 +88,7 @@
     color: #FFFFFF;
     padding: 10px;
     font-size: 1rem;
-    overflow-y: auto;
+    overflow-y: hidden;
       text-overflow: ellipsis;
       display: -webkit-box;
        -webkit-line-clamp: 4;
@@ -101,6 +101,10 @@
       align-items: center;
       justify-content: center;
     }
+    .custom-cardText {
+      overflow-y: scroll;
+      /* width: 100%; */
+  }
   
 
   .text2{
