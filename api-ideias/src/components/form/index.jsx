@@ -12,7 +12,7 @@ export const IdeaForm = () => {
   const [difficultyLevel, setDifficulty] = useState("");
   const [Postcolor, setColor] = useState("");
   const [errors, setErrors] = useState([])
-  const [hashtagErros, setHashtagErrors] = useState([])
+  const [hashtagErros, setHashtagErrors] = useState('')
   const headers = useAuthHeader();
   const Token = headers.replace('x-acess-token','')
 
@@ -59,7 +59,7 @@ const validateHashtag = (hashtags) =>{
 
       console.log(request)
       setErrors([])
-      setHashtagErrors([])
+      setHashtagErrors('')
       alert("Ideia criada com sucesso!");
     } catch (error) {
       console.log(error)

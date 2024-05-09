@@ -23,7 +23,7 @@ function IdeaCard({ editable, cards, url }) {
   const [editColor, setEditColor] = useState("");
   const [editDifficulty, setEditDifficulty] = useState(1);
   const [errors, setErrors] = useState([])
-  const [requestErros, setRequestErrors] = useState([])
+  const [requestErros, setRequestErrors] = useState('')
   const [isEditing, setIsEditing] = useState(null);
   const [hashtagErros, setHashtagErrors] = useState('')
   const headers = useAuthHeader();
@@ -32,7 +32,10 @@ function IdeaCard({ editable, cards, url }) {
 
   const cleanToken = headers.replace("x-acess-token", "");
 
-  const handleClose = () => setShow(false);
+  const handleClose = () =>{
+    setHashtagErrors('')
+    setShow(false)
+  } ;
 
 
 
@@ -75,22 +78,27 @@ function IdeaCard({ editable, cards, url }) {
       
       const get = await FetchApi("GET", `https://banco-de-ideiasapi.up.railway.app${newUrl}`, '', cleanToken)
       console.log(get)
+      if(get.message === "project não encontrado, tente novamente com outros valores!"){
+       
+        throw 'nenhum project'
+      }
       const projects = get.projects.filter(project => !posts.some(post => post.id === project.id))
 
       setPreviousUrl(get.previousUrl)
-
+      setRequestErrors('')
       if (get.nextUrl !== null) {
         setNewUrl(get.nextUrl)
       }
       setPosts((prevPosts) => [...prevPosts, ...projects])
-
+   
 
     } catch (error) {
+      console.log(error)
       if (error.response?.status === 401) {
         unlogUser()
       }
 
-      if(error.response?.status === 404){
+      if(error === 'nenhum project'){
         return setRequestErrors('nenhum post encontrado')
       }
     }
@@ -175,12 +183,9 @@ function IdeaCard({ editable, cards, url }) {
           cleanToken
         );
         console.log(data)
-  
-        setPosts(
-          posts.map((post) => (post.id === editPost.id ? editPost : post))
-        );
-  
+    
         setErrors([])
+ 
         setHashtagErrors('')
         handleClose();
        
@@ -322,7 +327,7 @@ function IdeaCard({ editable, cards, url }) {
                 <Form.Check
                   type="radio"
                   name="color"
-                  value="#FFD602"
+                  value="FFD602"
                   label="Amarelo"
                   style={{ backgroundColor: "#FFD602", border: '1px solid black', display: 'flex', alignItems: 'center' }}
                 />
@@ -330,14 +335,14 @@ function IdeaCard({ editable, cards, url }) {
                   type="radio"
                   name="color"
                   label="Rosa Neon"
-                  value="#FF02C7"
+                  value="FF02C7"
                   style={{ backgroundColor: "#FF02C7", border: '1px solid black', display: 'flex', alignItems: 'center' }}
                 />
                 <Form.Check
                   type="radio"
                   name="color"
                   label="Azul Neon"
-                  value="#02FFD1"
+                  value="02FFD1"
                   style={{ backgroundColor: "#02FFD1", border: '1px solid black', display: 'flex', alignItems: 'center' }}
                 />
               </Form.Group>
