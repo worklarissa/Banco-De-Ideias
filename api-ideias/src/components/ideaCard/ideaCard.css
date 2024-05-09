@@ -39,6 +39,7 @@
   .modal-body {
     border: none;
     color: #FFFFFF;
+    line-break: anywhere;
    
   }
   .modal-footer{
@@ -73,6 +74,8 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 10px;
+    overflow: hidden;
+    white-space:nowrap;
 }
   .text{
     color: #FFFFFF;
