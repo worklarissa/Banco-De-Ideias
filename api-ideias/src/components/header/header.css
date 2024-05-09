@@ -25,6 +25,10 @@ h1{
     align-items: center;
 }
 
+.article-image{
+    width: 40%;
+}
+
 
 
 .logout-button{

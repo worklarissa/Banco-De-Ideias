@@ -1,18 +1,95 @@
 .section-sobre-home{
     display: flex;
-    padding: 20px;
+    justify-content: center;
+    align-items: center;
+    height: 82vh;
     
 }
 
 .imagem-home{
-    width: 40%;
+    width: 30%;
+    transform: scaleX(-1);
 }
 
 .text-sobre-home{
-    font-family: "Raleway", sans-serif;
-    
-   justify-items: center;
+   display: flex;
+   justify-content: space-around;
+   flex-direction: row;
+    flex-wrap: wrap;
+ 
+  
 }
+
+.double-article{
+    display: flex;
+    flex-direction: column;
+    gap: 100px;
+}
+
+.text-article-card{
+    text-align: center;
+    color: white;
+}
+
+.card-article{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    width: 200px;
+    background-color: gray;
+}
+
+.articles{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 80%;
+    gap: 200px;
+
+}
+
+.yellow-text{
+    color: #FFD602;
+}
+
+.blue-text{
+    color: #7BEFFF;
+}
+
+.middle-text{
+    width: 50%;
+    margin: 0;
+}
+
+.carrosel-title1{
+    padding-top: 5%;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.cards{
+    height: 100vh;
+}
+
+.example-cards{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 100px;
+    height: 80%;
+}
+
+.card1{
+    height: 200px;
+    width: 200px;
+    background-color: gray;
+}
+
+
 
 h1{
     font-size: 64px;
@@ -20,12 +97,25 @@ h1{
     text-align: center;
 }
 
+
 p{
     color:#FFFFFF;
     font-weight: 500;
     text-align: justify;
     text-wrap: pretty;
 
+}
+
+.text-middle-page{
+font-size: 2rem;
+letter-spacing: n;
+padding: 0;
+margin: 0;
+
+}
+
+.main-title{
+    margin: 20px;
 }
 
 /*media  (min-width:menor que a tela do pc){
