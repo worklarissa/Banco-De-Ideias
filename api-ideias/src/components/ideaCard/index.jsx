@@ -223,7 +223,7 @@ function IdeaCard({ editable, cards, url }) {
     {requestErros && <div className='error-notFound'>Nenhum post encontrado, tente rolar a tela até a parte de baixo para carregar mais posts</div>}
       <Row xs={1} md={cards} className="main" >
         {posts.map((post, idx) => (
-          <Col key={idx} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <Col key={idx} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
             <Card
               onClick={() => handleShow(post)}
               style={{ backgroundColor: `#${post.postColor}` }}
