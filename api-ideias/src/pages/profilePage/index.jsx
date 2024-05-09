@@ -34,7 +34,6 @@ const ProfilePage = () => {
           <div className="profile-info">
             <div className="infos">
               <h2 className="subtitle">{authUser.name}</h2>
-
               <Link className="btn" to="/criar">Criar ideia</Link>
               <Link className="btn">Ideias a serem Aprovadas</Link>
             </div>
