@@ -118,6 +118,34 @@ margin: 0;
     margin: 20px;
 }
 
+/*celulares */
+ @media only screen 
+and (min-device-width : 320px) 
+and (max-device-width : 480px) {
+    .main-title{
+        font-size:1rem;
+    }
+   
+
+    .text-middle-page{
+        font-size:1rem;
+
+    }
+
+    .carrosel-title1{
+        font-size: 1rem;
+    }
+
+    .articles{
+        gap: 100px;
+    }
+    .card-article{
+        height: 80px;
+        width: 80px;
+    }
+
+}
+
 /*media  (min-width:menor que a tela do pc){
     flex-wrap: wrap;
 }*/
