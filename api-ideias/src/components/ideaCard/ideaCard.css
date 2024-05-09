@@ -74,8 +74,14 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 10px;
-    overflow: hidden;
-    white-space:nowrap;
+    
+}
+
+.post-title{
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 70%
 }
   .text{
     color: #FFFFFF;

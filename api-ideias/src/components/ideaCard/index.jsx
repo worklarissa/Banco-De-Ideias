@@ -242,7 +242,7 @@ function IdeaCard({ editable, cards, url }) {
                   </div>
                 )}
                 <Card.Title>
-                  <span>{post.title}</span>
+                  <span className='post-title'>{post.title}</span>
                   <span className="star">
                     {renderStars(post.difficultLevel)}
                   </span>
