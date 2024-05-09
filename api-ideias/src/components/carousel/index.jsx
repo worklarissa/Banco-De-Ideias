@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Carousel from 'react-bootstrap/Carousel';
+import Carousel from "react-bootstrap/Carousel";
 import Card from "react-bootstrap/Card";
 import { FetchApi } from "../../utils/Fetch";
 
@@ -10,9 +10,13 @@ function IdeaCarousel({ url }) {
 
   const loadPosts = () => {
     FetchApi("GET", `${url}?page=${page}`, "", null).then((data) => {
-      setPosts(data);
-      setAllPosts((prevPosts) => [...prevPosts, ...data]);
-      setPage((prevPage) => prevPage + 1);
+      if (Array.isArray(data.projects)) {
+        setPosts(data.projects);
+        setAllPosts((prevPosts) => [...prevPosts, ...data.projects]);
+        setPage((prevPage) => prevPage + 1);
+      } else {
+        console.error("Data is not an array:", data);
+      }
     });
   };
 
@@ -20,24 +24,43 @@ function IdeaCarousel({ url }) {
     loadPosts();
   }, []);
 
-  const handleSelect = (selectedIndex) => {
-    if (selectedIndex === allPosts.length - 1 && selectedIndex !== posts.length - 1) {
+  const handleSelect = (selectedIndex, e) => {
+    if (
+      selectedIndex === allPosts.length - 1 &&
+      selectedIndex !== posts.length - 1
+    ) {
       setPosts(allPosts[selectedIndex]);
     } else if (selectedIndex === posts.length - 1) {
       loadPosts();
     }
   };
 
+  
+  const groupedPosts = posts.reduce((grouped, post, index) => {
+    const groupIndex = Math.floor(index / 3);
+
+    if (!grouped[groupIndex]) {
+      grouped[groupIndex] = [];
+    }
+
+    grouped[groupIndex].push(post);
+
+    return grouped;
+  }, []);
+
   return (
     <Carousel onSelect={handleSelect}>
-      {posts.map((post, idx) => (
+      {groupedPosts.map((group, idx) => (
         <Carousel.Item key={idx}>
-          <div style={{ display: 'flex', justifyContent: 'space-around' }}>
-            {post.map((item, index) => (
-              <Card key={index} style={{ backgroundColor: item.postColor, flex: 1 }}>
-                <Card.Body>
-                  <Card.Title>{item.title}</Card.Title>
-                  <Card.Text>{item.text}</Card.Text>
+          <div className="d-flex justify-content-around">
+            {group.map((post, idx) => (
+              <Card
+                key={idx}
+                style={{ backgroundColor: "#" + post.postColor, flex: 1 }}
+              >
+                <Card.Body style={{ backgroundColor:  post.postColor, flex: 1 }}>
+                  <Card.Title>{post.title}</Card.Title>
+                  <Card.Text>{post.text}</Card.Text>
                 </Card.Body>
               </Card>
             ))}
