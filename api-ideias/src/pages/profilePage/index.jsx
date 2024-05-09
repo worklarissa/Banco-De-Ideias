@@ -50,8 +50,11 @@ const ProfilePage = () => {
             <div className="infos">
               <h2 className="subtitle">{authUser.name}</h2>
               <p className="paragraph">total de ideias : {countIdeas}</p>
+              <div className="buttons-profile">
               <Link className="btn" to="/criar">Criar ideia</Link>
               <button className="btn" onClick={handleButtonClick}>{buttonText}</button>
+              </div>
+             
             </div>
           </div>
           <div className="profile-ideas">

@@ -14,7 +14,7 @@ export const IdeaForm = () => {
   const [errors, setErrors] = useState([])
   const [hashtagErros, setHashtagErrors] = useState('')
   const headers = useAuthHeader();
-  const Token = headers.replace('x-acess-token','')
+  const Token = headers.replace('x-acess-token', '')
 
   const handleHashtagsChange = (event) => {
     const value = event.target.value
@@ -24,17 +24,17 @@ export const IdeaForm = () => {
   };
 
   const yupValidation = Yup.object({
-    title: Yup.string().required('Preencha Este Campo!').min(10,"O titulo deve ter pelo menos 10 caracteres ").max(50,"O titulo deve ter no máximo 50 caracteres"),
-    text: Yup.string().required('Preencha Este Campo!').min(50, "A descrição deve ter pelo menos 50 caracteres").max(1000,"A descrição deve ter no máximo 1000 caracteres"),
-    difficultLevel:Yup.number().required('Preencha Este Campo!').min(1,"Deve ser um número de 1 a 3").max(3,"deve ser um número de 1 a 3"),
-    Postcolor:Yup.string().required('Preencha Este Campo').oneOf(['FFD602','FF02C7','02FFD1'], 'A cor do post deve ser vermelho, azul ou verde')
+    title: Yup.string().required('Preencha Este Campo!').min(10, "O titulo deve ter pelo menos 10 caracteres ").max(50, "O titulo deve ter no máximo 50 caracteres"),
+    text: Yup.string().required('Preencha Este Campo!').min(50, "A descrição deve ter pelo menos 50 caracteres").max(1000, "A descrição deve ter no máximo 1000 caracteres"),
+    difficultLevel: Yup.number().required('Preencha Este Campo!').min(1, "Deve ser um número de 1 a 3").max(3, "deve ser um número de 1 a 3"),
+    Postcolor: Yup.string().required('Preencha Este Campo').oneOf(['FFD602', 'FF02C7', '02FFD1'], 'A cor do post deve ser vermelho, azul ou verde')
   })
 
-const validateHashtag = (hashtags) =>{
+  const validateHashtag = (hashtags) => {
 
     const validatedHashtags = hashtags.every(hashtag => hashtag.length >= 4)
     return validatedHashtags
-}
+  }
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
@@ -46,48 +46,44 @@ const validateHashtag = (hashtags) =>{
         Postcolor: Postcolor,
       };
 
-    
-
-      console.log(formData)
-      await yupValidation.validate( formData, { abortEarly: false })
-      console.log(validateHashtag(hashtags))
-      if(!validateHashtag(hashtags)){
-         throw "Hashtag validation failed"
+      await yupValidation.validate(formData, { abortEarly: false })
+      if (!validateHashtag(hashtags)) {
+        throw "Hashtag validation failed"
       }
-    
-      const request = await FetchApi("POST", "https://banco-de-ideiasapi.up.railway.app/project/create", formData,Token);
 
-      console.log(request)
+      const request = await FetchApi("POST", "https://banco-de-ideiasapi.up.railway.app/project/create", formData, Token);
+
       setErrors([])
       setHashtagErrors('')
+      setTitle('')
+      setDescription('')
+      setColor('')
+      setDifficulty('')
+      setHashtags([])
       alert("Ideia criada com sucesso!");
+      event.target.reset()
     } catch (error) {
-      console.log(error)
-      console.log(error.inner)
-
-      if(error === "Hashtag validation failed"){
+      if (error === "Hashtag validation failed") {
         return setHashtagErrors(error)
       }
 
       const newErrors = {}
-      
+
       if (error.inner) {
-          error.inner.forEach(err => {
-              newErrors[err.path] = err.message
-          })
-          setErrors(newErrors)
-          console.log(errors)
-          console.log(errors.label)
-          return 
+        error.inner.forEach(err => {
+          newErrors[err.path] = err.message
+        })
+
+        return setErrors(newErrors)
       }
-     
+
     }
   };
 
   return (
     <Form onSubmit={handleSubmit} className="form">
-          
-       {errors.title && <div className='error-input-create'>{errors.title}</div>}
+
+      {errors.title && <div className='error-input-create'>{errors.title}</div>}
       <FloatingLabel controlId="title" label="Título" className="mb-3">
         <Form.Control
           type="text"
@@ -110,7 +106,7 @@ const validateHashtag = (hashtags) =>{
           required
         />
       </FloatingLabel>
-      {hashtagErros && <div className='error-input-create'>As hashtags precisam ter pelo menos 4 caracteres</div>}
+      {hashtagErros && <div className='error-input-create'>As hashtags precisam ter pelo menos 4 caracteres, deve haver pelo menos 1 tecnologia recomendada para o projeto</div>}
       <FloatingLabel controlId="hashtags" label="Hashtags" className="mb-3">
         <Form.Control
           type="text"
@@ -135,7 +131,7 @@ const validateHashtag = (hashtags) =>{
       </Form.Select>
 
       <Form.Group controlId="color" className="cores">
-      {errors.postColor && <div className='error-input-create'>{errors.postColor}</div>}
+        {errors.postColor && <div className='error-input-create'>{errors.postColor}</div>}
         <Form.Label>Cores :</Form.Label>
         <div className="radios">
           <Form.Check
