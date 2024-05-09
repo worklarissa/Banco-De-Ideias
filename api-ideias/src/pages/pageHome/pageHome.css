@@ -144,6 +144,13 @@ and (max-device-width : 480px) {
         height: 80px;
         width: 80px;
     }
+   .cards{
+    display: none;
+   }
+
+   .section-sobre-home{
+    height: 86vh
+   }
 
 }
 
