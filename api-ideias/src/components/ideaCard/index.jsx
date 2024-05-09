@@ -64,7 +64,7 @@ function IdeaCard({ editable, cards, url }) {
     setEditDifficulty(post.difficultLevel);
     setIsEditing(false);
     setShow(true);
-    console.log(post.id);
+   
   };
 
   const handleEdit = (event, post) => {
@@ -84,8 +84,6 @@ function IdeaCard({ editable, cards, url }) {
         "",
         cleanToken
       );
-      console.log(newUrl);
-      console.log(get);
       if (
         get.message ===
         "project não encontrado, tente novamente com outros valores!"
@@ -173,7 +171,6 @@ function IdeaCard({ editable, cards, url }) {
 
   const handleSave = async () => {
     try {
-      console.log("esses são os dados do post ", editPost);
       editPost.postColor = editColor || editPost.postColor;
 
       const postData = {
@@ -194,7 +191,7 @@ function IdeaCard({ editable, cards, url }) {
         postData,
         cleanToken
       );
-      console.log(data);
+     
       setPosts(posts.filter((item) => item.id !== editPost.id));
       setErrors([]);
 

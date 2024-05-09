@@ -36,7 +36,7 @@ function LoginForm() {
             await yupValidation.validate( userInfo, { abortEarly: false })
             const request = await FetchApi('Post', url, userInfo)
 
-            console.log(request.result)
+         
 
             signIn({
                 auth: {
