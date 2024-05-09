@@ -84,18 +84,19 @@ function IdeaCard({ editable, cards, url }) {
         "",
         cleanToken
       );
-      console.log(newUrl)
+      console.log(newUrl);
       console.log(get);
-      if (get.message === "project não encontrado, tente novamente com outros valores!"){
-       
-        throw "nenhum project";      
+      if (
+        get.message ===
+        "project não encontrado, tente novamente com outros valores!"
+      ) {
+        throw "nenhum project";
       }
 
-   
       const projects = get.projects.filter(
         (project) => !posts.some((post) => post.id === project.id)
       );
-     
+
       setPreviousUrl(get.previousUrl);
       setRequestErrors("");
       if (get.nextUrl !== null) {
@@ -103,19 +104,16 @@ function IdeaCard({ editable, cards, url }) {
       }
       // setPosts((prevPosts) => [...prevPosts, ...projects]);
       setPosts((prevPosts) => {
-        const uniqueProjects = projects.filter((project) => (
-          !prevPosts.some((prevPost) => prevPost.id === project.id)
-        ));
+        const uniqueProjects = projects.filter(
+          (project) => !prevPosts.some((prevPost) => prevPost.id === project.id)
+        );
         return [...prevPosts, ...uniqueProjects];
       });
-    
     } catch (error) {
       console.log(error);
       if (error.response?.status === 401) {
         unlogUser();
       }
-
-     
     }
   };
 
@@ -341,7 +339,9 @@ function IdeaCard({ editable, cards, url }) {
                 onChange={(e) => {
                   const hashtags = e.target.value
                     .split(" ")
-                    .map((word) => (word.startsWith("#") ? word : "#" + word));
+                    .map((word) => ({
+                      hashtag: word.startsWith("#") ? word : "#" + word,
+                    }));
                   setEditPost({
                     ...editPost,
                     hashtags: hashtags,
@@ -408,7 +408,9 @@ function IdeaCard({ editable, cards, url }) {
           ) : (
             <>
               <h2 className="userName"> Autor : {editPost?.user.name}</h2>
-              <Card.Text bsPrefix="custom-cardText" className="modalText">{editPost?.text}</Card.Text>
+              <Card.Text bsPrefix="custom-cardText" className="modalText">
+                {editPost?.text}
+              </Card.Text>
               <Card.Text className="modalText">
                 {editPost?.hashtags.map((hashtag, idx) => (
                   <span key={idx}>{hashtag.hashtag}</span>
