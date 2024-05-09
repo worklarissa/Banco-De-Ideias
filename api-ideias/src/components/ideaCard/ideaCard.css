@@ -77,6 +77,7 @@
     
 }
 
+
 .post-title{
   overflow: hidden;
   white-space: nowrap;
@@ -159,6 +160,38 @@
 .delete:hover{
   cursor: pointer;
 }
+
+.modal-body{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+
+
+@media only screen 
+and (min-device-width : 320px) 
+and (max-device-width : 480px) {
+  .custom-cardText{
+      overflow-y: scroll;
+      width: 100%;
+  }
+  .modal-dialog{
+      height: 100%;
+  }
+  .modal-body{
+      max-height: 500px;
+  }
+  .modal-body p{
+      width: 100%;
+  }
+ 
+
+}
+
+
+
 /* @media screen and (max-width: 900px) {
   .card{
       width: auto; 

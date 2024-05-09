@@ -408,7 +408,7 @@ function IdeaCard({ editable, cards, url }) {
           ) : (
             <>
               <h2 className="userName"> Autor : {editPost?.user.name}</h2>
-              <Card.Text className="modalText">{editPost?.text}</Card.Text>
+              <Card.Text bsPrefix="custom-cardText" className="modalText">{editPost?.text}</Card.Text>
               <Card.Text className="modalText">
                 {editPost?.hashtags.map((hashtag, idx) => (
                   <span key={idx}>{hashtag.hashtag}</span>
