@@ -211,8 +211,6 @@ function IdeaCard({ editable, cards, url }) {
           newErrors[err.path] = err.message;
         });
         setErrors(newErrors);
-        console.log(errors);
-        console.log(errors.label);
         return;
       }
     }
