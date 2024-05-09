@@ -5,11 +5,13 @@ import ProfilePage from "../pages/profilePage";
 import PageCreateIdea from "../pages/pageCreateIdea";
 import PageLogin from "../pages/pageLogin";
 import PageRegister from "../pages/pageRegister";
+import Home from "../pages/pageHome";
 
 const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={<Home />} />
         <Route path="/login" element={<PageLogin />} />
         <Route path="/cadastro" element={<PageRegister />} />
         <Route 

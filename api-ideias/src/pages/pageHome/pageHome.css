@@ -1,0 +1,33 @@
+.section-sobre-home{
+    display: flex;
+    padding: 20px;
+    
+}
+
+.imagem-home{
+    width: 40%;
+}
+
+.text-sobre-home{
+    font-family: "Raleway", sans-serif;
+    
+   justify-items: center;
+}
+
+h1{
+    font-size: 64px;
+    font-weight: 800;
+    text-align: center;
+}
+
+p{
+    color:#FFFFFF;
+    font-weight: 500;
+    text-align: justify;
+    text-wrap: pretty;
+
+}
+
+/*media  (min-width:menor que a tela do pc){
+    flex-wrap: wrap;
+}*/
