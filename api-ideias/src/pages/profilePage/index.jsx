@@ -11,9 +11,9 @@ import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 const ProfilePage = () => {
   const [countIdeas, setCount] = useState(0);
   const [ideaCardUrl, setIdeaCardUrl] = useState('show-my?limit=1&offset=0');
+  const [key, setKey] = useState(Date.now())
   const [title, setTitle] = useState('Suas ideias de projetos');
   const [buttonText, setButtonText] = useState('Ideias a serem Aprovadas');
-  const [reload, setReload] = useState(false); // Adicione este estado
   const headers = useAuthHeader();
   const Token = headers ? headers.replace("x-acess-token", ""): null;
   const authUser = useAuthUser();
@@ -24,19 +24,20 @@ const ProfilePage = () => {
   }
   useEffect(()=>{
     getData()
-  },[ideaCardUrl, reload]) 
+  },[ideaCardUrl]) 
  
   const handleButtonClick = () => {
     if (ideaCardUrl === 'show-my?limit=1&offset=0') {
       setIdeaCardUrl('/show-standby?limit=5&offset=0');
       setButtonText('Ideias Aprovadas');
       setTitle('Ideias a serem Aprovadas');
+      
     } else {
       setIdeaCardUrl('show-my?limit=1&offset=0');
       setButtonText('Ideias a serem Aprovadas');
       setTitle('Suas ideias de projetos');
     }
-    setReload(!reload); 
+    setKey(Date.now()); 
   }
 
   return (
@@ -48,6 +49,7 @@ const ProfilePage = () => {
           <div className="profile-info">
             <div className="infos">
               <h2 className="subtitle">{authUser.name}</h2>
+              <p className="paragraph">total de ideias : {countIdeas}</p>
               <Link className="btn" to="/criar">Criar ideia</Link>
               <button className="btn" onClick={handleButtonClick}>{buttonText}</button>
             </div>
@@ -59,7 +61,7 @@ const ProfilePage = () => {
                 url={ideaCardUrl}
                 editable={true}
                 cards={2}
-                key={ideaCardUrl}
+                key={key}
               />
             </div>
           </div>

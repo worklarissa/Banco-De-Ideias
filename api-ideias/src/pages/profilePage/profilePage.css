@@ -24,6 +24,9 @@
     color: white;
     margin-bottom: 2rem;
 }
+.paragraph{
+    margin-bottom: 20px;
+}
 
 .idea{
   margin-left: 15rem;
@@ -87,9 +90,14 @@
     .ideas{
         margin: 1rem;
     }
+    .paragraph{
+        text-align: center;
+        margin-bottom: 90px;
+    }
     .btn{
-        width: auto;
-        font-size: 1rem;
+        margin-top: 20px;
+        width: 5rem;
+        font-size: 0.78rem;
     }
     .profile-info{
         width: auto;
