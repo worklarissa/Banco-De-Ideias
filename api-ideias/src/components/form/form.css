@@ -12,6 +12,10 @@
     height: auto;
 }
 
+.banner{
+    z-index: -1;
+}
+
 .error-input-create{
     color: white;
     margin: 5px;
@@ -72,3 +76,16 @@
     }
 
 } 
+
+@media only screen 
+and (min-device-width : 320px) 
+and (max-device-width : 480px) {
+    .form{
+        width: 90%;
+    }
+
+    .form-check-input{
+        padding: 10px;
+    }
+
+}
