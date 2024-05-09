@@ -183,7 +183,7 @@ function IdeaCard({ editable, cards, url }) {
           cleanToken
         );
         console.log(data)
-    
+        setPosts(posts.filter(item => item.id !== editPost.id))
         setErrors([])
  
         setHashtagErrors('')
