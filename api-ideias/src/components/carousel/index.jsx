@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Carousel from "react-bootstrap/Carousel";
 import Card from "react-bootstrap/Card";
 import { FetchApi } from "../../utils/Fetch";
+import "./carousel.css"
 
 function IdeaCarousel({ url }) {
   const [posts, setPosts] = useState([]);
@@ -59,8 +60,8 @@ function IdeaCarousel({ url }) {
                 style={{ backgroundColor: "#" + post.postColor, flex: 1 }}
               >
                 <Card.Body style={{ backgroundColor:  post.postColor, flex: 1 }}>
-                  <Card.Title>{post.title}</Card.Title>
-                  <Card.Text>{post.text}</Card.Text>
+                  <Card.Title className="titleCarousel">{post.title}</Card.Title>
+                  <Card.Text className="textCarousel">{post.text}</Card.Text>
                 </Card.Body>
               </Card>
             ))}

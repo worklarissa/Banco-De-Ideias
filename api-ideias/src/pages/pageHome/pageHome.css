@@ -5,17 +5,7 @@
     height: 82vh;
     
 }
-.carousel-control-prev, .carousel-control-next {
-    width: auto;
-  }
-  
-  .carousel-control-prev {
-    left: auto;
-  }
-  
-  .carousel-control-next {
-    right: 10px;
-  }
+
 
 .imagem-home{
     width: 30%;
