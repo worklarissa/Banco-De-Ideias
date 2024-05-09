@@ -6,7 +6,10 @@
 .profile-page{
     display: flex;
     justify-content: space-between;
+    min-height: 100vh;
 }
+
+
 
 .profile-info{
     margin-top: 2.4em;
@@ -37,9 +40,11 @@
 }
 
 .infos{
+    display: flex;
+    align-items: center;
     border: 1px solid  #4E4B4B;
     width: 25vw;
-    height: 60vh;
+    height: 50vh;
     margin: 1rem;
     padding: 20px;
     border-radius: 2%;
@@ -49,12 +54,18 @@
 
 .infos p {
     color: white;
-    margin-left: 3.6rem;
     font-size: 1.5rem;
 }
 
+.buttons-profile{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+}
+
 .btn{
-    margin-left: 0.75rem;
     width: 20vw;
     height: 10vh;
     color: white;
@@ -69,6 +80,7 @@
 .btn:hover{
     background-color: yellow;
 }
+
 
 
 @media (max-width: 600px) {
@@ -92,7 +104,6 @@
     }
     .paragraph{
         text-align: center;
-        margin-bottom: 90px;
     }
     .btn{
         margin-top: 20px;

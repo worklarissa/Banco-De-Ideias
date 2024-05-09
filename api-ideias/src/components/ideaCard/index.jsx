@@ -84,32 +84,38 @@ function IdeaCard({ editable, cards, url }) {
         "",
         cleanToken
       );
+      console.log(newUrl)
       console.log(get);
-      if (
-        get.message ===
-        "project não encontrado, tente novamente com outros valores!"
-      ) {
-        throw "nenhum project";
+      if (get.message === "project não encontrado, tente novamente com outros valores!"){
+       
+        throw "nenhum project";      
       }
+
+   
       const projects = get.projects.filter(
         (project) => !posts.some((post) => post.id === project.id)
       );
-
+     
       setPreviousUrl(get.previousUrl);
       setRequestErrors("");
       if (get.nextUrl !== null) {
         setNewUrl(get.nextUrl);
       }
-      setPosts((prevPosts) => [...prevPosts, ...projects]);
+      // setPosts((prevPosts) => [...prevPosts, ...projects]);
+      setPosts((prevPosts) => {
+        const uniqueProjects = projects.filter((project) => (
+          !prevPosts.some((prevPost) => prevPost.id === project.id)
+        ));
+        return [...prevPosts, ...uniqueProjects];
+      });
+    
     } catch (error) {
       console.log(error);
       if (error.response?.status === 401) {
         unlogUser();
       }
 
-      if (error === "nenhum project") {
-        return setRequestErrors("nenhum post encontrado");
-      }
+     
     }
   };
 
@@ -402,7 +408,7 @@ function IdeaCard({ editable, cards, url }) {
           ) : (
             <>
               <h2 className="userName"> Autor : {editPost?.user.name}</h2>
-              <Card.Text className="modalText">{editPost?.text}</Card.Text>
+              <Card.Text bsPrefix="custom-cardText" className="modalText">{editPost?.text}</Card.Text>
               <Card.Text className="modalText">
                 {editPost?.hashtags.map((hashtag, idx) => (
                   <span key={idx}>{hashtag.hashtag}</span>

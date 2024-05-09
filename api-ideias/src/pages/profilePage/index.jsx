@@ -28,7 +28,7 @@ const ProfilePage = () => {
  
   const handleButtonClick = () => {
     if (ideaCardUrl === 'show-my?limit=1&offset=0') {
-      setIdeaCardUrl('/show-standby?limit=5&offset=0');
+      setIdeaCardUrl('/show-standby?limit=1&offset=0');
       setButtonText('Ideias Aprovadas');
       setTitle('Ideias a serem Aprovadas');
       
@@ -41,7 +41,7 @@ const ProfilePage = () => {
   }
 
   return (
-    <div>
+    <div className="profile-page-div">
       <Header to1="/" link1="Home" to2="/ideias" link2="Todas ideias"/>
       <div>
         <h1 className="title">Perfil</h1>
@@ -50,8 +50,11 @@ const ProfilePage = () => {
             <div className="infos">
               <h2 className="subtitle">{authUser.name}</h2>
               <p className="paragraph">total de ideias : {countIdeas}</p>
+              <div className="buttons-profile">
               <Link className="btn" to="/criar">Criar ideia</Link>
               <button className="btn" onClick={handleButtonClick}>{buttonText}</button>
+              </div>
+             
             </div>
           </div>
           <div className="profile-ideas">
