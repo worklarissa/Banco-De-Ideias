@@ -80,7 +80,7 @@
   .text{
     color: #FFFFFF;
     padding: 10px;
-    font-size: 1.3rem;
+    font-size: 1rem;
     overflow-y: auto;
       text-overflow: ellipsis;
       display: -webkit-box;
