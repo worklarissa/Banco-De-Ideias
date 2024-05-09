@@ -11,6 +11,11 @@
     width: auto;
     height: auto;
 }
+
+.error-input-create{
+    color: white;
+    margin: 5px;
+}
 .input {
     background-color: #FFD602;
     padding: 20px;
