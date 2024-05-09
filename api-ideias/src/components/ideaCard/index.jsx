@@ -179,9 +179,6 @@ function IdeaCard({ editable, cards, url }) {
         hashtags: editPost.hashtags || posts.hashtags,
       };
 
-      if (!validateHashtag(editPost.hashtags)) {
-        throw "Hashtag validation failed";
-      }
       await yupValidation.validate(postData, { abortEarly: false });
       const data = await FetchApi(
         "PATCH",

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState} from "react";
 import IdeaCard from "../../components/ideaCard";
 import Header from "../../components/header";
 
