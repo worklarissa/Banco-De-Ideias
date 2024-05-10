@@ -47,7 +47,8 @@ function RegisterForm() {
 
     try {
       await yupValidation.validate(userInfo, { abortEarly: false });
-      const request = await FetchApi("POST", url, userInfo);
+       await FetchApi("POST", url, userInfo);
+
 
       setErrors([]);
       alert("Conta criada com sucesso!");
@@ -55,8 +56,16 @@ function RegisterForm() {
         navigate("/login");
       }, 1500);
     } catch (error) {
-      console.log(error);
+
       const newErrors = {};
+
+      if(error?.response.data){
+        let errorsArray = error.response.data?.error
+        errorsArray.forEach((err) =>{
+           newErrors[err.path] = err.message
+        })
+        return setErrors(newErrors)
+      }
 
       if (error.inner) {
         error.inner.forEach((err) => {
