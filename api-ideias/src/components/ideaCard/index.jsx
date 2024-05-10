@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { FetchApi } from "../../utils/Fetch";
 import Form from "react-bootstrap/Form";
@@ -13,6 +13,7 @@ import "./ideaCard.css";
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 import { useUnlog } from "../../utils/Logout";
+import { StandbyContext } from "../../context/isStandbyContext";
 
 function IdeaCard({ editable, cards, url }) {
   const [posts, setPosts] = useState([]);
@@ -23,12 +24,15 @@ function IdeaCard({ editable, cards, url }) {
   const [editColor, setEditColor] = useState("");
   const [editDifficulty, setEditDifficulty] = useState(1);
   const [errors, setErrors] = useState([]);
-  const [requestErros, setRequestErrors] = useState("");
+  const [requestErros, setRequestErrors] = useState(false);
   const [isEditing, setIsEditing] = useState(null);
   const [hashtagErros, setHashtagErrors] = useState("");
   const headers = useAuthHeader();
   const authUser = useAuthUser();
   const unlogUser = useUnlog();
+
+
+  const {standby} = useContext(StandbyContext)
 
   const cleanToken = headers.replace("x-acess-token", "");
 
@@ -70,7 +74,7 @@ function IdeaCard({ editable, cards, url }) {
   const handleEdit = (event, post) => {
     event.stopPropagation();
     if (!isEditing) {
-      setHashtagErrors("");
+      setHashtagErrors(false);
     }
     handleShow(post);
     setIsEditing(true);
@@ -108,9 +112,12 @@ function IdeaCard({ editable, cards, url }) {
       });
     
     } catch (error) {
-      console.log(error);
       if (error.response?.status === 401) {
         unlogUser();
+      }
+
+      if(error === "nenhum project"){
+          setRequestErrors(true)
       }
 
      
@@ -186,7 +193,11 @@ function IdeaCard({ editable, cards, url }) {
         postData,
         cleanToken
       );
-      setPosts(posts.filter((item) => item.id !== editPost.id));
+
+      if(!standby){
+        setPosts(posts.filter((item) => item.id !== editPost.id));
+      }
+     
       setErrors([]);
 
       setHashtagErrors("");
@@ -285,7 +296,7 @@ function IdeaCard({ editable, cards, url }) {
           <Modal.Title>
             {isEditing ? (
               <ContentEditable
-                html={editPost?.title}
+                html={editPost?.title || ''}
                 onChange={(e) =>
                   setEditPost({ ...editPost, title: e.target.value })
                 }
@@ -306,7 +317,7 @@ function IdeaCard({ editable, cards, url }) {
               <h2 className="userName"> Autor : {authUser.name}</h2>
               <ContentEditable
                 tagName="p"
-                html={editPost?.text}
+                html={editPost?.text || ''}
                 onChange={(e) =>
                   setEditPost({ ...editPost, text: e.target.value })
                 }

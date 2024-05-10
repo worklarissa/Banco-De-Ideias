@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import Router from "./routes/router";
 import createStore from "react-auth-kit/createStore";
 import AuthProvider from "react-auth-kit";
+import { StandbyProvider } from "./context/isStandbyContext";
 
 const store = createStore({
   authName: "_auth",
@@ -14,7 +15,10 @@ const store = createStore({
 ReactDOM.createRoot(document.getElementById("root")).render(
 
     <AuthProvider store={store}>
-      <Router />
+      <StandbyProvider>
+        <Router />
+      </StandbyProvider>
+    
     </AuthProvider>
 
 );

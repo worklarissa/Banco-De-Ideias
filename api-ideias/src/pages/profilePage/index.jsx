@@ -1,16 +1,20 @@
-import { useState} from "react";
+import { useContext, useState} from "react";
 import IdeaCard from "../../components/ideaCard";
 import Header from "../../components/header";
 
 import "./profilePage.css";
 import { Link } from "react-router-dom";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
+import { StandbyContext } from "../../context/isStandbyContext";
 
 const ProfilePage = () => {
   const [ideaCardUrl, setIdeaCardUrl] = useState('show-my?limit=1&offset=0');
   const [key, setKey] = useState(Date.now())
   const [title, setTitle] = useState('Suas ideias de projetos');
   const [buttonText, setButtonText] = useState('Ideias a serem Aprovadas');
+
+
+  const { handleStandbyToggle } = useContext(StandbyContext)
 
   const authUser = useAuthUser();
 
@@ -19,6 +23,7 @@ const ProfilePage = () => {
       setIdeaCardUrl('/show-standby?limit=1&offset=0');
       setButtonText('Ideias Aprovadas');
       setTitle('Ideias a serem Aprovadas');
+      handleStandbyToggle()
       
     } else {
       setIdeaCardUrl('show-my?limit=1&offset=0');
