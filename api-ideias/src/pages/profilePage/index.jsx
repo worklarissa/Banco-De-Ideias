@@ -14,12 +14,12 @@ const ProfilePage = () => {
   const [buttonText, setButtonText] = useState('Ideias a serem Aprovadas');
 
 
-  const { handleStandbyToggle } = useContext(StandbyContext)
+  const { stanby, handleStandbyToggle } = useContext(StandbyContext)
 
   const authUser = useAuthUser();
 
   const handleButtonClick = () => {
-    if (ideaCardUrl === 'show-my?limit=1&offset=0') {
+    if (!stanby) {
       setIdeaCardUrl('/show-standby?limit=1&offset=0');
       setButtonText('Ideias Aprovadas');
       setTitle('Ideias a serem Aprovadas');
