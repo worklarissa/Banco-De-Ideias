@@ -2,7 +2,7 @@
 
 ## Tecnologias utilizadas 👾​
 
-react + vite, react router dom lib, react auth kit lib, yup lib, react-bootstrap, react-contenteditable.
+react + vite,dotenv,react router dom lib, react auth kit lib, yup lib, react-bootstrap, react-contenteditable.
 
 ## Visão geral 💡
 Muitas vezes desenvolvedores iniciantes e experientes se encontram com dificuldades para desenvolver projetos, o Banco de ideias está aqui para solucionar esse problema! Neste projeto desenvolvedores podem visualizar ideias de projeto públicadas por outros desenvolvedores!
@@ -17,6 +17,13 @@ para acessar o Banco de ideias: *work in progress* (deploy feito com vercel)
 
 O projeto contem um sistema de autenticação baseado em json web token, para lidar com a autenticação nossa equipe utilizou a biblioteca react-auth-kit que permite a fácil manipulação de cookies e rotas protegidas. O projeto conta também com a biblioteca react-router-dom que permite a separação de rotas por rotas protegidas e algumas outras funcionalidades.
 
+## ⚙️Configuração do Ambiente (Acesso Local)
+Crie um arquivo **.env** na pasta onde se encontra o package.json seu projeto e configure as variavies de ambiente necessarias:
+
+Exemplo Arquivo .env:
+```
+VITE_API_URL = http://urlexemplo
+```
 
 ## Para Acessar O Projeto Localmente 🏠​
 
