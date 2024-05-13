@@ -14,12 +14,13 @@ const ProfilePage = () => {
   const [buttonText, setButtonText] = useState('Ideias a serem Aprovadas');
 
 
-  const { stanby, handleStandbyToggle } = useContext(StandbyContext)
+  const { standby,handleStandbyToggle } = useContext(StandbyContext)
 
   const authUser = useAuthUser();
 
   const handleButtonClick = () => {
-    if (!stanby) {
+    console.log(standby)
+    if (!standby) {
       setIdeaCardUrl('/show-standby?limit=1&offset=0');
       setButtonText('Ideias Aprovadas');
       setTitle('Ideias a serem Aprovadas');
@@ -29,6 +30,7 @@ const ProfilePage = () => {
       setIdeaCardUrl('show-my?limit=1&offset=0');
       setButtonText('Ideias a serem Aprovadas');
       setTitle('Suas ideias de projetos');
+      handleStandbyToggle()
     }
     setKey(Date.now()); 
   }

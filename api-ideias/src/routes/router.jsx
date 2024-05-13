@@ -6,6 +6,7 @@ import PageCreateIdea from "../pages/pageCreateIdea";
 import PageLogin from "../pages/pageLogin";
 import PageRegister from "../pages/pageRegister";
 import Home from "../pages/pageHome";
+import StandbyProvider from "../context/isStandbyContext";
 
 const Router = () => {
   return (
@@ -18,7 +19,9 @@ const Router = () => {
         path="/ideias" 
         element={
         <RequireAuth fallbackPath="/login">
+          <StandbyProvider>
         <Ideas />
+        </StandbyProvider>
         </RequireAuth>
         } 
         />
@@ -26,7 +29,9 @@ const Router = () => {
           path="/perfil"
           element={
             <RequireAuth fallbackPath="/login">
+              <StandbyProvider>
               <ProfilePage />
+              </StandbyProvider>
             </RequireAuth>
           }
         />
@@ -34,6 +39,7 @@ const Router = () => {
           path="/criar"
           element={
             <RequireAuth fallbackPath="/login">
+              
               <PageCreateIdea />
             </RequireAuth>
           }

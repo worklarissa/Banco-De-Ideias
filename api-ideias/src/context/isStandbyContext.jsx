@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext,useState } from "react";
 
 
 
@@ -18,4 +18,4 @@ function StandbyProvider({children}){
 }
 
 
-export {StandbyProvider}
+export default StandbyProvider

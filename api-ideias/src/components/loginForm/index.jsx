@@ -15,6 +15,7 @@ function LoginForm() {
     const loginForm = useRef(null)
     const signIn = useSignIn()
     const navigate = useNavigate()
+    const ApiUrl = import.meta.env.VITE_API_URL
 
     const yupValidation = Yup.object({
         email: Yup.string().required('Preencha este Campo!'),
@@ -28,7 +29,7 @@ function LoginForm() {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        const url = 'https://banco-de-ideiasapi.up.railway.app/user/login'
+        const url = `${ApiUrl}/user/login`
         const email = loginForm.current.email.value
         const password = loginForm.current.password.value
         const userInfo = { email, password }

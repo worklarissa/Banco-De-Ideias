@@ -15,6 +15,7 @@ export const IdeaForm = () => {
   const [hashtagErros, setHashtagErrors] = useState('')
   const headers = useAuthHeader();
   const Token = headers.replace('x-acess-token', '')
+  const ApiUrl = import.meta.env.VITE_API_URL
 
   const handleHashtagsChange = (event) => {
     const value = event.target.value
@@ -51,7 +52,7 @@ export const IdeaForm = () => {
         throw "Hashtag validation failed"
       }
 
-      const request = await FetchApi("POST", "https://banco-de-ideiasapi.up.railway.app/project/create", formData, Token);
+      const request = await FetchApi("POST", `${ApiUrl}/project/create`, formData, Token);
 
       setErrors([])
       setHashtagErrors('')

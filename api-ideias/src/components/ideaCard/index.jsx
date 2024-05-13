@@ -16,6 +16,7 @@ import { useUnlog } from "../../utils/Logout";
 import { StandbyContext } from "../../context/isStandbyContext";
 
 function IdeaCard({ editable, cards, url }) {
+
   const [posts, setPosts] = useState([]);
   const [newUrl, setNewUrl] = useState(`/project/${url}?`);
   const [previousUrl, setPreviousUrl] = useState("");
@@ -30,6 +31,8 @@ function IdeaCard({ editable, cards, url }) {
   const headers = useAuthHeader();
   const authUser = useAuthUser();
   const unlogUser = useUnlog();
+  const ApiUrl = import.meta.env.VITE_API_URL
+
 
 
   const {standby} = useContext(StandbyContext)
@@ -84,7 +87,7 @@ function IdeaCard({ editable, cards, url }) {
     try {
       const get = await FetchApi(
         "GET",
-        `https://banco-de-ideiasapi.up.railway.app${newUrl}`,
+        `${ApiUrl}${newUrl}`,
         "",
         cleanToken
       );
@@ -151,7 +154,7 @@ function IdeaCard({ editable, cards, url }) {
       event.stopPropagation();
       const request = await FetchApi(
         "DELETE",
-        `https://banco-de-ideiasapi.up.railway.app/project/delete-my/${post.id}`,
+        `${ApiUrl}/project/delete-my/${post.id}`,
         "",
         cleanToken
       );
@@ -189,7 +192,7 @@ function IdeaCard({ editable, cards, url }) {
       await yupValidation.validate(postData, { abortEarly: false });
       const data = await FetchApi(
         "PATCH",
-        `https://banco-de-ideiasapi.up.railway.app/project/update-my/${editPost.id}`,
+        `${ApiUrl}/project/update-my/${editPost.id}`,
         postData,
         cleanToken
       );

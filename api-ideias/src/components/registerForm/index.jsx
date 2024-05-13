@@ -12,6 +12,7 @@ function RegisterForm() {
 
   const registerForm = useRef(null);
   const navigate = useNavigate();
+  const ApiUrl = import.meta.env.VITE_API_URL
 
   const yupValidation = Yup.object({
     name: Yup.string().required("Preencha Este Campo!"),
@@ -39,7 +40,7 @@ function RegisterForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const url = "https://banco-de-ideiasapi.up.railway.app/user/create";
+    const url = `${ApiUrl}/user/create`;
     const name = registerForm.current.name.value;
     const email = registerForm.current.email.value;
     const password = registerForm.current.password.value;
