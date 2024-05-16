@@ -16,13 +16,14 @@ const Header = ({ to1, link1, to2, link2, to3, link3, to4, link4 }) => {
   const useHeader = useAuthHeader("auth.token");
   const authUser = useAuthUser();
   const navigate = useNavigate();
+  const ApiUrl = import.meta.env.VITE_API_URL
 
   async function handleLogout() {
     try {
       const token = useHeader.replace("x-acess-token ", "");
       await FetchApi(
         "POST",
-        "https://banco-de-ideiasapi.up.railway.app/user/logout",
+        `${ApiUrl}/user/logout`,
         "",
         token
       );

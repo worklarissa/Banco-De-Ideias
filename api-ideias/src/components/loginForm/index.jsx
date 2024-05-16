@@ -3,6 +3,8 @@ import useSignIn from 'react-auth-kit/hooks/useSignIn';
 import { useState, useRef } from "react"
 import { FetchApi } from "../../utils/Fetch"
 import {useNavigate } from "react-router-dom";
+import {toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 import eye from "../../assets/eyeSvg.svg"
 
 import "./login.css"
@@ -11,11 +13,15 @@ import "./login.css"
 
 function LoginForm() {
     const [errors, setErrors] = useState([])
+    const [requestError, setRequestErrors] = useState('')
     const [showPassword, setShowPassword] = useState(false)
     const loginForm = useRef(null)
     const signIn = useSignIn()
     const navigate = useNavigate()
     const ApiUrl = import.meta.env.VITE_API_URL
+
+    const notify = () =>{toast.success('Logado com sucesso!')}
+    const notifyError = () =>{toast.error('Usuário não encontrado!')}
 
     const yupValidation = Yup.object({
         email: Yup.string().required('Preencha este Campo!'),
@@ -39,6 +45,7 @@ function LoginForm() {
 
          
             console.log(request)
+            notify()
             signIn({
                 auth: {
                     token: request.result.token,
@@ -52,18 +59,18 @@ function LoginForm() {
             })
 
             setErrors([])
+            setRequestErrors('')
             navigate('/perfil')
             
         } catch (error) {
             const newErrors = {}
-
-            if(error?.response.data){
-                let errorsArray = error.response.data?.error
-                errorsArray.forEach((err) =>{
-                   newErrors[err.path] = err.message
-                })
-                return setErrors(newErrors)
-              }
+            setErrors([])
+            setRequestErrors('')
+            if(error?.response?.status === 401){
+                notifyError()
+               return setRequestErrors('Usuário não encontrado')
+            } 
+         
 
             if (error.inner) {
                 error.inner.forEach(err => {
@@ -81,6 +88,7 @@ function LoginForm() {
     return (
         <div className="login-form-box">
             <form ref={loginForm} onSubmit={handleSubmit} className="form-login-container">
+                 {requestError && <div className='error-input-register'>{requestError}</div>}
                 <div className="input-login">
                     <label>Email</label>
                     {errors.email && <div className='error-input-register'>{errors.email}</div>}

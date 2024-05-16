@@ -3,7 +3,9 @@ import { useState } from "react";
 import { Form, Button, FloatingLabel } from "react-bootstrap";
 import "./form.css";
 import { FetchApi } from "../../utils/Fetch";
+import {toast } from 'react-toastify'
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
+
 
 export const IdeaForm = () => {
   const [title, setTitle] = useState("");
@@ -36,6 +38,9 @@ export const IdeaForm = () => {
     const validatedHashtags = hashtags.every(hashtag => hashtag.length >= 4)
     return validatedHashtags
   }
+
+  const notifyCreated = () =>{toast.success('post criado com sucesso!')}
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
@@ -47,12 +52,9 @@ export const IdeaForm = () => {
         Postcolor: Postcolor,
       };
 
-      await yupValidation.validate(formData, { abortEarly: false })
-      if (!validateHashtag(hashtags)) {
-        throw "Hashtag validation failed"
-      }
-
       const request = await FetchApi("POST", `${ApiUrl}/project/create`, formData, Token);
+
+      
 
       setErrors([])
       setHashtagErrors('')
@@ -61,7 +63,7 @@ export const IdeaForm = () => {
       setColor('')
       setDifficulty('')
       setHashtags([])
-      alert("Ideia criada com sucesso!");
+      notifyCreated()
       event.target.reset()
     } catch (error) {
       if (error === "Hashtag validation failed") {

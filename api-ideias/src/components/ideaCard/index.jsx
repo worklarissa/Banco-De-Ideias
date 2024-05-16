@@ -2,6 +2,9 @@ import * as Yup from "yup";
 import { useState, useEffect, useContext } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { FetchApi } from "../../utils/Fetch";
+import {toast } from 'react-toastify'
+import { useUnlog } from "../../utils/Logout";
+import { StandbyContext } from "../../context/isStandbyContext";
 import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
@@ -12,8 +15,8 @@ import ContentEditable from "react-contenteditable";
 import "./ideaCard.css";
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
-import { useUnlog } from "../../utils/Logout";
-import { StandbyContext } from "../../context/isStandbyContext";
+
+
 
 function IdeaCard({ editable, cards, url }) {
 
@@ -43,6 +46,8 @@ function IdeaCard({ editable, cards, url }) {
     setHashtagErrors("");
     setShow(false);
   };
+
+  const notifyDeleted = () =>{toast.success('Post deletado com sucesso!')}
 
   const yupValidation = Yup.object({
     title: Yup.string()
@@ -158,7 +163,7 @@ function IdeaCard({ editable, cards, url }) {
         "",
         cleanToken
       );
-      alert("Post deletado com sucesso!");
+      notifyDeleted()
       setPosts(posts.filter((item) => item.id !== post.id));
     } catch (error) {
       if (error.response?.status === 401) {
