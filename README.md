@@ -2,7 +2,7 @@
 
 ## Tecnologias utilizadas 👾​
 
-react + vite,dotenv,react router dom lib, react auth kit lib, yup lib, react-bootstrap, react-contenteditable,react-toastify.
+react + vite, dotenv, react router dom lib, react auth kit lib, yup lib, react-bootstrap, react-contenteditable,react-toastify, axios.
 
 ## Visão geral 💡
 Muitas vezes desenvolvedores iniciantes e experientes se encontram com dificuldades para desenvolver projetos, o Banco de ideias está aqui para solucionar esse problema! Neste projeto desenvolvedores podem visualizar ideias de projeto públicadas por outros desenvolvedores!
