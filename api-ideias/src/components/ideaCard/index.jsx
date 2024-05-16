@@ -15,6 +15,7 @@ import ContentEditable from "react-contenteditable";
 import "./ideaCard.css";
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
+import Loading from "../loader/Loading";
 
 
 
@@ -24,6 +25,7 @@ function IdeaCard({ editable, cards, url }) {
   const [newUrl, setNewUrl] = useState(`/project/${url}?`);
   const [previousUrl, setPreviousUrl] = useState("");
   const [show, setShow] = useState(false);
+  const [removeLoading, setRemoveLoading] = useState(false)
   const [editPost, setEditPost] = useState(null);
   const [editColor, setEditColor] = useState("");
   const [editDifficulty, setEditDifficulty] = useState(1);
@@ -118,6 +120,8 @@ function IdeaCard({ editable, cards, url }) {
         ));
         return [...prevPosts, ...uniqueProjects];
       });
+
+      setRemoveLoading(true)
     
     } catch (error) {
       if (error.response?.status === 401) {
@@ -244,6 +248,8 @@ function IdeaCard({ editable, cards, url }) {
           carregar mais posts
         </div>
       )}
+
+      {!removeLoading && <Loading />}
       <Row xs={1} md={cards} className="main">
         {posts.map((post, idx) => (
           <Col
