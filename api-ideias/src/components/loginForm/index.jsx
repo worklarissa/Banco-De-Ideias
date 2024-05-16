@@ -38,7 +38,7 @@ function LoginForm() {
             const request = await FetchApi('Post', url, userInfo)
 
          
-
+            console.log(request)
             signIn({
                 auth: {
                     token: request.result.token,
@@ -56,6 +56,14 @@ function LoginForm() {
             
         } catch (error) {
             const newErrors = {}
+
+            if(error?.response.data){
+                let errorsArray = error.response.data?.error
+                errorsArray.forEach((err) =>{
+                   newErrors[err.path] = err.message
+                })
+                return setErrors(newErrors)
+              }
 
             if (error.inner) {
                 error.inner.forEach(err => {

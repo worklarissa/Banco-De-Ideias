@@ -7,6 +7,8 @@ import Footer from "../../components/footer";
 import IdeaCarousel from "../../components/carousel";
 
 export default function Home() {
+
+  const ApiUrl = import.meta.env.VITE_API_URL
   return (
     <>
       <Header
@@ -48,7 +50,7 @@ export default function Home() {
           <span className="blue-text">populares</span> no momento!
         </h1>
 
-        <IdeaCarousel url={' https://banco-de-ideiasapi.up.railway.app/project/show-valid?limit=9&offset=0'}/>
+        <IdeaCarousel url={`${ApiUrl}/project/show-valid?limit=9&offset=0`}/>
       </div>
 
       <div className="cards">
