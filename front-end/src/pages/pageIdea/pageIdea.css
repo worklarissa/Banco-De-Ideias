@@ -1,6 +1,6 @@
-.title{
+.title1{
     text-align: center;
-    font-size: 2.25rem;
+    font-size: 3rem;
     color:#FFD602;
     font-weight: bold;
     margin-bottom: 55px;
@@ -11,5 +11,35 @@
     font-size: 2.3rem;
     color:#FFFFFF;
     font-weight: bold;
+    margin-left: 550px;
+     white-space: nowrap;
 }
-
+.top-section{
+    display: flex;
+    justify-content: space-between;
+}
+.page{
+    display: flex;
+    flex-direction: column;
+}
+@media(max-width:824px){
+    .title1{
+         text-align: center;
+         font-size: 2.25rem;
+    }
+    .title2{
+        margin: 0 auto;
+        font-size: 1.76rem;
+    }
+    .top-section{
+        display: flex;
+        flex-direction: column;
+       gap: 20px;
+    }
+    
+  }
+  @media(max-width:1440){
+    .title1{
+        font-size: 2rem
+    }
+  }
