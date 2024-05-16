@@ -1,0 +1,65 @@
+.link{
+    color: white;
+    text-decoration: none;
+    font-size: 2.25rem;
+    margin: 10px;
+   
+}   
+
+.link:hover{
+    color: #FFD602
+}
+h1{
+  color: aliceblue;
+}
+.navbar{
+    padding: 10px;
+    justify-content: space-between;
+    background-color: #0E1618;
+    color: white;
+}
+
+.navbar-nav{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.article-image{
+    width: 40%;
+}
+
+
+
+
+.logout-button{
+    padding: 10px;
+    border: none;
+    transition: 1s;
+}
+
+.logout-button:hover{
+    background-color: rgb(144, 144, 144);
+}
+
+@media (max-width: 600px) {
+    .link {
+        font-size: 1rem; /* Reduz o tamanho da fonte */
+        margin: 5px; /* Reduz a margem */
+    }
+    .navbar {
+        flex-direction: column; /* Muda a direção do flex para coluna */
+    }
+
+    .me-auto{
+        margin: 0!important;
+    }
+    .navbar-toggler {
+        background-color: white; /* Defina a cor do ícone para branco */
+      }
+
+      .custom-toggler.navbar-toggler {
+        border-color: transparent;
+        color: white;
+    }
+}
