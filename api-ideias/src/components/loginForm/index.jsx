@@ -41,7 +41,7 @@ function LoginForm() {
         const userInfo = { email, password }
         try {
             await yupValidation.validate( userInfo, { abortEarly: false })
-            const request = await FetchApi('Post', url, userInfo)
+            const request = await FetchApi('POST', url, userInfo)
 
          
             console.log(request)
