@@ -1,0 +1,59 @@
+@keyframes pulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+   .pageCreateIdea{
+        width: 100vw;
+        height: 100vh;
+    }
+
+    .create{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        
+    }
+    
+    .banner{
+        border: 1px solid black;
+        border-radius: 20%;
+        margin-right: 13rem;
+        margin-bottom: 40px;
+        animation: pulse 6s infinite;
+    }
+
+    .title-create-idea{
+      color: #FFD602;
+      font-size: 1.5rem;
+    }
+
+
+    @media only screen 
+and (min-device-width : 320px) 
+and (max-device-width : 480px) {
+
+  .title-create-idea{
+    font-size: 1rem;
+    margin: 10px;
+    color: #FFD602;
+  }
+  
+    .create{
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      gap: 100px;
+    }
+
+    .banner{
+      margin: 0;
+    }
+}

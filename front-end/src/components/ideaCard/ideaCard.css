@@ -1,0 +1,262 @@
+@keyframes float{
+    0%{
+        transform: translateY(0px);
+    }
+    50%{
+        transform: translateY(-20px)
+    }
+    100%{
+        transform: translateY(0px)
+    }
+  }
+  .main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    gap: 100px;
+
+  }
+
+  .error-notFound{
+    color: white;
+    font-size: 1rem;
+    text-align: center;
+    margin-top: 30px;
+  }
+  .error-input-edit{
+    color: black;
+    font-size: bold;
+   text-align: center;
+   background-color: orange;
+   padding: 5px;
+  }
+  
+  .modal-header {
+    border: none;
+    color: #FFFFFF;
+  }
+  .modal-body {
+    border: none;
+    color: #FFFFFF;
+    line-break: anywhere;
+   
+  }
+  .modal-footer{
+        border: none;
+        color: #FFFFFF;
+      
+  }
+  .card{
+      margin: 40px;
+      padding: 15px;
+      width: 292px;
+      height: auto;
+      max-width: 500px;
+      max-height: 500px;
+     
+      animation: float 2.5s ease-in-out infinite;
+      
+      
+  } 
+  .save{
+    font-size:  1.25rem;
+    border: 2px solid black;
+    height: 5vh;
+    width: 50vw;  
+    border-radius: 9%;
+    color:white
+  }
+  
+  .card-title{
+    color: white;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    
+}
+
+
+.post-title{
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 70%
+}
+  .text{
+    color: #FFFFFF;
+    padding: 10px;
+    font-size: 1rem;
+    overflow-y: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+       -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+      
+    }
+  
+    .modal-dialog {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .custom-cardText {
+      overflow-y: scroll;
+      /* width: 100%; */
+  }
+  
+
+  .text2{
+    color: #FFFFFF;
+    font-size: 1.3rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+     -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+  }
+  .modal-content{
+    background-color: hsl(50, 100%, 50%);
+    width: 100vw;
+  }
+  .star{
+      color: black;
+  } 
+  .modal-title{
+    color: white;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  .colors{
+    margin-top: 30px;
+  }
+  .dificulty{
+    margin-top:30px;
+  }
+.modal-body p{
+    margin: 10px;
+    font-size: 1.3rem;
+    width:40vw;  
+}
+.edit{
+  width: 2rem;
+  height: 2rem;
+}
+.delete{
+  width: 2rem;
+  height: 2rem;
+}
+.userName{
+  color: #FFFFFF;
+  font-size: 1.3rem;
+  padding: 2px;
+  font-weight: 700                          
+}
+
+.edit:hover{
+  cursor: pointer;
+}
+
+.delete:hover{
+  cursor: pointer;
+}
+
+.modal-body{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+p{
+  word-break: break-all;
+}
+ 
+
+
+
+@media only screen 
+and (min-device-width : 320px) 
+and (max-device-width : 480px) {
+  .custom-cardText{
+      overflow-y: scroll;
+      width: 100%;
+  }
+  .modal-dialog{
+      height: 100%;
+  }
+  .modal-body{
+      max-height: 500px;
+  }
+  .modal-body p{
+      width: 100%;
+  }
+
+  .title2{
+    font-size: 1.5rem;
+  }
+  .card-title{
+    flex-direction: column-reverse;
+  }
+  
+
+  .text2{
+    margin-top: 5px;
+    font-size: 1rem;
+  }
+  .post-title{
+    font-size: 1rem;
+    width: 100%;
+  }
+
+  .star{
+    text-align: end;
+  }
+  .card{
+    width: 190px;
+  }
+
+  .form-check-input{
+    padding: 15px;
+}
+
+p{
+  word-break: break-all;
+}
+ 
+
+}
+
+
+
+/* @media screen and (max-width: 900px) {
+  .card{
+      width: auto; 
+      height: auto;
+      margin: 20px;
+      animation: none;
+  }
+
+  .main{
+    margin-left: 80px;
+    text-align: center;
+  }
+  /* .card-title, .text,.text2 .modal-body p {
+      font-size: 13px; 
+  }
+  .edit,.delete{
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .modal,.modal-content,.modal-title,.modal-body,.modal-header,.modal-footer{
+    width: 60vw;
+    height: auto;
+    font-size: 0.78rem;
+    margin:0; 
+    
+  } */
+
