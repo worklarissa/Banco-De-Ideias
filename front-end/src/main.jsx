@@ -4,7 +4,7 @@ import Router from "./routes/router";
 import createStore from "react-auth-kit/createStore";
 import AuthProvider from "react-auth-kit";
 import {ToastContainer} from 'react-toastify'
-// import  StandbyProvider  from "./context/isStandbyContext";
+
 
 const store = createStore({
   authName: "_auth",
@@ -16,10 +16,8 @@ const store = createStore({
 ReactDOM.createRoot(document.getElementById("root")).render(
 
     <AuthProvider store={store}>
-      {/* <StandbyProvider> */}
       <ToastContainer closeOnClick="true" />
         <Router />
-      {/* </StandbyProvider> */}
     
     </AuthProvider>
 

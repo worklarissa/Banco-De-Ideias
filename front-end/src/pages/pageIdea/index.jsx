@@ -3,12 +3,15 @@ import "./pageIdea.css";
 import IdeaCard from "../../components/ideaCard";
 import SearchBar from "../../components/searchBar"
 import { useEffect, useState } from "react";
+import { useVerifyRole } from "../../utils/VerifyRole";
 
 export const Ideas = () => {
 
   const [key, setKey] = useState(Date.now());
+  const isAdmOn = useVerifyRole()
 
   useEffect(() => {
+    isAdmOn()
     setKey(Date.now()); 
   }, []);
 

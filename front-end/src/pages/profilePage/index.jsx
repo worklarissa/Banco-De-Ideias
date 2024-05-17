@@ -1,4 +1,4 @@
-import { useContext, useState} from "react";
+import { useContext, useEffect, useState} from "react";
 import IdeaCard from "../../components/ideaCard";
 import Header from "../../components/header";
 
@@ -6,12 +6,14 @@ import "./profilePage.css";
 import { Link } from "react-router-dom";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 import { StandbyContext } from "../../context/isStandbyContext";
+import { useVerifyRole } from "../../utils/VerifyRole";
 
 const ProfilePage = () => {
   const [ideaCardUrl, setIdeaCardUrl] = useState('show-my?limit=1&offset=0');
   const [key, setKey] = useState(Date.now())
   const [title, setTitle] = useState('Suas ideias de projetos');
   const [buttonText, setButtonText] = useState('Ideias a serem Aprovadas');
+  const isAdmOn = useVerifyRole()
 
 
   const { standby,handleStandbyToggle } = useContext(StandbyContext)
@@ -34,6 +36,10 @@ const ProfilePage = () => {
     }
     setKey(Date.now()); 
   }
+
+  useEffect(()=>{
+    isAdmOn()
+  },[])
 
   return (
     <div className="profile-page-div">

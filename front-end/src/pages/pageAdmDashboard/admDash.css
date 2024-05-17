@@ -1,0 +1,88 @@
+
+.adm-box{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100svh;
+}
+
+
+.title-dashboard{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    color: black;
+    width: 100%;
+}
+
+.operations-box{
+    background-color: white;
+    padding: 20px;
+    height: 80%;
+    width: 80%;
+    border-radius: 20px;
+}
+
+.adm-message >p{
+   color: black;
+   font-size: 1.3rem;
+}
+
+.adm-message{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 3px;
+
+}
+
+.logout-adm{
+    border: none;
+    cursor: pointer;
+    transition: 1s;
+    padding: 10px;
+}
+
+.logout-adm:hover{
+    background-color: rgb(105, 105, 105);
+}
+
+.gen-title{
+    color: black;
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+.display-buttons-box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.main-buttons-adm{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding-top: 50px;
+    width: 100%;
+}
+
+.change-operation{
+    transition: 0.3s;
+    padding: 20px;
+}
+
+.change-operation:hover{
+    cursor: pointer;
+    background-color: rgb(152, 147, 147);
+}
+
+.itens-adm-box{
+    border: solid 1px black;
+    height: 300px;
+    width: 600px;
+}

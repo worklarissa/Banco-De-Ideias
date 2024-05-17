@@ -1,0 +1,35 @@
+
+.form-adm-login{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    height: 300px;
+    width: 300px;
+    color: black;
+}
+
+.show-password > p{
+    color: black;
+}
+
+.button-submit-adm{
+    padding: 10px;
+    width: 200px;
+    border: none;
+    transition: 1s;
+}
+
+.button-submit-adm:hover{
+    cursor: pointer;
+    background-color: rgb(161, 163, 165);
+}
+
+.adm-not-found{
+    color: red;
+    font: 2rem;
+    padding-bottom: 10px;
+}
