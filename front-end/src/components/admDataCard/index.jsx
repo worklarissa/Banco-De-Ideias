@@ -11,41 +11,27 @@ import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 
 function DataCard() {
 
-    const { setItems,dataItems } = useContext(AdminDataContext)
+    const { setItems, dataItems,toggleConfirmation,sendConfirmationValue,aproval,toggleAprovalMenu } = useContext(AdminDataContext)
+
     const ApiUrl = import.meta.env.VITE_API_URL
     const signOut = useSignOut()
     const navigate = useNavigate()
     const header = useAuthHeader()
     const cleanToken = header.replace("x-acess-token", "")
 
-    // const confirmation = (value,id) =>{
+    const confirmation = (value) => {
+        toggleConfirmation()
+        sendConfirmationValue(value)
+    }
 
-    //         if(value === 'delete'){
-    //             handleDelete(id)
-    //         }
-    // }
+    const confirmationAproval = (value) => {
+        toggleConfirmation()
+        toggleAprovalMenu()
+        sendConfirmationValue(value)
+    }
 
 
-    const handleDelete = async (id) => {
-        try {
-          const request = await FetchApi(
-            "DELETE",
-            `${ApiUrl}/adm/delete-project/${id}`,
-            "",
-            cleanToken
-          );
-          console.log(request)
-
-          setItems(dataItems.filter((item) => item.id !== id));
-        } catch (error) {
-            console.log(error)
-          if (error.response?.status === 401) {
-            signOut()
-            navigate()
-          }
-        }
-      };
-
+    
     return (
         <>
             {dataItems ? (
@@ -58,9 +44,9 @@ function DataCard() {
                                     <th>id</th>
                                     <th>titulo</th>
                                     <th>texto  <div className="edit-delete-admin">
-                                        <GrValidate className="editIcons-admin"/>
+                                        <GrValidate className="editIcons-admin" onClick={()=>confirmationAproval(item.id)} />
                                         <FaEdit className="editIcons-admin" />
-                                        <FaTrash className="editIcons-admin" onClick={()=>handleDelete(item.id)}/>
+                                        <FaTrash className="editIcons-admin" onClick={() =>confirmation(item.id) } />
                                     </div>
                                     </th>
                                     <th>dificuldade</th>

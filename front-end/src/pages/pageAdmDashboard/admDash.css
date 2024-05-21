@@ -88,3 +88,47 @@
     overflow-y: scroll;
     padding: 10px;
 }
+
+.confirm-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    height: 100svh;
+    width: 100svw;
+    background-color: rgba(0, 0, 0, 0.514);
+  }
+  
+  .confirm-box{
+    background-color: white;
+    border: black solid 1px;
+    padding: 10px;
+    height: 300px;
+    width: 300px;
+  }
+
+    
+  .confirm-box >p{
+    color: black;
+    text-align: center;
+  }
+
+  .confirm-option{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    height: 100%;
+  }
+
+  .close-option{
+    height: 40px;
+    width: 40px;
+    cursor: pointer;
+  }
+
+  .accept-option{
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
+  }

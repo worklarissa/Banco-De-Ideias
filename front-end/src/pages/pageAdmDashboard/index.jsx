@@ -3,6 +3,8 @@ import { Container } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
 import { useContext, useEffect, useState } from "react"
 import { AdminDataContext } from "../../context/adminDataContext";
+import { FaCheck } from "react-icons/fa";
+import { IoMdClose } from "react-icons/io";
 import { FetchApi } from "../../utils/Fetch";
 import useSignOut from "react-auth-kit/hooks/useSignOut";
 import "./admDash.css"
@@ -14,7 +16,7 @@ import DataCard from "../../components/admDataCard";
 
 
 function PageAdmDashBoard() {
-    const { setItems, dataItems } = useContext(AdminDataContext)
+    const { setItems, dataItems,confirmation,toggleConfirmation,confirmationValue,aproval,toggleAprovalMenu} = useContext(AdminDataContext)
     const [url, setUrl] = useState('')
     const [nextUrl, setNextUrl] = useState('')
     const [visible, setVisible] = useState(false)
@@ -22,6 +24,7 @@ function PageAdmDashBoard() {
     const authUser = useAuthUser()
     const useHeader = useAuthHeader()
     const signOut = useSignOut()
+    const cleanToken = useHeader.replace("x-acess-token ", "");
     const ApiUrl = import.meta.env.VITE_API_URL
 
 
@@ -62,7 +65,6 @@ function PageAdmDashBoard() {
 
     const handleLogout = async () => {
         try {
-            const token = useHeader.replace("x-acess-token ", "");
             console.log(token)
             await FetchApi(
                 "POST",
@@ -84,8 +86,66 @@ function PageAdmDashBoard() {
         }
     }
 
+    const confirmDelete = (postId)=>{
+        handleDelete(postId)
+        toggleConfirmation()
+    }
+    const confirmValidate = (postId)=>{
+        handleValidate(postId)
+        toggleAprovalMenu()
+        toggleConfirmation()
+    }
+
+    const closeModal = () =>{
+        toggleAprovalMenu()
+        toggleConfirmation()
+    }
+
+
+    const handleDelete = async (id) => {
+        try {
+            const request = await FetchApi(
+                "DELETE",
+                `${ApiUrl}/adm/delete-project/${id}`,
+                "",
+                cleanToken
+            );
+            console.log(request)
+
+            setItems(dataItems.filter((item) => item.id !== id));
+        } catch (error) {
+            console.log(error)
+            if (error.response?.status === 401) {
+                signOut()
+                navigate()
+            }
+        }
+    };
+
+    const handleValidate = async (id) => {
+        try {
+            const body = {isValid: true}
+            const request = await FetchApi(
+                "PATCH",
+                `${ApiUrl}/adm/update-project/${id}`,
+                body,
+                cleanToken
+            );
+            console.log(request)
+
+            setItems(dataItems.filter((item) => item.id !== id));
+        } catch (error) {
+            console.log(error)
+            if (error.response?.status === 401) {
+                signOut()
+                navigate()
+            }
+        }
+    };
+
+
+
     const getData = async () => {
-        const cleanToken = useHeader.replace("x-acess-token", "");
         try {
             const request = await FetchApi('GET', `${ApiUrl}${url}`, '', cleanToken)
             console.log(request)
@@ -138,6 +198,28 @@ function PageAdmDashBoard() {
 
     return (
         <>
+         {confirmation ? (
+            <div className="confirm-container">
+                <div className="confirm-box">
+                  <p>{aproval ? 'tem certeza que deseja validar o projeto ?':'tem certeza que quer apagar o projeto ?'}</p>
+                    <div className="confirm-option">
+                        {aproval ? (
+                            <>
+                             <FaCheck className="accept-option" onClick={()=> confirmValidate(confirmationValue)} />
+                              <IoMdClose className="close-option" onClick={()=> closeModal() } />
+                            </>
+                             
+                        ):(
+                        <>
+                             <FaCheck className="accept-option" onClick={()=> confirmDelete(confirmationValue)} />
+                            <IoMdClose className="close-option" onClick={()=> toggleConfirmation() } />
+                        </>
+                           
+                        )}
+                        
+                    </div>
+                </div>
+            </div>) : null}
             {role !== 'adm' ? null : (
                 <Container bsPrefix="adm-box">
                     <div className="operations-box">

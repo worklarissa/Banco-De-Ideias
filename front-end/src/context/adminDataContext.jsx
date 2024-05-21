@@ -9,8 +9,24 @@ export const AdminDataContext = createContext()
 function AdminDataProvider({ children }) {
 
     const [dataItems, setData] = useState([])
+    const [confirmation, setConfirmation] = useState(false)
+    const [confirmationValue, setConfirmationValue] = useState(false)
+    const [aproval,setAproval] = useState(false)
+    const [postId, setPostId] = useState()
 
 
+    const toggleConfirmation = () =>{
+        setConfirmation(!confirmation)
+    
+    }
+
+    const toggleAprovalMenu = () =>{
+        setAproval(!aproval)
+    }
+
+    const sendConfirmationValue = (value) =>{
+        setConfirmationValue(value)
+    }
 
     const setItems = (values) =>{
         setData(values)
@@ -19,7 +35,7 @@ function AdminDataProvider({ children }) {
 
 
     return (
-        <AdminDataContext.Provider value={{ setItems, dataItems }}>{children}</AdminDataContext.Provider>
+        <AdminDataContext.Provider value={{ setItems, dataItems,aproval,toggleAprovalMenu,toggleConfirmation,confirmation,sendConfirmationValue,confirmationValue }}>{children}</AdminDataContext.Provider>
     )
 }
 
