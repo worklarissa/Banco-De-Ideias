@@ -85,4 +85,6 @@
     border: solid 1px black;
     height: 300px;
     width: 600px;
+    overflow-y: scroll;
+    padding: 10px;
 }

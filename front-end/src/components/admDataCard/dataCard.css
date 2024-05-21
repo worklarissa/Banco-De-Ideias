@@ -1,0 +1,27 @@
+table, th, td {
+    border:1px solid black;
+    padding: 10px;
+  }
+
+  table{
+    width: 100%;
+    margin: 10px;
+  }
+
+.text-table{
+    min-width: 300px;
+}
+
+.edit-delete-admin{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.editIcons-admin{
+  height: 20px;
+  width: 20px;
+  cursor: pointer;
+}

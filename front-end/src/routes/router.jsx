@@ -11,6 +11,8 @@ import PageAdmLogin from "../pages/pageLoginAdm";
 import PageAdmDashBoard from "../pages/pageAdmDashboard";
 
 
+
+
 const Router = () => {
 
 
@@ -20,7 +22,7 @@ const Router = () => {
         <Route path="/login" element={<PageLogin />} />
         <Route path="/cadastro" element={<PageRegister />} />
         <Route path="/admin/login" element={<PageAdmLogin />} />
-        <Route path="/admin/dashboard" element={<PageAdmDashBoard />} />
+        <Route path="/admin/dashboard" element={<PageAdmDashBoard /> } />
         <Route path="/" element={<Home />} />
 
 
