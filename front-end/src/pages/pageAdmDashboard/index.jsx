@@ -13,12 +13,14 @@ import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 
 import DataCard from "../../components/admDataCard";
+import Loading from "../../components/loader/Loading";
 
 
 function PageAdmDashBoard() {
-    const { setItems, dataItems,confirmation,toggleConfirmation,confirmationValue,aproval,toggleAprovalMenu} = useContext(AdminDataContext)
+    const { setItems, dataItems, confirmation, toggleConfirmation, confirmationValue, operation } = useContext(AdminDataContext)
     const [url, setUrl] = useState('')
     const [nextUrl, setNextUrl] = useState('')
+    const [isLoading, setLoadingStop] = useState(true)
     const [visible, setVisible] = useState(false)
     const navigate = useNavigate()
     const authUser = useAuthUser()
@@ -26,7 +28,7 @@ function PageAdmDashBoard() {
     const signOut = useSignOut()
     const cleanToken = useHeader.replace("x-acess-token ", "");
     const ApiUrl = import.meta.env.VITE_API_URL
-
+  
 
     const role = authUser?.role
     const verifyIsAdm = () => {
@@ -46,10 +48,10 @@ function PageAdmDashBoard() {
                 break;
 
             case 'invalid':
-                setTimeout(()=>{
+                setTimeout(() => {
                     setUrl('/adm/invalid-projects')
                 }, 100)
-               
+
                 console.log(url)
                 break;
 
@@ -86,20 +88,15 @@ function PageAdmDashBoard() {
         }
     }
 
-    const confirmDelete = (postId)=>{
+    const confirmDelete = (postId) => {
         handleDelete(postId)
         toggleConfirmation()
     }
-    const confirmValidate = (postId)=>{
+    const confirmValidate = (postId) => {
         handleValidate(postId)
-        toggleAprovalMenu()
         toggleConfirmation()
     }
 
-    const closeModal = () =>{
-        toggleAprovalMenu()
-        toggleConfirmation()
-    }
 
 
     const handleDelete = async (id) => {
@@ -124,7 +121,7 @@ function PageAdmDashBoard() {
 
     const handleValidate = async (id) => {
         try {
-            const body = {isValid: true}
+            const body = { isValid: true }
             const request = await FetchApi(
                 "PATCH",
                 `${ApiUrl}/adm/update-project/${id}`,
@@ -146,10 +143,14 @@ function PageAdmDashBoard() {
 
 
     const getData = async () => {
+        setLoadingStop(false)
         try {
+            
+          
             const request = await FetchApi('GET', `${ApiUrl}${url}`, '', cleanToken)
             console.log(request)
-
+           
+            
             if (request.nextUrl !== null) {
                 setNextUrl(request.nextUrl);
             }
@@ -165,22 +166,25 @@ function PageAdmDashBoard() {
             }
 
             setItems(request.projects)
-
+          
             console.log(dataItems)
 
 
         } catch (error) {
             console.log(error)
+        } finally {
+            setLoadingStop(true); // Set loading to false
         }
-
+    
+       
     }
 
 
 
 
     const handleClick = async (value) => {
-      toggleUrl(value)
-       
+        toggleUrl(value)
+
 
     }
 
@@ -189,6 +193,7 @@ function PageAdmDashBoard() {
     }, [])
 
     useEffect(() => {
+
         console.log('ativou o use effect')
         if (url) {
             getData()
@@ -198,28 +203,18 @@ function PageAdmDashBoard() {
 
     return (
         <>
-         {confirmation ? (
-            <div className="confirm-container">
-                <div className="confirm-box">
-                  <p>{aproval ? 'tem certeza que deseja validar o projeto ?':'tem certeza que quer apagar o projeto ?'}</p>
-                    <div className="confirm-option">
-                        {aproval ? (
-                            <>
-                             <FaCheck className="accept-option" onClick={()=> confirmValidate(confirmationValue)} />
-                              <IoMdClose className="close-option" onClick={()=> closeModal() } />
-                            </>
-                             
-                        ):(
-                        <>
-                             <FaCheck className="accept-option" onClick={()=> confirmDelete(confirmationValue)} />
-                            <IoMdClose className="close-option" onClick={()=> toggleConfirmation() } />
-                        </>
-                           
-                        )}
-                        
+            {confirmation ? (
+                <div className="confirm-container">
+                    <div className="confirm-box">
+                        <p>{operation === 'aproval' ? 'tem certeza que deseja validar o projeto ?' : 'tem certeza que quer apagar o projeto ?'}</p>
+                        <div className="confirm-option">
+                            {operation === 'aproval' ?
+                            <FaCheck className="accept-option" onClick={() => confirmValidate(confirmationValue)} /> : <FaCheck className="accept-option" onClick={() => confirmDelete(confirmationValue)} />}
+                            <IoMdClose className="close-option" onClick={() => toggleConfirmation()} />
+
+                        </div>
                     </div>
-                </div>
-            </div>) : null}
+                </div>) : null}
             {role !== 'adm' ? null : (
                 <Container bsPrefix="adm-box">
                     <div className="operations-box">
@@ -241,6 +236,7 @@ function PageAdmDashBoard() {
 
                             <div className="itens-adm-box">
                                 <DataCard />
+                                {!isLoading ? <Loading className="loading-data-admin" /> : null}
                             </div>
                             <div className="btn-div-adm">
                                 <button className="load-more-adm" onClick={() => handleNewUrl()}>Carrega Mais</button>

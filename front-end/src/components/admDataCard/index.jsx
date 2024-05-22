@@ -11,7 +11,7 @@ import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 
 function DataCard() {
 
-    const { setItems, dataItems,toggleConfirmation,sendConfirmationValue,aproval,toggleAprovalMenu } = useContext(AdminDataContext)
+    const {dataItems,toggleConfirmation,sendConfirmationValue,isLoading } = useContext(AdminDataContext)
 
     const ApiUrl = import.meta.env.VITE_API_URL
     const signOut = useSignOut()
@@ -19,17 +19,11 @@ function DataCard() {
     const header = useAuthHeader()
     const cleanToken = header.replace("x-acess-token", "")
 
-    const confirmation = (value) => {
+    const confirmation = (value,key) => {
         toggleConfirmation()
-        sendConfirmationValue(value)
+        sendConfirmationValue(value,key)
+        
     }
-
-    const confirmationAproval = (value) => {
-        toggleConfirmation()
-        toggleAprovalMenu()
-        sendConfirmationValue(value)
-    }
-
 
     
     return (
@@ -44,9 +38,9 @@ function DataCard() {
                                     <th>id</th>
                                     <th>titulo</th>
                                     <th>texto  <div className="edit-delete-admin">
-                                        <GrValidate className="editIcons-admin" onClick={()=>confirmationAproval(item.id)} />
+                                        {!item.isValid? <GrValidate className="editIcons-admin" onClick={()=>confirmation(item.id,'aproval')} /> : null}
                                         <FaEdit className="editIcons-admin" />
-                                        <FaTrash className="editIcons-admin" onClick={() =>confirmation(item.id) } />
+                                        <FaTrash className="editIcons-admin" onClick={() =>confirmation(item.id,'delete') } />
                                     </div>
                                     </th>
                                     <th>dificuldade</th>

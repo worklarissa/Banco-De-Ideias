@@ -1,6 +1,7 @@
 import { createContext, useState } from "react";
 import { FetchApi } from "../utils/Fetch";
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
+import { Prev } from "react-bootstrap/esm/PageItem";
 
 
 
@@ -11,31 +12,49 @@ function AdminDataProvider({ children }) {
     const [dataItems, setData] = useState([])
     const [confirmation, setConfirmation] = useState(false)
     const [confirmationValue, setConfirmationValue] = useState(false)
-    const [aproval,setAproval] = useState(false)
+    const [editMenu, toggleEditMenu] = useState(false)
+    // const [isLoading,setStopLoading] = useState(true)
+    const [operation, setOperation] = useState('')
     const [postId, setPostId] = useState()
 
 
-    const toggleConfirmation = () =>{
+    const toggleConfirmation = () => {
         setConfirmation(!confirmation)
-    
+
     }
 
-    const toggleAprovalMenu = () =>{
-        setAproval(!aproval)
+    // const toggleLoading = () =>{
+    //     setStopLoading(!isLoading)
+    //     console.log(isLoading)
+    // }
+
+    const sendConfirmationValue = (value, key) => {
+     
+        switch (key) {
+            case 'aproval':
+                setConfirmationValue(value)
+                setOperation((key))
+                break;
+
+            case 'delete':
+                setConfirmationValue(value)
+                setOperation(key)
+                break;
+
+            default:
+                break;
+        }
+       
     }
 
-    const sendConfirmationValue = (value) =>{
-        setConfirmationValue(value)
-    }
-
-    const setItems = (values) =>{
+    const setItems = (values) => {
         setData(values)
         console.log(dataItems)
     }
 
 
     return (
-        <AdminDataContext.Provider value={{ setItems, dataItems,aproval,toggleAprovalMenu,toggleConfirmation,confirmation,sendConfirmationValue,confirmationValue }}>{children}</AdminDataContext.Provider>
+        <AdminDataContext.Provider value={{ setItems, dataItems, operation, toggleConfirmation, confirmation, sendConfirmationValue, confirmationValue}}>{children}</AdminDataContext.Provider>
     )
 }
 
