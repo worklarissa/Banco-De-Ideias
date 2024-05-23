@@ -4,7 +4,6 @@
 ![stats-last commit](https://img.shields.io/github/last-commit/worklarissa/Banco-De-Ideias?display_timestamp=committer&labelColor=%23FFD602&color=white)
 ![stats-count-languages](https://img.shields.io/github/languages/count/worklarissa/Banco-De-Ideias?labelColor=%23FFD602&color=white)
 ![repository-size](https://img.shields.io/github/repo-size/worklarissa/Banco-De-Ideias?labelColor=%23FFD602&color=white)
-![acess-count](https://img.shields.io/github/search/worklarissa/Banco-De-Ideias/access?logoSize=auto%20&labelColor=%23FFD602&color=white)
 ![stars-count](https://img.shields.io/github/stars/worklarissa/Banco-De-Ideias?style=social&logoColor=%23FFD602&labelColor=%23FFD602&color=%23FFD602)
 
 ---
@@ -25,7 +24,6 @@
 - [x] Login
 - [x] Criar projeto
 - [x] Editar projeto Criado pelo próprio usuário
-
 - [x] Visualizar ideias de projetos criados por outros usuários
 - [x] Visualizar perfil de usuário
 - [x] Visualizar ideias de projetos criadas pelo próprio usuário em espera
