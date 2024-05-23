@@ -26,7 +26,6 @@ function PageAdmDashBoard() {
     const authUser = useAuthUser()
     const useHeader = useAuthHeader()
     const signOut = useSignOut()
-    const cleanToken = useHeader.replace("x-acess-token ", "");
     const ApiUrl = import.meta.env.VITE_API_URL
     const editForm = useRef(null)
 
@@ -67,13 +66,13 @@ function PageAdmDashBoard() {
 
 
     const handleLogout = async () => {
+        const cleanToken = useHeader.replace("x-acess-token ", "");
         try {
-            console.log(token)
             await FetchApi(
                 "POST",
                 `${ApiUrl}/adm/logout`,
                 "",
-                token
+                cleanToken
             );
 
             signOut()
@@ -101,6 +100,7 @@ function PageAdmDashBoard() {
 
 
     const handleDelete = async (id) => {
+        const cleanToken = useHeader.replace("x-acess-token ", "");
         try {
             const request = await FetchApi(
                 "DELETE",
@@ -121,6 +121,7 @@ function PageAdmDashBoard() {
     };
 
     const handleValidate = async (id) => {
+        const cleanToken = useHeader.replace("x-acess-token ", "");
         try {
             const body = { isValid: true }
             const request = await FetchApi(
@@ -144,6 +145,7 @@ function PageAdmDashBoard() {
 
 
     const getData = async () => {
+        const cleanToken = useHeader.replace("x-acess-token ", "");
         setLoadingStop(false)
         try {
 
