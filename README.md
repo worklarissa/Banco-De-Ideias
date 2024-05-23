@@ -8,14 +8,14 @@
 
 ---
 ## 📖Seções
-- [Tecnologias utilizadas no projeto]('#tecnologias-utilizadas-')
-- [Funcionalidades](#-funcionalidades-do-projeto-)
-- [Visão geral sobre o projeto]('#visão-geral-')
-- [como rodar este projeto?]('#rodando-o-projeto%EF%B8%8F')
-     - [Configuração do ambiente local]('#%EF%B8%8Fconfiguração-do-ambiente-acesso-local')
-     - [acessando localmente]('#para-acessar-o-projeto-localment')
-- [Projeto Backend]('#api-utilizada-para-o-projeto-')
-- [Status do Projeto]('#considerações-finais')
+- [Tecnologias utilizadas no projeto](#-tecnologias-utilizadas)
+- [Funcionalidades](#-funcionalidades-do-projeto)
+- [Visão geral sobre o projeto](#-visão-geral)
+- [como rodar este projeto?](#-rodando-o-projeto%EF%B8%8F)
+     - [Configuração do ambiente local](#-%EF%B8%8Fconfiguração-do-ambiente-acesso-local)
+     - [acessando localmente](#-para-acessar-o-projeto-localment)
+- [Projeto Backend](#-api-utilizada-para-o-projeto)
+- [Status do Projeto](#-considerações-finais)
 ---
 
 
