@@ -47,7 +47,7 @@
 ![yup](https://img.shields.io/badge/Yup-white?style=for-the-badge&logo=reacthookform&logoSize=auto&labelColor=%23ECD53F&color=%23ECD53F)
 ![react boostrap](https://tinyurl.com/3napvcn4)
 ![react-contenteditable](https://tinyurl.com/5787f4rs)
-![react-toastfy](https://tinyurl.com/yhrwem7d)
+![react-toastfy](https://tinyurl.com/wtyhuv47)
 ![axios](https://img.shields.io/badge/axios-white?style=for-the-badge&logo=axios&logoColor=white&logoSize=auto&labelColor=%23ECD53F&color=%23ECD53F)
 
 ---
