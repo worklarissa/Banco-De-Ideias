@@ -11,7 +11,7 @@ import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 
 function DataCard() {
 
-    const {dataItems,toggleConfirmation,sendConfirmationValue,isLoading } = useContext(AdminDataContext)
+    const {dataItems,toggleConfirmation,sendConfirmationValue,toggleEditMenu } = useContext(AdminDataContext)
 
     const ApiUrl = import.meta.env.VITE_API_URL
     const signOut = useSignOut()
@@ -24,6 +24,10 @@ function DataCard() {
         sendConfirmationValue(value,key)
         
     }
+
+    const editMenu = () =>[
+        toggleEditMenu()
+    ]
 
     
     return (
@@ -39,7 +43,7 @@ function DataCard() {
                                     <th>titulo</th>
                                     <th>texto  <div className="edit-delete-admin">
                                         {!item.isValid? <GrValidate className="editIcons-admin" onClick={()=>confirmation(item.id,'aproval')} /> : null}
-                                        <FaEdit className="editIcons-admin" />
+                                        <FaEdit className="editIcons-admin" onClick={()=> editMenu()} />
                                         <FaTrash className="editIcons-admin" onClick={() =>confirmation(item.id,'delete') } />
                                     </div>
                                     </th>

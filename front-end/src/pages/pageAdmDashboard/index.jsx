@@ -1,7 +1,7 @@
 
 import { Container } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect, useRef, useState } from "react"
 import { AdminDataContext } from "../../context/adminDataContext";
 import { FaCheck } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
@@ -17,7 +17,7 @@ import Loading from "../../components/loader/Loading";
 
 
 function PageAdmDashBoard() {
-    const { setItems, dataItems, confirmation, toggleConfirmation, confirmationValue, operation } = useContext(AdminDataContext)
+    const { setItems, dataItems, confirmation, toggleConfirmation, confirmationValue, operation, editMenu,toggleEditMenu } = useContext(AdminDataContext)
     const [url, setUrl] = useState('')
     const [nextUrl, setNextUrl] = useState('')
     const [isLoading, setLoadingStop] = useState(true)
@@ -28,7 +28,8 @@ function PageAdmDashBoard() {
     const signOut = useSignOut()
     const cleanToken = useHeader.replace("x-acess-token ", "");
     const ApiUrl = import.meta.env.VITE_API_URL
-  
+    const editForm = useRef(null)
+
 
     const role = authUser?.role
     const verifyIsAdm = () => {
@@ -145,12 +146,12 @@ function PageAdmDashBoard() {
     const getData = async () => {
         setLoadingStop(false)
         try {
-            
-          
+
+
             const request = await FetchApi('GET', `${ApiUrl}${url}`, '', cleanToken)
             console.log(request)
-           
-            
+
+
             if (request.nextUrl !== null) {
                 setNextUrl(request.nextUrl);
             }
@@ -166,7 +167,7 @@ function PageAdmDashBoard() {
             }
 
             setItems(request.projects)
-          
+
             console.log(dataItems)
 
 
@@ -175,17 +176,23 @@ function PageAdmDashBoard() {
         } finally {
             setLoadingStop(true); // Set loading to false
         }
-    
-       
+
+
     }
-
-
-
 
     const handleClick = async (value) => {
         toggleUrl(value)
 
 
+    }
+
+    const handleSubmit = (e) =>{
+        e.preventDefault()
+        const title = editForm.current.title.value
+        const text = editForm.current.text.value
+        const difficultLevel = editForm.current.difficultLevel.value
+        const editObject = {title:title,text:text,difficultLevel:difficultLevel}
+        console.log(editObject)
     }
 
     useEffect(() => {
@@ -203,13 +210,30 @@ function PageAdmDashBoard() {
 
     return (
         <>
+
+            {editMenu ?
+                <div className="edit-modal-container-admin">
+                    <div className="edit-modal-box-admin">
+                        <form ref={editForm} onSubmit={handleSubmit} className="edit-modal-box-admin">
+                            <label htmlFor="title">titulo</label>
+                            <input type="text" name="title" />
+                            <label htmlFor="text">texto</label>
+                            <input type="text" name="text" />
+                            <label htmlFor="difficultLevel">dificuldade</label>
+                            <input type="text" name="difficultLevel" />
+                            <input type="submit" value='login' className="button-submit-adminEdit" />
+                        </form>
+                        <IoMdClose className="close-option" onClick={() =>   toggleEditMenu()} />
+                    </div>
+                </div> : null}
+
             {confirmation ? (
                 <div className="confirm-container">
                     <div className="confirm-box">
                         <p>{operation === 'aproval' ? 'tem certeza que deseja validar o projeto ?' : 'tem certeza que quer apagar o projeto ?'}</p>
                         <div className="confirm-option">
                             {operation === 'aproval' ?
-                            <FaCheck className="accept-option" onClick={() => confirmValidate(confirmationValue)} /> : <FaCheck className="accept-option" onClick={() => confirmDelete(confirmationValue)} />}
+                                <FaCheck className="accept-option" onClick={() => confirmValidate(confirmationValue)} /> : <FaCheck className="accept-option" onClick={() => confirmDelete(confirmationValue)} />}
                             <IoMdClose className="close-option" onClick={() => toggleConfirmation()} />
 
                         </div>

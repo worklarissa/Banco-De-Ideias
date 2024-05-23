@@ -132,3 +132,21 @@
     width: 30px;
     cursor: pointer;
   }
+
+  .edit-modal-container-admin{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    height: 100svh;
+    width: 100svw;
+    background-color: rgba(0, 0, 0, 0.514);
+  }
+
+  .edit-modal-box-admin{
+    background-color: white;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }

@@ -12,10 +12,9 @@ function AdminDataProvider({ children }) {
     const [dataItems, setData] = useState([])
     const [confirmation, setConfirmation] = useState(false)
     const [confirmationValue, setConfirmationValue] = useState(false)
-    const [editMenu, toggleEditMenu] = useState(false)
+    const [editMenu, setEditMenu] = useState(false)
     // const [isLoading,setStopLoading] = useState(true)
     const [operation, setOperation] = useState('')
-    const [postId, setPostId] = useState()
 
 
     const toggleConfirmation = () => {
@@ -23,10 +22,10 @@ function AdminDataProvider({ children }) {
 
     }
 
-    // const toggleLoading = () =>{
-    //     setStopLoading(!isLoading)
-    //     console.log(isLoading)
-    // }
+    const toggleEditMenu = () => {
+        setEditMenu(!editMenu)
+
+    }
 
     const sendConfirmationValue = (value, key) => {
      
@@ -54,7 +53,7 @@ function AdminDataProvider({ children }) {
 
 
     return (
-        <AdminDataContext.Provider value={{ setItems, dataItems, operation, toggleConfirmation, confirmation, sendConfirmationValue, confirmationValue}}>{children}</AdminDataContext.Provider>
+        <AdminDataContext.Provider value={{ setItems, dataItems, operation, toggleConfirmation, confirmation, sendConfirmationValue, confirmationValue, toggleEditMenu,editMenu}}>{children}</AdminDataContext.Provider>
     )
 }
 
