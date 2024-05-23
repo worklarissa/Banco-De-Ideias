@@ -8,8 +8,8 @@
 
 ---
 ## 📖Seções
-- [Tecnologias utilizadas no projeto](#-tecnologias-utilizadas)
-- [Funcionalidades](#-funcionalidades-do-projeto)
+- [Tecnologias utilizadas no projeto](#tecnologias-utilizadas)
+- [Funcionalidades](#funcionalidades-do-projeto)
 - [Visão geral sobre o projeto](#-visão-geral)
 - [como rodar este projeto?](#-rodando-o-projeto%EF%B8%8F)
      - [Configuração do ambiente local](#-%EF%B8%8Fconfiguração-do-ambiente-acesso-local)
