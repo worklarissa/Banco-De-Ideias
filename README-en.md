@@ -1,1 +1,1 @@
-                                                                                                                                      ![🇧🇷](https://github.com/worklarissa/Banco-De-Ideias/blob/main/README.md)
+ ![🇧🇷](https://github.com/worklarissa/Banco-De-Ideias/blob/main/README.md)
