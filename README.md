@@ -1,3 +1,6 @@
+| [🇺🇸 English](README-en.md) |
+| [🇧🇷 Português](https://github.com/worklarissa/Banco-De-Ideias) |
+
 # Banco de ideias 💡​🗃️​
 ![Captura de tela de 2024-05-21 14-54-08](https://github.com/worklarissa/Banco-De-Ideias/assets/139612792/ee5e94c4-5236-4106-a7a4-693a5233710c)
 ### Um projeto feito para inspirar e catalisar a criatividade entre desenvolvedores💡🎨
