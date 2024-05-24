@@ -110,6 +110,7 @@ npm run dev
 
 ## API Used For The Project 🔙​
 This API handles site functionalities such as login and logout and post management https://github.com/Andernial/Banco-De-Ideias-API
+
 ---
 
 ## Final Considerations 📦
