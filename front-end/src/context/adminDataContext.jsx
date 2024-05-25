@@ -40,6 +40,13 @@ function AdminDataProvider({ children }) {
                 setOperation(key)
                 break;
 
+            case 'update':
+                setConfirmationValue(value)
+                setOperation(key)
+                console.log(confirmationValue)
+
+            break;
+
             default:
                 break;
         }

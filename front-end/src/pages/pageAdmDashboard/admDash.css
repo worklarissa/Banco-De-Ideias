@@ -150,3 +150,8 @@
     justify-content: center;
     flex-direction: column;
   }
+
+  .admin-text-input{
+    max-height: 300px;
+    overflow-y: scroll;
+  }

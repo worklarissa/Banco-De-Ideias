@@ -25,9 +25,10 @@ function DataCard() {
         
     }
 
-    const editMenu = () =>[
+    const editMenu = (values,key) =>{
+        sendConfirmationValue(values,key)
         toggleEditMenu()
-    ]
+}
 
     
     return (
@@ -43,7 +44,7 @@ function DataCard() {
                                     <th>titulo</th>
                                     <th>texto  <div className="edit-delete-admin">
                                         {!item.isValid? <GrValidate className="editIcons-admin" onClick={()=>confirmation(item.id,'aproval')} /> : null}
-                                        <FaEdit className="editIcons-admin" onClick={()=> editMenu()} />
+                                        <FaEdit className="editIcons-admin" onClick={()=> editMenu(item,'update')} />
                                         <FaTrash className="editIcons-admin" onClick={() =>confirmation(item.id,'delete') } />
                                     </div>
                                     </th>

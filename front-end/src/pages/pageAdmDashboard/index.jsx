@@ -188,13 +188,37 @@ function PageAdmDashBoard() {
 
     }
 
-    const handleSubmit = (e) =>{
+    const handleSubmit = async (e) =>{
         e.preventDefault()
+        const cleanToken = useHeader.replace("x-acess-token ", "");
         const title = editForm.current.title.value
         const text = editForm.current.text.value
         const difficultLevel = editForm.current.difficultLevel.value
-        const editObject = {title:title,text:text,difficultLevel:difficultLevel}
-        console.log(editObject)
+        const hashtagsString = editForm.current.hashtags.value.replace(/,/g, ' ').trim() // Remove espaços em branco extras
+        const hashtags = hashtagsString.split(/\s+/);
+        const editObject = {title:title,text:text,difficultLevel:difficultLevel, hashtags}
+
+        try {
+            const data = await FetchApi(
+                "PATCH",
+                `${ApiUrl}/adm/update-project/${confirmationValue.id}`,
+                editObject,
+                cleanToken
+              );
+
+              console.log(data.project)
+
+              setItems((prevItems)=>{
+                return prevItems.map((item)=>{
+                    return item.id === data.project.id ? data.project : item
+                })
+              })
+
+              toggleEditMenu()
+         
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     useEffect(() => {
@@ -218,12 +242,15 @@ function PageAdmDashBoard() {
                     <div className="edit-modal-box-admin">
                         <form ref={editForm} onSubmit={handleSubmit} className="edit-modal-box-admin">
                             <label htmlFor="title">titulo</label>
-                            <input type="text" name="title" />
+                            <input type="text" name="title" defaultValue={confirmationValue.title} />
                             <label htmlFor="text">texto</label>
-                            <input type="text" name="text" />
+                            <textarea name="text" rows="4" cols="50" className="admin-text-input" defaultValue={confirmationValue.text} />
+                    
                             <label htmlFor="difficultLevel">dificuldade</label>
-                            <input type="text" name="difficultLevel" />
-                            <input type="submit" value='login' className="button-submit-adminEdit" />
+                            <input type="text" name="difficultLevel" defaultValue={confirmationValue.difficultLevel} />
+                            <label htmlFor="hashtags">Hashtags</label>
+                            <input type="text" name="hashtags" defaultValue={confirmationValue.hashtags.map((hashtag) => hashtag.hashtag)} />
+                            <input type="submit" value='enviar' className="button-submit-adminEdit" />
                         </form>
                         <IoMdClose className="close-option" onClick={() =>   toggleEditMenu()} />
                     </div>
