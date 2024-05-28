@@ -16,6 +16,7 @@ import "./ideaCard.css";
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 import Loading from "../loader/Loading";
+import RequestLoadingSvg from "../../assets/small-spinner.svg"
 
 
 
@@ -26,6 +27,7 @@ function IdeaCard({ editable, cards, url }) {
   const [previousUrl, setPreviousUrl] = useState("");
   const [show, setShow] = useState(false);
   const [removeLoading, setRemoveLoading] = useState(false)
+  const [requestLoading, setRequestLoading] = useState(false)
   const [editPost, setEditPost] = useState(null);
   const [editColor, setEditColor] = useState("");
   const [editDifficulty, setEditDifficulty] = useState(1);
@@ -49,15 +51,17 @@ function IdeaCard({ editable, cards, url }) {
     setShow(false);
   };
 
-  const notifyDeleted = () =>{toast.success('Post deletado com sucesso!')}
+  const notifyChange = (change) =>{toast.success(`Post ${change} com sucesso!`)}
 
   const yupValidation = Yup.object({
     title: Yup.string()
       .min(10, "O titulo deve ter pelo menos 10 caracteres ")
-      .max(50, "O titulo deve ter no máximo 50 caracteres"),
+      .max(50, "O titulo deve ter no máximo 50 caracteres")
+      .matches(/^((?!(?:&nbsp;|\s)$).)*$/, 'O título não pode começar ou terminar com espaços vazios;'),
     text: Yup.string()
       .min(50, "A descrição deve ter pelo menos 50 caracteres")
-      .max(1000, "A descrição deve ter no máximo 1000 caracteres"),
+      .max(1000, "A descrição deve ter no máximo 1000 caracteres")
+      .matches(/^((?!(?:&nbsp;|\s)$).)*$/, 'O texto não pode começar ou terminar com espaços vazios;'),
     difficultLevel: Yup.number()
       .min(1, "Deve ser um número de 1 a 3")
       .max(3, "deve ser um número de 1 a 3"),
@@ -98,6 +102,7 @@ function IdeaCard({ editable, cards, url }) {
         "",
         cleanToken
       );
+      console.log(get)
       if (get.message === "project não encontrado, tente novamente com outros valores!"){
        
         throw "nenhum project";      
@@ -160,6 +165,7 @@ function IdeaCard({ editable, cards, url }) {
 
   const handleDelete = async (event, post) => {
     try {
+      setRequestLoading(true)
       event.stopPropagation();
       const request = await FetchApi(
         "DELETE",
@@ -167,12 +173,14 @@ function IdeaCard({ editable, cards, url }) {
         "",
         cleanToken
       );
-      notifyDeleted()
+      notifyChange('deletado')
       setPosts(posts.filter((item) => item.id !== post.id));
     } catch (error) {
       if (error.response?.status === 401) {
         unlogUser();
       }
+    }finally{
+      setRequestLoading(false)
     }
   };
   const renderStars = (difficulty) => {
@@ -188,15 +196,23 @@ function IdeaCard({ editable, cards, url }) {
 
   const handleSave = async () => {
     try {
+      setRequestLoading(true)
       editPost.postColor = editColor || editPost.postColor;
 
+      const hashtags = editPost.hashtags.map((hashtag)=>{
+          return hashtag.hashtag
+      })
+
       const postData = {
-        title: editPost.title || posts.title,
-        text: editPost.text || posts.text,
-        postColor: editPost.postColor || posts.postColor,
-        difficultLevel: editPost.difficultLevel || posts.difficultLevel,
-        hashtags: editPost.hashtags || posts.hashtags,
+        title: editPost.title,
+        text: editPost.text,
+        postColor: editPost.postColor,
+        difficultLevel: editPost.difficultLevel,
+        hashtags: hashtags
+        // hashtags: editPost.hashtags || posts.hashtags,
       };
+
+      console.log(postData)
 
       await yupValidation.validate(postData, { abortEarly: false });
       const data = await FetchApi(
@@ -206,16 +222,24 @@ function IdeaCard({ editable, cards, url }) {
         cleanToken
       );
 
+      console.log(data)
+
       if(!standby){
         setPosts(posts.filter((item) => item.id !== editPost.id));
       }
+
+      setPosts((prevPosts)=>{
+         return prevPosts.map((item)=>{
+              return item.id === data.post.id ? data.post : item
+          })
+      })
      
       setErrors([]);
 
       setHashtagErrors("");
       handleClose();
-
       setEditPost({});
+      notifyChange('atualizado')
     } catch (error) {
       console.log(error);
       if (error.response?.status === 401) {
@@ -233,6 +257,8 @@ function IdeaCard({ editable, cards, url }) {
         setErrors(newErrors);
         return;
       }
+    }finally{
+      setRequestLoading(false)
     }
   };
 
@@ -273,8 +299,10 @@ function IdeaCard({ editable, cards, url }) {
                     />
                     <FaTrash
                       onClick={(event) => handleDelete(event, post)}
+                      hidden={requestLoading}
                       className="delete"
                     />
+                    {requestLoading ? <img src={RequestLoadingSvg} alt="carregando" className="delete-loading"/>:null}
                   </div>
                 )}
                 <Card.Title>
@@ -310,7 +338,7 @@ function IdeaCard({ editable, cards, url }) {
           <Modal.Title>
             {isEditing ? (
               <ContentEditable
-                html={editPost?.title || ''}
+                html={editPost?.title}
                 onChange={(e) =>
                   setEditPost({ ...editPost, title: e.target.value })
                 }
@@ -331,7 +359,7 @@ function IdeaCard({ editable, cards, url }) {
               <h2 className="userName"> Autor : {authUser.name}</h2>
               <ContentEditable
                 tagName="p"
-                html={editPost?.text || ''}
+                html={editPost?.text}
                 onChange={(e) =>
                   setEditPost({ ...editPost, text: e.target.value })
                 }
@@ -431,13 +459,19 @@ function IdeaCard({ editable, cards, url }) {
         </Modal.Body>
         <Modal.Footer style={{ backgroundColor: `#${editPost?.postColor}` }}>
           {isEditing ? (
+            <>
             <Button
               bsPrefix="save"
               style={{ backgroundColor: "#0E1618" }}
+              hidden={requestLoading}
               onClick={handleSave}
             >
               Salvar
             </Button>
+            {requestLoading ? <img src={RequestLoadingSvg} alt="carregando" /> : null}
+           
+            </>
+            
           ) : (
             ""
           )}
