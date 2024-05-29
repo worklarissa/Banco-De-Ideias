@@ -21,6 +21,12 @@
   
 }
 
+.card{
+    max-height: 250px;
+    min-height: 250px;
+    overflow-y: hidden;
+}
+
 .double-article{
     display: flex;
     flex-direction: column;
