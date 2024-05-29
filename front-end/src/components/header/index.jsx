@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import { FetchApi } from "../../utils/Fetch";
+import { useState } from "react";
 import logo from "../../assets/logo.jpeg";
 import useIsAuthenticated from "react-auth-kit/hooks/useIsAuthenticated";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
@@ -10,7 +11,9 @@ import "../../styles/customNavBar.css";
 import "./header.css";
 import "../../styles/global.css";
 
-const Header = ({ to1, link1, to2, link2, to3, link3, to4, link4 }) => {
+
+const Header = () => {
+  const [requestLoading, setRequestLoading] = useState(false)
   const isAuth = useIsAuthenticated();
   const signOut = useSignOut();
   const useHeader = useAuthHeader("auth.token");
@@ -20,6 +23,7 @@ const Header = ({ to1, link1, to2, link2, to3, link3, to4, link4 }) => {
 
   async function handleLogout() {
     try {
+      setRequestLoading(true)
       const token = useHeader.replace("x-acess-token ", "");
       await FetchApi(
         "POST",
@@ -32,6 +36,8 @@ const Header = ({ to1, link1, to2, link2, to3, link3, to4, link4 }) => {
       navigate('/login')
     } catch (error) {
       console.error(error);
+    } finally {
+      setRequestLoading(false)
     }
   }
 
@@ -72,7 +78,7 @@ const Header = ({ to1, link1, to2, link2, to3, link3, to4, link4 }) => {
                   {authUser.name}
                 </Link>
                 <Link className="link" to="">
-                  <button onClick={() => handleLogout()} className="logout-button">Logout</button>
+                  <button onClick={() => handleLogout()} className="logout-button" disabled={requestLoading}>Logout</button>
                 </Link>
               </>
             )}
