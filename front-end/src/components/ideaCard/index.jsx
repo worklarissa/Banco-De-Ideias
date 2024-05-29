@@ -47,6 +47,7 @@ function IdeaCard({ editable, cards, url }) {
   const cleanToken = headers.replace("x-acess-token", "");
 
   const handleClose = () => {
+    setErrors([]);
     setHashtagErrors("");
     setShow(false);
   };
@@ -56,12 +57,10 @@ function IdeaCard({ editable, cards, url }) {
   const yupValidation = Yup.object({
     title: Yup.string()
       .min(10, "O titulo deve ter pelo menos 10 caracteres ")
-      .max(50, "O titulo deve ter no máximo 50 caracteres")
-      .matches(/^((?!(?:&nbsp;|\s)$).)*$/, 'O título não pode começar ou terminar com espaços vazios;'),
+      .max(50, "O titulo deve ter no máximo 50 caracteres"),
     text: Yup.string()
       .min(50, "A descrição deve ter pelo menos 50 caracteres")
-      .max(1000, "A descrição deve ter no máximo 1000 caracteres")
-      .matches(/^((?!(?:&nbsp;|\s)$).)*$/, 'O texto não pode começar ou terminar com espaços vazios;'),
+      .max(1000, "A descrição deve ter no máximo 1000 caracteres"),
     difficultLevel: Yup.number()
       .min(1, "Deve ser um número de 1 a 3")
       .max(3, "deve ser um número de 1 a 3"),
