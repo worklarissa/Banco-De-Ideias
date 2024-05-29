@@ -6,6 +6,7 @@ import {useNavigate } from "react-router-dom";
 import {toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import eye from "../../assets/eyeSvg.svg"
+import LoadingSvg from "../../assets/small-spinner.svg"
 
 import "./login.css"
 
@@ -15,6 +16,7 @@ function LoginForm() {
     const [errors, setErrors] = useState([])
     const [requestError, setRequestErrors] = useState('')
     const [showPassword, setShowPassword] = useState(false)
+    const [requestLoading,setRequestLoading] = useState(false)
     const loginForm = useRef(null)
     const signIn = useSignIn()
     const navigate = useNavigate()
@@ -40,6 +42,7 @@ function LoginForm() {
         const password = loginForm.current.password.value
         const userInfo = { email, password }
         try {
+            setRequestLoading(true)
             await yupValidation.validate( userInfo, { abortEarly: false })
             const request = await FetchApi('POST', url, userInfo)
 
@@ -80,6 +83,8 @@ function LoginForm() {
                 return setErrors(newErrors)
             }
            
+        }finally{
+            setRequestLoading(false)
         }
 
 
@@ -108,7 +113,8 @@ function LoginForm() {
                 </div>
 
                 <div className="send-login">
-                    <input type="submit" value='login' className="button-submit" />
+                    <input type="submit" value='login' className="button-submit" hidden={requestLoading} />
+                     {requestLoading ? <img src={LoadingSvg} alt="carregando" className='loading-login' />:null }
                 </div>
 
             </form>

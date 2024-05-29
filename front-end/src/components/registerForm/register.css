@@ -17,6 +17,12 @@
     justify-content: center;
     gap: 30px;
 }
+
+.loading-register{
+    height: 50px;
+    width: 50px;
+}
+
 .error-input-register{
     font-size: 1rem;
     text-align: center;

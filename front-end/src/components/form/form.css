@@ -38,6 +38,13 @@
     gap: 10px;
     
 }
+
+.loading-create{
+    height: 50px;
+    width: 50px;
+}
+
+
 .salvar{
     width: 6rem;
     height: 2.5rem;

@@ -5,6 +5,7 @@ import "./form.css";
 import { FetchApi } from "../../utils/Fetch";
 import {toast } from 'react-toastify'
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
+import LoadingSvg from "../../assets/small-spinner.svg"
 
 
 export const IdeaForm = () => {
@@ -15,6 +16,7 @@ export const IdeaForm = () => {
   const [Postcolor, setColor] = useState("");
   const [errors, setErrors] = useState([])
   const [hashtagErros, setHashtagErrors] = useState('')
+  const [requestLoading, setRequestLoading] = useState(false)
   const headers = useAuthHeader();
   const Token = headers.replace('x-acess-token', '')
   const ApiUrl = import.meta.env.VITE_API_URL
@@ -30,7 +32,6 @@ export const IdeaForm = () => {
     title: Yup.string().required('Preencha Este Campo!').min(10, "O titulo deve ter pelo menos 10 caracteres ").max(50, "O titulo deve ter no máximo 50 caracteres"),
     text: Yup.string().required('Preencha Este Campo!').min(50, "A descrição deve ter pelo menos 50 caracteres").max(1000, "A descrição deve ter no máximo 1000 caracteres"),
     difficultLevel: Yup.number().required('Preencha Este Campo!').min(1, "Deve ser um número de 1 a 3").max(3, "deve ser um número de 1 a 3"),
-    Postcolor: Yup.string().required('Preencha Este Campo').oneOf(['FFD602', 'FF02C7', '02FFD1'], 'A cor do post deve ser vermelho, azul ou verde')
   })
 
   const validateHashtag = (hashtags) => {
@@ -44,17 +45,22 @@ export const IdeaForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
+      setRequestLoading(true)
       const formData = {
         title: title,
         text: description,
         hashtags: hashtags,
         difficultLevel: difficultyLevel,
-        Postcolor: Postcolor,
+        postColor: Postcolor,
       };
 
+      if(validateHashtag(hashtags) === false){
+        throw "Hashtag validation failed"
+      }
+      await yupValidation.validate( formData, { abortEarly: false })
       const request = await FetchApi("POST", `${ApiUrl}/project/create`, formData, Token);
 
-      
+      console.log(request)
 
       setErrors([])
       setHashtagErrors('')
@@ -80,6 +86,8 @@ export const IdeaForm = () => {
         return setErrors(newErrors)
       }
 
+    }finally{
+      setRequestLoading(false)
     }
   };
 
@@ -179,9 +187,10 @@ export const IdeaForm = () => {
         </div>
       </Form.Group>
 
-      <Button type="submit" className="salvar">
+      <Button type="submit" className="salvar" hidden={requestLoading} >
         Criar
       </Button>
+      {requestLoading ? <img src={LoadingSvg} alt="carregando" className='loading-create'/> : null}
     </Form>
   );
 };

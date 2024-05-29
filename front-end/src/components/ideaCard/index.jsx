@@ -214,6 +214,10 @@ function IdeaCard({ editable, cards, url }) {
 
       console.log(postData)
 
+      if(validateHashtag(hashtags) === false){
+        throw "Hashtag validation failed"
+      }
+
       await yupValidation.validate(postData, { abortEarly: false });
       const data = await FetchApi(
         "PATCH",
@@ -242,13 +246,15 @@ function IdeaCard({ editable, cards, url }) {
       notifyChange('atualizado')
     } catch (error) {
       console.log(error);
+      if (error === "Hashtag validation failed") {
+        return setHashtagErrors(error);
+      }
+      
       if (error.response?.status === 401) {
         unlogUser();
       }
 
-      if (error === "Hashtag validation failed") {
-        return setHashtagErrors(error);
-      }
+     
       const newErrors = {};
       if (error.inner) {
         error.inner.forEach((err) => {
@@ -392,13 +398,14 @@ function IdeaCard({ editable, cards, url }) {
               <Form.Group
                 className="colors"
                 onChange={(e) => setEditColor(e.target.value)}
-                value={editColor}
+                value={editColor}              
                 aria-label="cores"
               >
                 <Form.Check
                   type="radio"
                   name="color"
                   value="FFD602"
+                  defaultChecked={editPost.postColor === "FFD602" ? true : false}
                   label="Amarelo"
                   style={{
                     backgroundColor: "#FFD602",
@@ -412,6 +419,7 @@ function IdeaCard({ editable, cards, url }) {
                   name="color"
                   label="Rosa Neon"
                   value="FF02C7"
+                  defaultChecked={editPost.postColor === "FF02C7" ? true : false}
                   style={{
                     backgroundColor: "#FF02C7",
                     border: "1px solid black",
@@ -424,6 +432,7 @@ function IdeaCard({ editable, cards, url }) {
                   name="color"
                   label="Azul Neon"
                   value="02FFD1"
+                  defaultChecked={editPost.postColor === "02FFD1" ? true : false}
                   style={{
                     backgroundColor: "#02FFD1",
                     border: "1px solid black",

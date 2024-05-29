@@ -3,12 +3,17 @@ import { useState, useRef } from "react";
 import { FetchApi } from "../../utils/Fetch";
 import { useNavigate } from "react-router-dom";
 import eye from "../../assets/eyeSvg.svg";
+import LoadingSvg from '../../assets/small-spinner.svg'
 
 import "./register.css";
 
 function RegisterForm() {
   const [errors, setErrors] = useState([]);
   const [showPassword, setShowPassword] = useState(false);
+  const [requestLoading,setRequestLoading] = useState(false)
+
+
+  const notify = () =>{toast.success('Conta criada com sucesso!')}
 
   const registerForm = useRef(null);
   const navigate = useNavigate();
@@ -47,12 +52,13 @@ function RegisterForm() {
     const userInfo = { name, email, password };
 
     try {
+      setRequestLoading(true)
       await yupValidation.validate(userInfo, { abortEarly: false });
        await FetchApi("POST", url, userInfo);
 
 
       setErrors([]);
-      alert("Conta criada com sucesso!");
+      notify()
       setTimeout(() => {
         navigate("/login");
       }, 1500);
@@ -60,7 +66,7 @@ function RegisterForm() {
 
       const newErrors = {};
 
-      if(error?.response.data){
+      if(error?.response?.data){
         let errorsArray = error.response.data?.error
         errorsArray.forEach((err) =>{
            newErrors[err.path] = err.message
@@ -75,6 +81,8 @@ function RegisterForm() {
 
         return setErrors(newErrors);
       }
+    }finally{
+      setRequestLoading(false)
     }
   };
   return (
@@ -85,10 +93,10 @@ function RegisterForm() {
         className="form-register-container"
       >
         <div className="input-register">
-          <label>Nome</label>
-          {errors.name && (
+        {errors.name && (
             <div className="error-input-register">{errors.name}</div>
           )}
+          <label>Nome</label>
           <input type="text" name="name" />
         </div>
 
@@ -118,7 +126,8 @@ function RegisterForm() {
         </div>
         
         <div className="send-register">
-          <input type="submit" value="register" className="button-submit" />
+          <input type="submit" value="register" className="button-submit" hidden={requestLoading} />
+          {requestLoading ? <img src={LoadingSvg} alt="carregando" className="loading-register" /> : null}
         </div>
       </form>
     </div>

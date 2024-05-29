@@ -24,6 +24,11 @@
     font-size: 1.5rem;
 }
 
+.loading-login{
+    height: 50px;
+    width: 50px;
+}
+
 .input-login>input {
     border-radius: 10px;
     border: none;
