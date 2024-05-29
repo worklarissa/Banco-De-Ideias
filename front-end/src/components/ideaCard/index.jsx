@@ -1,4 +1,5 @@
 import * as Yup from "yup";
+import "./ideaCard.css";
 import { useState, useEffect, useContext } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { FetchApi } from "../../utils/Fetch";
@@ -12,7 +13,6 @@ import Row from "react-bootstrap/Row";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import ContentEditable from "react-contenteditable";
-import "./ideaCard.css";
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 import Loading from "../loader/Loading";
@@ -197,6 +197,7 @@ function IdeaCard({ editable, cards, url }) {
     try {
       setRequestLoading(true)
       editPost.postColor = editColor || editPost.postColor;
+      editPost.difficultLevel = editDifficulty
 
       const hashtags = editPost.hashtags.map((hashtag)=>{
           return hashtag.hashtag
@@ -364,6 +365,7 @@ function IdeaCard({ editable, cards, url }) {
               <h2 className="userName"> Autor : {authUser.name}</h2>
               <ContentEditable
                 tagName="p"
+                className="post-text-editable"
                 html={editPost?.text}
                 onChange={(e) =>
                   setEditPost({ ...editPost, text: e.target.value })
@@ -443,11 +445,13 @@ function IdeaCard({ editable, cards, url }) {
 
               <Form.Select
                 className="dificulty"
-                onChange={(e) => setEditDifficulty(e.target.value)}
+                onChange={(e) => {
+                  console.log(e.target.value)
+                  setEditDifficulty(e.target.value)
+                }}
                 value={editDifficulty}
                 aria-label="Nivel de dificuldade"
               >
-                <option>Selecione o nivel de dificuldade</option>
                 <option value={1}>1</option>
                 <option value={2}>2</option>
                 <option value={3}>3</option>

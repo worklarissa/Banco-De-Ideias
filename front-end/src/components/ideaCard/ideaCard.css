@@ -56,6 +56,7 @@
       height: auto;
       max-width: 500px;
       max-height: 500px;
+      min-width: 250px;
      
       animation: float 2.5s ease-in-out infinite;
       
@@ -73,6 +74,9 @@
   .delete-loading{
     height: 30px;
     width: 30px;
+  }
+  .post-text-editable{
+    padding: 10px;
   }
   
   .card-title{
@@ -223,7 +227,8 @@ and (max-device-width : 480px) {
     text-align: end;
   }
   .card{
-    width: 190px;
+    max-width: 130px;
+    min-width: 130px;
   }
 
   .form-check-input{
