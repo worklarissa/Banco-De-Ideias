@@ -29,6 +29,7 @@ const Header = ({ to1, link1, to2, link2, to3, link3, to4, link4 }) => {
       );
 
       signOut();
+      navigate('/login')
     } catch (error) {
       console.error(error);
     }
