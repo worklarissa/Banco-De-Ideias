@@ -9,36 +9,40 @@ import { StandbyContext } from "../../context/isStandbyContext";
 import { useVerifyRole } from "../../utils/VerifyRole";
 
 const ProfilePage = () => {
-  const [ideaCardUrl, setIdeaCardUrl] = useState('show-my?limit=1&offset=0');
+  const [limit,setLimit] = useState(10)
+  const [offset,setOffSet] = useState(0)
+  const [ideaCardUrl, setIdeaCardUrl] = useState('show-my?');
   const [key, setKey] = useState(Date.now())
   const [title, setTitle] = useState('Suas ideias de projetos');
   const [buttonText, setButtonText] = useState('Ideias a serem Aprovadas');
   const isAdmOn = useVerifyRole()
 
 
-  const { standby,handleStandbyToggle } = useContext(StandbyContext)
+  const {selectPage,page } = useContext(StandbyContext)
 
   const authUser = useAuthUser();
 
   const handleButtonClick = () => {
-    console.log(standby)
-    if (!standby) {
-      setIdeaCardUrl('/show-standby?limit=1&offset=0');
+      console.log(page)
+    if (page !== 'standby') {
+      setIdeaCardUrl('show-standby?');
       setButtonText('Ideias Aprovadas');
       setTitle('Ideias a serem Aprovadas');
-      handleStandbyToggle()
+      selectPage('standby')
       
-    } else {
-      setIdeaCardUrl('show-my?limit=1&offset=0');
+    }
+    if(page !== 'valid'){
+      setIdeaCardUrl('show-my?');
       setButtonText('Ideias a serem Aprovadas');
       setTitle('Suas ideias de projetos');
-      handleStandbyToggle()
+      selectPage('valid')
     }
     setKey(Date.now()); 
   }
 
   useEffect(()=>{
     isAdmOn()
+    selectPage('valid')
   },[])
 
   return (
@@ -64,6 +68,8 @@ const ProfilePage = () => {
                 url={ideaCardUrl}
                 editable={true}
                 cards={2}
+                offsetInitial={offset}
+                limitInitial={limit}
                 key={key}
               />
             </div>

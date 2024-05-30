@@ -6,14 +6,14 @@ export const StandbyContext = createContext()
 
 
 function StandbyProvider({children}){
-    const [standby, setStandby] = useState(false)
+    const [page, setPage] = useState('')
 
-    const handleStandbyToggle = () =>{
-        setStandby(!standby)
-    }
+    const selectPage = (pageName) =>[
+        setPage(pageName)
+    ]
 
     return(
-        <StandbyContext.Provider value={{standby,handleStandbyToggle}}>{children}</StandbyContext.Provider>
+        <StandbyContext.Provider value={{page,selectPage}}>{children}</StandbyContext.Provider>
     )
 }
 

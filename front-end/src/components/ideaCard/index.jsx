@@ -3,7 +3,7 @@ import "./ideaCard.css";
 import { useState, useEffect, useContext } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { FetchApi } from "../../utils/Fetch";
-import {toast } from 'react-toastify'
+import { toast } from 'react-toastify'
 import { useUnlog } from "../../utils/Logout";
 import { StandbyContext } from "../../context/isStandbyContext";
 import Form from "react-bootstrap/Form";
@@ -20,11 +20,13 @@ import RequestLoadingSvg from "../../assets/small-spinner.svg"
 
 
 
-function IdeaCard({ editable, cards, url }) {
+function IdeaCard({ editable, cards, url,offsetInitial,limitInitial}) {
 
   const [posts, setPosts] = useState([]);
-  const [newUrl, setNewUrl] = useState(`/project/${url}?`);
-  const [previousUrl, setPreviousUrl] = useState("");
+  const [limit,setLimit] = useState(limitInitial)
+  const [offset,setOffset] = useState(offsetInitial)
+  const [newUrl, setNewUrl] = useState(`/project/${url}limit=${limit}&offset=${offset}`);
+  const [hasMore, setHasMore] = useState(true)
   const [show, setShow] = useState(false);
   const [removeLoading, setRemoveLoading] = useState(false)
   const [requestLoading, setRequestLoading] = useState(false)
@@ -41,8 +43,7 @@ function IdeaCard({ editable, cards, url }) {
   const ApiUrl = import.meta.env.VITE_API_URL
 
 
-
-  const {standby} = useContext(StandbyContext)
+  const { page } = useContext(StandbyContext)
 
   const cleanToken = headers.replace("x-acess-token", "");
 
@@ -52,7 +53,7 @@ function IdeaCard({ editable, cards, url }) {
     setShow(false);
   };
 
-  const notifyChange = (change) =>{toast.success(`Post ${change} com sucesso!`)}
+  const notifyChange = (change) => { toast.success(`Post ${change} com sucesso!`) }
 
   const yupValidation = Yup.object({
     title: Yup.string()
@@ -81,7 +82,7 @@ function IdeaCard({ editable, cards, url }) {
     setEditDifficulty(post.difficultLevel);
     setIsEditing(false);
     setShow(true);
-   
+
   };
 
   const handleEdit = (event, post) => {
@@ -94,6 +95,9 @@ function IdeaCard({ editable, cards, url }) {
   };
 
   const getData = async () => {
+    console.log(newUrl)
+    if(!hasMore){return}
+    
     try {
       const get = await FetchApi(
         "GET",
@@ -101,42 +105,67 @@ function IdeaCard({ editable, cards, url }) {
         "",
         cleanToken
       );
+  
       console.log(get)
-      if (get.message === "project não encontrado, tente novamente com outros valores!"){
-       
-        throw "nenhum project";      
+      if (get.message === "project não encontrado, tente novamente com outros valores!") {
+
+        throw "nenhum project";
       }
 
-   
       const projects = get.projects.filter(
         (project) => !posts.some((post) => post.id === project.id)
       );
-     
-      setPreviousUrl(get.previousUrl);
+
       setRequestErrors("");
-      if (get.nextUrl !== null) {
-        setNewUrl(get.nextUrl);
-      }
     
+
+      if( page === 'valid'){
+        
+      }
+
+      if(page === 'standby'){
+
+      }
+
+      if(newUrl === '/project/show-my?limit=10&offset=0'|| newUrl === '/project/show-standby?limit=10&offset=0' ){
+        setOffset(10)
+        setLimit(1)
+        setNewUrl(`/project/${url}limit=1&offset=10`);
+      }else{
+        setNewUrl(get.nextUrl)
+      }
+      
       setPosts((prevPosts) => {
         const uniqueProjects = projects.filter((project) => (
-          !prevPosts.some((prevPost) => prevPost.id === project.id)
+            !prevPosts.some((prevPost) => prevPost.id === project.id)
         ));
-        return [...prevPosts, ...uniqueProjects];
-      });
+        const updatedPosts = [...prevPosts, ...uniqueProjects];
+        
+        // Verificar se o número de posts atingiu ou excedeu o total de projetos
+        if (updatedPosts.length >= get.totalOfProjects) {
+            setHasMore(false);
+        }
 
-      setRemoveLoading(true)
-    
+        console.log(hasMore, get.totalOfProjects, updatedPosts.length);
+        return updatedPosts;
+    });
+    //   if ( posts.length >= get.totalOfProjects) {
+    //     setHasMore(false)
+    // }
+    //   console.log(hasMore,get.totalOfProjects,posts.length)
+
     } catch (error) {
       if (error.response?.status === 401) {
         unlogUser();
       }
 
-      if(error === "nenhum project"){
-          setRequestErrors(true)
+      if (error === "nenhum project") {
+        setRequestErrors(true)
       }
 
-     
+
+    }finally{
+      setRemoveLoading(true)
     }
   };
 
@@ -144,21 +173,21 @@ function IdeaCard({ editable, cards, url }) {
     let scrollTimeout;
 
     const handleScroll = () => {
-      clearTimeout(scrollTimeout); 
+      clearTimeout(scrollTimeout);
       scrollTimeout = setTimeout(() => {
         const { scrollTop, clientHeight, scrollHeight } =
           document.documentElement;
         if (scrollTop + clientHeight + 1 >= scrollHeight) {
           getData();
         }
-      }, 200); 
+      }, 200);
     };
 
     window.addEventListener("scroll", handleScroll);
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      clearTimeout(scrollTimeout); 
+      clearTimeout(scrollTimeout);
     };
   }, [getData]);
 
@@ -174,11 +203,22 @@ function IdeaCard({ editable, cards, url }) {
       );
       notifyChange('deletado')
       setPosts(posts.filter((item) => item.id !== post.id));
+
+      if (offset > 0) {
+        setOffset(offset - 1);
+        setNewUrl(`/project/${url}limit=${limit}&offset=${offset - 1}`);
+        console.log(newUrl)
+    } else {
+      console.log('caiu no else')
+        setOffset(offset);
+        setNewUrl(newUrl);
+    }
+
     } catch (error) {
       if (error.response?.status === 401) {
         unlogUser();
       }
-    }finally{
+    } finally {
       setRequestLoading(false)
     }
   };
@@ -199,8 +239,8 @@ function IdeaCard({ editable, cards, url }) {
       editPost.postColor = editColor || editPost.postColor;
       editPost.difficultLevel = editDifficulty
 
-      const hashtags = editPost.hashtags.map((hashtag)=>{
-          return hashtag.hashtag
+      const hashtags = editPost.hashtags.map((hashtag) => {
+        return hashtag.hashtag
       })
 
       const postData = {
@@ -214,7 +254,7 @@ function IdeaCard({ editable, cards, url }) {
 
       console.log(postData)
 
-      if(validateHashtag(hashtags) === false){
+      if (validateHashtag(hashtags) === false) {
         throw "Hashtag validation failed"
       }
 
@@ -228,33 +268,48 @@ function IdeaCard({ editable, cards, url }) {
 
       console.log(data)
 
-      if(!standby){
+      if (page !== 'standby') {
         setPosts(posts.filter((item) => item.id !== editPost.id));
       }
 
-      setPosts((prevPosts)=>{
-         return prevPosts.map((item)=>{
-              return item.id === data.post.id ? data.post : item
-          })
+      setPosts((prevPosts) => {
+        return prevPosts.map((item) => {
+          return item.id === data.post.id ? data.post : item
+        })
       })
-     
+
       setErrors([]);
 
       setHashtagErrors("");
       handleClose();
       setEditPost({});
       notifyChange('atualizado')
+
+      if(page === 'standby')return
+
+      if (offset > 0) {
+        setOffset(offset - 1);
+        setNewUrl(`/project/${url}limit=${limit}&offset=${offset - 1}`);
+        console.log(newUrl)
+    } else {
+      console.log('caiu no else')
+        setOffset(offset);
+        setNewUrl(newUrl);
+    }
+
+   
+
     } catch (error) {
       console.log(error);
       if (error === "Hashtag validation failed") {
         return setHashtagErrors(error);
       }
-      
+
       if (error.response?.status === 401) {
         unlogUser();
       }
 
-     
+
       const newErrors = {};
       if (error.inner) {
         error.inner.forEach((err) => {
@@ -263,7 +318,7 @@ function IdeaCard({ editable, cards, url }) {
         setErrors(newErrors);
         return;
       }
-    }finally{
+    } finally {
       setRequestLoading(false)
     }
   };
@@ -308,7 +363,7 @@ function IdeaCard({ editable, cards, url }) {
                       hidden={requestLoading}
                       className="delete"
                     />
-                    {requestLoading ? <img src={RequestLoadingSvg} alt="carregando" className="delete-loading"/>:null}
+                    {requestLoading ? <img src={RequestLoadingSvg} alt="carregando" className="delete-loading" /> : null}
                   </div>
                 )}
                 <Card.Title>
@@ -377,29 +432,29 @@ function IdeaCard({ editable, cards, url }) {
                 </div>
               )}
               <ContentEditable
-  tabIndex="p"
-  html={
-    editPost?.hashtags
-      ? editPost.hashtags
-          .map((hashtag) => hashtag.hashtag)
-          .join(" ")
-      : ""
-  }
-  onChange={(e) => {
-    const hashtags = e.target.value
-      .split(" ")
-      .map((word) => ({ hashtag: word.startsWith("#") ? word : "#" + word }));
-    setEditPost({
-      ...editPost,
-      hashtags: hashtags,
-    });
-  }}
-/>
+                tabIndex="p"
+                html={
+                  editPost?.hashtags
+                    ? editPost.hashtags
+                      .map((hashtag) => hashtag.hashtag)
+                      .join(" ")
+                    : ""
+                }
+                onChange={(e) => {
+                  const hashtags = e.target.value
+                    .split(" ")
+                    .map((word) => ({ hashtag: word.startsWith("#") ? word : "#" + word }));
+                  setEditPost({
+                    ...editPost,
+                    hashtags: hashtags,
+                  });
+                }}
+              />
 
               <Form.Group
                 className="colors"
                 onChange={(e) => setEditColor(e.target.value)}
-                value={editColor}              
+                value={editColor}
                 aria-label="cores"
               >
                 <Form.Check
@@ -472,18 +527,18 @@ function IdeaCard({ editable, cards, url }) {
         <Modal.Footer style={{ backgroundColor: `#${editPost?.postColor}` }}>
           {isEditing ? (
             <>
-            <Button
-              bsPrefix="save"
-              style={{ backgroundColor: "#0E1618" }}
-              hidden={requestLoading}
-              onClick={handleSave}
-            >
-              Salvar
-            </Button>
-            {requestLoading ? <img src={RequestLoadingSvg} alt="carregando" /> : null}
-           
+              <Button
+                bsPrefix="save"
+                style={{ backgroundColor: "#0E1618" }}
+                hidden={requestLoading}
+                onClick={handleSave}
+              >
+                Salvar
+              </Button>
+              {requestLoading ? <img src={RequestLoadingSvg} alt="carregando" /> : null}
+
             </>
-            
+
           ) : (
             ""
           )}

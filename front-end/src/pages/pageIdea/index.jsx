@@ -2,16 +2,19 @@ import Header from "../../components/header";
 import "./pageIdea.css";
 import IdeaCard from "../../components/ideaCard";
 import SearchBar from "../../components/searchBar"
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useVerifyRole } from "../../utils/VerifyRole";
+import { StandbyContext } from "../../context/isStandbyContext";
 
 export const Ideas = () => {
 
   const [key, setKey] = useState(Date.now());
+  const {selectPage} = useContext(StandbyContext)
   const isAdmOn = useVerifyRole()
 
   useEffect(() => {
     isAdmOn()
+    selectPage('ideias')
     setKey(Date.now()); 
   }, []);
 

@@ -113,6 +113,13 @@
     text-align: center;
   }
 
+  .text-table{
+    min-width: 300px;
+    max-width: 300px;
+    /* text-overflow: ellipsis; */
+    word-break: break-all;
+  }
+
   .confirm-option{
     display: flex;
     justify-content: center;
