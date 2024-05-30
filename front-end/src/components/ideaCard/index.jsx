@@ -17,18 +17,18 @@ import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 import Loading from "../loader/Loading";
 import RequestLoadingSvg from "../../assets/small-spinner.svg"
+import LoadingMorePostsSvg from "../../assets/spinner-animation.svg"
 
 
 
-function IdeaCard({ editable, cards, url,offsetInitial,limitInitial}) {
+function IdeaCard({ editable, cards, url, offsetInitial, limitInitial }) {
 
   const [posts, setPosts] = useState([]);
-  const [limit,setLimit] = useState(limitInitial)
-  const [offset,setOffset] = useState(offsetInitial)
+  const [limit, setLimit] = useState(limitInitial)
+  const [offset, setOffset] = useState(offsetInitial)
   const [newUrl, setNewUrl] = useState(`/project/${url}limit=${limit}&offset=${offset}`);
   const [hasMore, setHasMore] = useState(true)
   const [show, setShow] = useState(false);
-  const [removeLoading, setRemoveLoading] = useState(false)
   const [requestLoading, setRequestLoading] = useState(false)
   const [editPost, setEditPost] = useState(null);
   const [editColor, setEditColor] = useState("");
@@ -37,6 +37,7 @@ function IdeaCard({ editable, cards, url,offsetInitial,limitInitial}) {
   const [requestErros, setRequestErrors] = useState(false);
   const [isEditing, setIsEditing] = useState(null);
   const [hashtagErros, setHashtagErrors] = useState("");
+  const [loadingPost, setLoadingPost] = useState(false)
   const headers = useAuthHeader();
   const authUser = useAuthUser();
   const unlogUser = useUnlog();
@@ -95,9 +96,10 @@ function IdeaCard({ editable, cards, url,offsetInitial,limitInitial}) {
   };
 
   const getData = async () => {
-    console.log(newUrl)
-    if(!hasMore){return}
-    
+
+    if (!hasMore) { return }
+    setLoadingPost(true)
+   
     try {
       const get = await FetchApi(
         "GET",
@@ -105,7 +107,7 @@ function IdeaCard({ editable, cards, url,offsetInitial,limitInitial}) {
         "",
         cleanToken
       );
-  
+
       console.log(get)
       if (get.message === "project não encontrado, tente novamente com outros valores!") {
 
@@ -117,42 +119,40 @@ function IdeaCard({ editable, cards, url,offsetInitial,limitInitial}) {
       );
 
       setRequestErrors("");
-    
 
-      if( page === 'valid'){
-        
-      }
 
-      if(page === 'standby'){
+      if (page === 'valid') {
 
       }
 
-      if(newUrl === '/project/show-my?limit=10&offset=0'|| newUrl === '/project/show-standby?limit=10&offset=0' ){
+      if (page === 'standby') {
+
+      }
+
+      if (newUrl === '/project/show-my?limit=10&offset=0' || newUrl === '/project/show-standby?limit=10&offset=0') {
         setOffset(10)
         setLimit(1)
         setNewUrl(`/project/${url}limit=1&offset=10`);
-      }else{
+      } else {
         setNewUrl(get.nextUrl)
       }
-      
+
       setPosts((prevPosts) => {
         const uniqueProjects = projects.filter((project) => (
-            !prevPosts.some((prevPost) => prevPost.id === project.id)
+          !prevPosts.some((prevPost) => prevPost.id === project.id)
         ));
         const updatedPosts = [...prevPosts, ...uniqueProjects];
-        
+
         // Verificar se o número de posts atingiu ou excedeu o total de projetos
         if (updatedPosts.length >= get.totalOfProjects) {
-            setHasMore(false);
+          setHasMore(false);
         }
 
         console.log(hasMore, get.totalOfProjects, updatedPosts.length);
         return updatedPosts;
-    });
-    //   if ( posts.length >= get.totalOfProjects) {
-    //     setHasMore(false)
-    // }
-    //   console.log(hasMore,get.totalOfProjects,posts.length)
+      });
+
+      console.log(hasMore, get.totalOfProjects, posts.length)
 
     } catch (error) {
       if (error.response?.status === 401) {
@@ -164,8 +164,8 @@ function IdeaCard({ editable, cards, url,offsetInitial,limitInitial}) {
       }
 
 
-    }finally{
-      setRemoveLoading(true)
+    } finally {
+      setLoadingPost(false)
     }
   };
 
@@ -208,11 +208,11 @@ function IdeaCard({ editable, cards, url,offsetInitial,limitInitial}) {
         setOffset(offset - 1);
         setNewUrl(`/project/${url}limit=${limit}&offset=${offset - 1}`);
         console.log(newUrl)
-    } else {
-      console.log('caiu no else')
+      } else {
+        console.log('caiu no else')
         setOffset(offset);
         setNewUrl(newUrl);
-    }
+      }
 
     } catch (error) {
       if (error.response?.status === 401) {
@@ -285,19 +285,19 @@ function IdeaCard({ editable, cards, url,offsetInitial,limitInitial}) {
       setEditPost({});
       notifyChange('atualizado')
 
-      if(page === 'standby')return
+      if (page === 'standby') return
 
       if (offset > 0) {
         setOffset(offset - 1);
         setNewUrl(`/project/${url}limit=${limit}&offset=${offset - 1}`);
         console.log(newUrl)
-    } else {
-      console.log('caiu no else')
+      } else {
+        console.log('caiu no else')
         setOffset(offset);
         setNewUrl(newUrl);
-    }
+      }
 
-   
+
 
     } catch (error) {
       console.log(error);
@@ -319,7 +319,7 @@ function IdeaCard({ editable, cards, url,offsetInitial,limitInitial}) {
         return;
       }
     } finally {
-      setRequestLoading(false)
+      setRequestLoading(false )
     }
   };
 
@@ -336,7 +336,6 @@ function IdeaCard({ editable, cards, url,offsetInitial,limitInitial}) {
         </div>
       )}
 
-      {!removeLoading && <Loading />}
       <Row xs={1} md={cards} className="main">
         {posts.map((post, idx) => (
           <Col
@@ -544,7 +543,12 @@ function IdeaCard({ editable, cards, url,offsetInitial,limitInitial}) {
           )}
         </Modal.Footer>
       </Modal>
+      <div className="loading-more-post-profile">
+      {loadingPost && <img src={LoadingMorePostsSvg} alt="carregando" />}
+      </div>
+     
     </>
+
   );
 }
 

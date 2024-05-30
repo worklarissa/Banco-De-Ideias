@@ -185,6 +185,19 @@
 p{
   word-break: break-all;
 }
+
+.loading-more-post-profile{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.loading-more-post-profile > img{
+  margin: 10px;
+  width: 90px;
+  height: 90px;
+}
+
  
 
 
@@ -234,6 +247,7 @@ and (max-device-width : 480px) {
   .form-check-input{
     padding: 15px;
 }
+
 
 p{
   word-break: break-all;
