@@ -13,7 +13,7 @@ function AdminDataProvider({ children }) {
     const [dataType,setDataType] = useState('')
     const [confirmation, setConfirmation] = useState(false)
     const [confirmationValue, setConfirmationValue] = useState(false)
-    const [editMenu, setEditMenu] = useState(false)
+    const [editMenu, setEditMenu] = useState('')
     // const [isLoading,setStopLoading] = useState(true)
     const [operation, setOperation] = useState('')
 
@@ -23,8 +23,8 @@ function AdminDataProvider({ children }) {
 
     }
 
-    const toggleEditMenu = () => {
-        setEditMenu(!editMenu)
+    const toggleEditMenu = (editable) => {
+        setEditMenu(editable)
 
     }
 
@@ -64,6 +64,11 @@ function AdminDataProvider({ children }) {
 
             case 'users':
                setDataType('user')
+                break;
+
+
+             case 'adms':
+               setDataType('adm')
                 break;
 
             default:

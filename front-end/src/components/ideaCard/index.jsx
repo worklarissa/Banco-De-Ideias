@@ -48,6 +48,10 @@ function IdeaCard({ editable, cards, url, offsetInitial, limitInitial }) {
 
   const cleanToken = headers.replace("x-acess-token", "");
 
+  const sanitizeContent = (html) => {
+    return html.replace(/^\s+|\s+$/g, '').replace(/&nbsp;/g, ' ');
+  };
+
   const handleClose = () => {
     setErrors([]);
     setHashtagErrors("");
@@ -136,7 +140,7 @@ function IdeaCard({ editable, cards, url, offsetInitial, limitInitial }) {
         ));
         const updatedPosts = [...prevPosts, ...uniqueProjects];
 
-        // Verificar se o número de posts atingiu ou excedeu o total de projetos
+   
         if (updatedPosts.length >= get.totalOfProjects) {
           setHasMore(false);
         }
@@ -345,7 +349,7 @@ function IdeaCard({ editable, cards, url, offsetInitial, limitInitial }) {
             >
               <Card.Body>
                 {editable && (
-                  <div>
+                  <div className="operation-icons-card">
                     <FaEdit
                       onClick={(event) => handleEdit(event, post)}
                       className="edit"
@@ -393,7 +397,10 @@ function IdeaCard({ editable, cards, url, offsetInitial, limitInitial }) {
               <ContentEditable
                 html={editPost?.title}
                 onChange={(e) =>
-                  setEditPost({ ...editPost, title: e.target.value })
+                  setEditPost({
+                    ...editPost,
+                    title: sanitizeContent(e.target.value)
+                  })
                 }
               />
             ) : (
@@ -415,7 +422,10 @@ function IdeaCard({ editable, cards, url, offsetInitial, limitInitial }) {
                 className="post-text-editable"
                 html={editPost?.text}
                 onChange={(e) =>
-                  setEditPost({ ...editPost, text: e.target.value })
+                  setEditPost({
+                    ...editPost,
+                    text: sanitizeContent(e.target.value)
+                  })
                 }
               />
               {hashtagErros && (

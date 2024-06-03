@@ -18,15 +18,15 @@ import operationLoading from "../../assets/spinner-animation.svg"
 
 
 function PageAdmDashBoard() {
-    const { setItems, dataItems, confirmation, toggleConfirmation, confirmationValue, operation, editMenu,toggleEditMenu,dataType,switchDataType} = useContext(AdminDataContext)
+    const { setItems, dataItems, confirmation, toggleConfirmation, confirmationValue, operation, editMenu, toggleEditMenu, dataType, switchDataType } = useContext(AdminDataContext)
     const [url, setUrl] = useState('')
     const [offset, setOffset] = useState(0)
-    const [path,setPath] = useState('')
+    const [path, setPath] = useState('')
     const [limit, setLimit] = useState(5)
     const [nextUrl, setNextUrl] = useState('')
     const [isLoading, setLoadingStop] = useState(true)
     const [deleteLoading, setDeleteLoading] = useState(false)
-    const [visible, setVisible] = useState(false)
+    const [createModal, setCreateModal] = useState(false)
     const navigate = useNavigate()
     const authUser = useAuthUser()
     const useHeader = useAuthHeader()
@@ -47,6 +47,7 @@ function PageAdmDashBoard() {
     const toggleUrl = (key) => {
         setItems([])
         setUrl('')
+        setNextUrl('')
         switch (key) {
             case 'valid':
                 setTimeout(() => {
@@ -66,8 +67,18 @@ function PageAdmDashBoard() {
                 break;
 
             case 'user':
-                setPath('all-users')
-                setUrl('/adm/all-users')
+                setTimeout(() => {
+                    setPath('all-users')
+                    setUrl('/adm/all-users')
+                }, 100)
+                break;
+
+
+            case 'adm':
+                setTimeout(() => {
+                    setPath('all-adms')
+                    setUrl('/adm/all-adms')
+                }, 100)
                 break;
 
             default:
@@ -89,6 +100,7 @@ function PageAdmDashBoard() {
             signOut()
             navigate('/admin/login')
         } catch (error) {
+
             console.error(error);
         }
     }
@@ -114,17 +126,17 @@ function PageAdmDashBoard() {
         const cleanToken = useHeader.replace("x-acess-token ", "");
         setDeleteLoading(true)
         let deleteUrl;
-        if(path === 'invalid-projects'|| 'all-projects'){
+        if (path === 'invalid-projects' || path === 'all-projects') {
             deleteUrl = 'delete-project'
         }
 
-        if(path === 'all-users'){
+        if (path === 'all-users') {
             deleteUrl = 'delete-user'
         }
 
-        // if(path === ''){
-        //     deleteUrl = 'delete'
-        // }
+        if (path === 'all-adms') {
+            deleteUrl = 'delete'
+        }
         try {
             const request = await FetchApi(
                 "DELETE",
@@ -138,23 +150,24 @@ function PageAdmDashBoard() {
 
             alert('Deletado com sucesso!')
 
-            if (offset > 0) {
+            if (offset > 0 && nextUrl !== '') {
                 setOffset(offset - 1);
                 setNextUrl(`/adm/${path}?limit=${limit}&offset=${offset - 1}`);
                 console.log(nextUrl)
-              } else {
+            } else {
                 console.log('caiu no else')
                 setOffset(offset);
                 setNextUrl(nextUrl);
-              }
+            }
 
         } catch (error) {
             console.log(error)
+            alert(error.message)
             if (error.response?.status === 401) {
                 signOut()
                 navigate()
             }
-        }finally{
+        } finally {
             setDeleteLoading(false)
         }
     };
@@ -174,6 +187,7 @@ function PageAdmDashBoard() {
             setItems(dataItems.filter((item) => item.id !== id));
         } catch (error) {
             console.log(error)
+            alert(error.message)
             if (error.response?.status === 401) {
                 signOut()
                 navigate()
@@ -206,25 +220,25 @@ function PageAdmDashBoard() {
                     );
                     return [...prevItems, ...newItems];
                 });
-              
+
             }
 
-            if (dataItems.length > 0 && dataType === 'user') {
+            if (dataItems.length > 0 && dataType === 'user' || dataType === 'adm') {
                 return setItems((prevItems) => {
                     const newItems = request.users.filter(
                         (newItem) => !prevItems.some((item) => item.id === newItem.id)
                     );
                     return [...prevItems, ...newItems];
                 });
-              
+
             }
 
-            if(dataType === 'project'){
+            if (dataType === 'project') {
                 setItems(request.projects)
-            }else{
+            } else {
                 setItems(request.users)
             }
-               
+
             console.log(dataItems)
 
 
@@ -237,45 +251,120 @@ function PageAdmDashBoard() {
 
     }
 
-    const handleClick = async (value,type) => {
+    const handleClick = async (value, type) => {
         switchDataType(type)
         toggleUrl(value)
-
-
     }
 
-    const handleSubmit = async (e) =>{
+    const toggleCreateModal = async () => {
+        setCreateModal(!createModal)
+    }
+
+
+
+    const handleSubmit = async (e) => {
         e.preventDefault()
         const cleanToken = useHeader.replace("x-acess-token ", "");
-        const title = editForm.current.title.value
-        const text = editForm.current.text.value
-        const difficultLevel = editForm.current.difficultLevel.value
-        const hashtagsString = editForm.current.hashtags.value.replace(/,/g, ' ').trim() 
-        const hashtags = hashtagsString.split(/\s+/);
-        const editObject = {title:title,text:text,difficultLevel:difficultLevel, hashtags}
+        let editObject;
+        let pathUpdate;
+
+        if (path === 'invalid-projects' || path === 'all-projects') {
+            const title = editForm.current.title.value
+            const text = editForm.current.text.value
+            const difficultLevel = editForm.current.difficultLevel.value
+            const hashtagsString = editForm.current.hashtags.value.replace(/,/g, ' ').trim()
+            const hashtags = hashtagsString.split(/\s+/);
+            editObject = { title: title, text: text, difficultLevel: difficultLevel, hashtags }
+            pathUpdate = "update-project"
+            console.log(editObject)
+        }
+
+
+        if (path === 'all-adms') {
+            const name = editForm.current.name.value
+            const password = editForm.current.password.value
+            editObject = { name: name, password: password }
+            pathUpdate = "update"
+        }
+
         setDeleteLoading(true)
         try {
+
             const data = await FetchApi(
                 "PATCH",
-                `${ApiUrl}/adm/update-project/${confirmationValue.id}`,
+                `${ApiUrl}/adm/${pathUpdate}/${confirmationValue.id}`,
                 editObject,
                 cleanToken
-              );
+            );
 
-              console.log(data.project)
-
-              setItems((prevItems)=>{
-                return prevItems.map((item)=>{
-                    return item.id === data.project.id ? data.project : item
+            console.log(pathUpdate)
+            if (pathUpdate === 'update-project' || pathUpdate === "all-projects") {
+                console.log('caiu no project update')
+                setItems((prevItems) => {
+                    return prevItems.map((item) => {
+                        return item.id === data.project.id ? data.project : item
+                    })
                 })
-              })
+            }
 
-              toggleEditMenu()
-              alert('editado com sucesso!')
-         
+            if (pathUpdate === 'update') {
+                setItems((prevItems) => {
+                    return prevItems.map((item) => {
+                        return item.id === data.updated.id ? data.updated : item
+                    })
+                })
+            }
+
+            toggleEditMenu('')
+            alert('editado com sucesso!')
+
         } catch (error) {
+            alert(error.message)
             console.log(error)
-        }finally{
+        } finally {
+            setDeleteLoading(false)
+        }
+    }
+
+
+    const handleSubmitCreate = async (e) => {
+        e.preventDefault()
+        const cleanToken = useHeader.replace("x-acess-token ", "");
+        const name = editForm.current.name.value
+        const password = editForm.current.password.value
+        const editObject = { name: name, password: password }
+
+        setDeleteLoading(true)
+        try {
+
+            const data = await FetchApi(
+                "POST",
+                `${ApiUrl}/adm/create`,
+                editObject,
+                cleanToken
+            );
+
+            console.log(data)
+
+            setItems((prevItems) => [...prevItems, data.adm]);
+
+            if (nextUrl !== '') {
+                setOffset(offset + 1);
+                setNextUrl(`/adm/${path}?limit=${limit}&offset=${offset + 1}`);
+                console.log(nextUrl)
+            } else {
+                console.log('caiu no else')
+                setOffset(offset);
+                setNextUrl(nextUrl);
+            }
+
+            toggleCreateModal('')
+            alert('criado com sucesso!')
+
+        } catch (error) {
+            alert(error.message)
+            console.log(error)
+        } finally {
             setDeleteLoading(false)
         }
     }
@@ -296,7 +385,7 @@ function PageAdmDashBoard() {
     return (
         <>
 
-            {editMenu ?
+            {editMenu === 'project' ?
                 <div className="edit-modal-container-admin">
                     <div className="edit-modal-box-admin">
                         <form ref={editForm} onSubmit={handleSubmit} className="edit-modal-box-admin">
@@ -304,14 +393,42 @@ function PageAdmDashBoard() {
                             <input type="text" name="title" defaultValue={confirmationValue.title} />
                             <label htmlFor="text">texto</label>
                             <textarea name="text" rows="4" cols="50" className="admin-text-input" defaultValue={confirmationValue.text} />
-                    
+
                             <label htmlFor="difficultLevel">dificuldade</label>
                             <input type="text" name="difficultLevel" defaultValue={confirmationValue.difficultLevel} />
                             <label htmlFor="hashtags">Hashtags</label>
                             <input type="text" name="hashtags" defaultValue={confirmationValue.hashtags.map((hashtag) => hashtag.hashtag)} />
-                            <input type="submit" value='enviar' className="button-submit-adminEdit" />
+                            <input type="submit" value='enviar' className="button-submit-adminEdit" disabled={deleteLoading} />
                         </form>
-                        <IoMdClose className="close-option" onClick={() =>   toggleEditMenu()} />
+                        <IoMdClose className="close-option" onClick={() => toggleEditMenu('')} />
+                    </div>
+                </div> : null}
+
+            {editMenu === 'adm' ?
+                <div className="edit-modal-container-admin">
+                    <div className="edit-modal-box-admin">
+                        <form ref={editForm} onSubmit={handleSubmit} className="edit-modal-box-admin">
+                            <label htmlFor="title">nome</label>
+                            <input type="text" name="name" defaultValue={confirmationValue.name} />
+                            <label htmlFor="text">senha</label>
+                            <input type="text" name="password" defaultValue={confirmationValue.password} />
+                            <input type="submit" value='enviar' className="button-submit-adminEdit" disabled={deleteLoading} />
+                        </form>
+                        <IoMdClose className="close-option" onClick={() => toggleEditMenu('')} />
+                    </div>
+                </div> : null}
+
+            {createModal ?
+                <div className="edit-modal-container-admin">
+                    <div className="edit-modal-box-admin">
+                        <form ref={editForm} onSubmit={handleSubmitCreate} className="edit-modal-box-admin">
+                            <label htmlFor="title">nome</label>
+                            <input type="text" name="name" />
+                            <label htmlFor="text">senha</label>
+                            <input type="text" name="password" />
+                            <input type="submit" value='enviar' className="button-submit-adminEdit" disabled={deleteLoading} />
+                        </form>
+                        <IoMdClose className="close-option" onClick={() => toggleCreateModal()} />
                     </div>
                 </div> : null}
 
@@ -340,18 +457,20 @@ function PageAdmDashBoard() {
                         </div>
                         <div className="display-buttons-box">
                             <div className="main-buttons-adm">
-                                <button className="change-operation" onClick={() => handleClick('invalid','projects')}>Ideias invalidas</button>
-                                <button className="change-operation" onClick={()=> handleClick('valid','projects')}>Todas as ideias</button>
-                                <button className="change-operation" onClick={()=> handleClick('user','users')}>Todos os usuários</button>
-                                <button className="change-operation">Todos os adms</button>
+                                <button className="change-operation" disabled={!isLoading} onClick={() => handleClick('invalid', 'projects')}>Ideias invalidas</button>
+                                <button className="change-operation" disabled={!isLoading} onClick={() => handleClick('valid', 'projects')}>Todas as ideias</button>
+                                <button className="change-operation" disabled={!isLoading} onClick={() => handleClick('user', 'users')}>Todos os usuários</button>
+                                <button className="change-operation" disabled={!isLoading} onClick={() => handleClick('adm', 'adms')}>Todos os adms</button>
                             </div>
 
+
                             <div className="itens-adm-box">
-                                {deleteLoading ? <Loading/>: <DataCard />}
+                                {deleteLoading ? <Loading /> : <DataCard />}
                                 {!isLoading ? <Loading className="loading-data-admin" /> : null}
                             </div>
                             <div className="btn-div-adm">
                                 <button className="load-more-adm" onClick={() => handlenextUrl()}>Carrega Mais</button>
+                                {path && path === 'all-adms' ? <button type="button" onClick={toggleCreateModal}>Criar Adm</button> : null}
                             </div>
                         </div>
 

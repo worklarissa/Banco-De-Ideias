@@ -1,23 +1,13 @@
-import { useContext, useEffect, useState } from "react"
+import { useContext} from "react"
 import { AdminDataContext } from "../../context/adminDataContext"
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { GrValidate } from "react-icons/gr";
 import "./dataCard.css"
-import useSignOut from "react-auth-kit/hooks/useSignOut";
-import { useNavigate } from "react-router-dom";
-import { FetchApi } from "../../utils/Fetch";
-import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 
 
 function DataCard() {
 
     const {dataItems,dataType,toggleConfirmation,sendConfirmationValue,toggleEditMenu } = useContext(AdminDataContext)
-
-    const ApiUrl = import.meta.env.VITE_API_URL
-    const signOut = useSignOut()
-    const navigate = useNavigate()
-    const header = useAuthHeader()
-    const cleanToken = header.replace("x-acess-token", "")
 
     const confirmation = (value,key) => {
         toggleConfirmation()
@@ -25,9 +15,9 @@ function DataCard() {
         
     }
 
-    const editMenu = (values,key) =>{
+    const editMenu = (values,key,editable) =>{
         sendConfirmationValue(values,key)
-        toggleEditMenu()
+        toggleEditMenu(editable)
 }
 
     
@@ -44,7 +34,7 @@ function DataCard() {
                                     <th>titulo</th>
                                     <th>texto  <div className="edit-delete-admin">
                                         {!item.isValid? <GrValidate className="editIcons-admin" onClick={()=>confirmation(item.id,'aproval')} /> : null}
-                                        <FaEdit className="editIcons-admin" onClick={()=> editMenu(item,'update')} />
+                                        <FaEdit className="editIcons-admin" onClick={()=> editMenu(item,'update','project')} />
                                         <FaTrash className="editIcons-admin" onClick={() =>confirmation(item.id,'delete') } />
                                     </div>
                                     </th>
@@ -108,6 +98,40 @@ function DataCard() {
                     </div>
                 ))
             ): null}
+
+            {dataItems && dataType === 'adm' ? (
+                dataItems.map((item, idx) => (
+                    <div key={idx}>
+
+                        <table >
+                            <tbody>
+                                <tr>
+                                    <th>id</th>
+                                    <th>nome</th>
+                                    <th>senha   
+                                        <div className="edit-delete-admin">
+                                        <FaEdit className="editIcons-admin" onClick={()=> editMenu(item,'update','adm')} />
+                                        <FaTrash className="editIcons-admin" onClick={() =>confirmation(item.id,'delete') } />
+                                        </div>
+                                    </th>
+                                    <th>criado</th>
+                                    <th>atualizado</th>
+                                </tr>
+                                <tr>
+                                    <td>{item.id}</td>
+                                    <td>{item.name}</td>
+                                    <td>{item.password}</td>
+                                    <td>{item.createdAt}</td>
+                                    <td>{item.updatedAt}</td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+                    </div>
+                ))
+            ): null}
+
+                
 
         </>
     )

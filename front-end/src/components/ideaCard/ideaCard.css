@@ -152,7 +152,16 @@
     margin: 10px;
     font-size: 1.3rem;
     width:40vw;  
+    padding: 10px;
 }
+
+.operation-icons-card{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 .edit{
   width: 2rem;
   height: 2rem;

@@ -162,3 +162,11 @@
     max-height: 300px;
     overflow-y: scroll;
   }
+
+  .btn-div-adm{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+  }
