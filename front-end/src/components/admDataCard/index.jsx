@@ -11,7 +11,7 @@ import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 
 function DataCard() {
 
-    const {dataItems,toggleConfirmation,sendConfirmationValue,toggleEditMenu } = useContext(AdminDataContext)
+    const {dataItems,dataType,toggleConfirmation,sendConfirmationValue,toggleEditMenu } = useContext(AdminDataContext)
 
     const ApiUrl = import.meta.env.VITE_API_URL
     const signOut = useSignOut()
@@ -33,7 +33,7 @@ function DataCard() {
     
     return (
         <>
-            {dataItems ? (
+            {dataItems && dataType === 'project' ? (
                 dataItems.map((item, idx) => (
                     <div key={idx}>
 
@@ -72,6 +72,42 @@ function DataCard() {
                     </div>
                 ))
             ) : null}
+
+            {dataItems && dataType === 'user' ? (
+                dataItems.map((item, idx) => (
+                    <div key={idx}>
+
+                        <table >
+                            <tbody>
+                                <tr>
+                                    <th>id</th>
+                                    <th>nome</th>
+                                    <th>email  <div className="edit-delete-admin">
+                                        {/* {!item.isValid? <GrValidate className="editIcons-admin" onClick={()=>confirmation(item.id,'aproval')} /> : null} */}
+                                        {/* <FaEdit className="editIcons-admin" onClick={()=> editMenu(item,'update')} /> */}
+                                        <FaTrash className="editIcons-admin" onClick={() =>confirmation(item.id,'delete') } />
+                                    </div>
+                                    </th>
+                                    <th>senha</th>
+                                    <th>número de ideias</th>
+                                    <th>criado</th>
+                                    <th>atualizado</th>
+                                </tr>
+                                <tr>
+                                    <td>{item.id}</td>
+                                    <td>{item.name}</td>
+                                    <td className="text-table">{item.email}</td>
+                                    <td>{item.password}</td>
+                                    <td>{item.ideasNumber}</td>
+                                    <td>{item.createdAt}</td>
+                                    <td>{item.updatedAt}</td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+                    </div>
+                ))
+            ): null}
 
         </>
     )

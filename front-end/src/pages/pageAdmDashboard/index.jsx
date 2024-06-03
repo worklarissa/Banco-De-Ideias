@@ -14,13 +14,18 @@ import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 
 import DataCard from "../../components/admDataCard";
 import Loading from "../../components/loader/Loading";
+import operationLoading from "../../assets/spinner-animation.svg"
 
 
 function PageAdmDashBoard() {
-    const { setItems, dataItems, confirmation, toggleConfirmation, confirmationValue, operation, editMenu,toggleEditMenu } = useContext(AdminDataContext)
+    const { setItems, dataItems, confirmation, toggleConfirmation, confirmationValue, operation, editMenu,toggleEditMenu,dataType,switchDataType} = useContext(AdminDataContext)
     const [url, setUrl] = useState('')
+    const [offset, setOffset] = useState(0)
+    const [path,setPath] = useState('')
+    const [limit, setLimit] = useState(5)
     const [nextUrl, setNextUrl] = useState('')
     const [isLoading, setLoadingStop] = useState(true)
+    const [deleteLoading, setDeleteLoading] = useState(false)
     const [visible, setVisible] = useState(false)
     const navigate = useNavigate()
     const authUser = useAuthUser()
@@ -44,19 +49,25 @@ function PageAdmDashBoard() {
         setUrl('')
         switch (key) {
             case 'valid':
+                setTimeout(() => {
+                    setPath('all-projects')
+                    setUrl('/adm/all-projects')
+                }, 100)
 
                 break;
 
             case 'invalid':
                 setTimeout(() => {
+                    setPath('invalid-projects')
                     setUrl('/adm/invalid-projects')
                 }, 100)
 
                 console.log(url)
                 break;
 
-            case 'users':
-                setUrl('/adm/invalid-projects')
+            case 'user':
+                setPath('all-users')
+                setUrl('/adm/all-users')
                 break;
 
             default:
@@ -82,7 +93,7 @@ function PageAdmDashBoard() {
         }
     }
 
-    const handleNewUrl = () => {
+    const handlenextUrl = () => {
         if (nextUrl !== null) {
             return setUrl(nextUrl);
         }
@@ -101,22 +112,50 @@ function PageAdmDashBoard() {
 
     const handleDelete = async (id) => {
         const cleanToken = useHeader.replace("x-acess-token ", "");
+        setDeleteLoading(true)
+        let deleteUrl;
+        if(path === 'invalid-projects'|| 'all-projects'){
+            deleteUrl = 'delete-project'
+        }
+
+        if(path === 'all-users'){
+            deleteUrl = 'delete-user'
+        }
+
+        // if(path === ''){
+        //     deleteUrl = 'delete'
+        // }
         try {
             const request = await FetchApi(
                 "DELETE",
-                `${ApiUrl}/adm/delete-project/${id}`,
+                `${ApiUrl}/adm/${deleteUrl}/${id}`,
                 "",
                 cleanToken
             );
             console.log(request)
 
             setItems(dataItems.filter((item) => item.id !== id));
+
+            alert('Deletado com sucesso!')
+
+            if (offset > 0) {
+                setOffset(offset - 1);
+                setNextUrl(`/adm/${path}?limit=${limit}&offset=${offset - 1}`);
+                console.log(nextUrl)
+              } else {
+                console.log('caiu no else')
+                setOffset(offset);
+                setNextUrl(nextUrl);
+              }
+
         } catch (error) {
             console.log(error)
             if (error.response?.status === 401) {
                 signOut()
                 navigate()
             }
+        }finally{
+            setDeleteLoading(false)
         }
     };
 
@@ -153,23 +192,39 @@ function PageAdmDashBoard() {
             const request = await FetchApi('GET', `${ApiUrl}${url}`, '', cleanToken)
             console.log(request)
 
+            setOffset(request.offset + request.limit)
+            setLimit(request.limit)
 
             if (request.nextUrl !== null) {
                 setNextUrl(request.nextUrl);
             }
 
-            if (dataItems.length > 0) {
+            if (dataItems.length > 0 && dataType === 'project') {
                 return setItems((prevItems) => {
                     const newItems = request.projects.filter(
                         (newItem) => !prevItems.some((item) => item.id === newItem.id)
                     );
                     return [...prevItems, ...newItems];
                 });
-                //  setItems((prevItems) => [...prevItems, ...request.projects])
+              
             }
 
-            setItems(request.projects)
+            if (dataItems.length > 0 && dataType === 'user') {
+                return setItems((prevItems) => {
+                    const newItems = request.users.filter(
+                        (newItem) => !prevItems.some((item) => item.id === newItem.id)
+                    );
+                    return [...prevItems, ...newItems];
+                });
+              
+            }
 
+            if(dataType === 'project'){
+                setItems(request.projects)
+            }else{
+                setItems(request.users)
+            }
+               
             console.log(dataItems)
 
 
@@ -182,7 +237,8 @@ function PageAdmDashBoard() {
 
     }
 
-    const handleClick = async (value) => {
+    const handleClick = async (value,type) => {
+        switchDataType(type)
         toggleUrl(value)
 
 
@@ -194,10 +250,10 @@ function PageAdmDashBoard() {
         const title = editForm.current.title.value
         const text = editForm.current.text.value
         const difficultLevel = editForm.current.difficultLevel.value
-        const hashtagsString = editForm.current.hashtags.value.replace(/,/g, ' ').trim() // Remove espaços em branco extras
+        const hashtagsString = editForm.current.hashtags.value.replace(/,/g, ' ').trim() 
         const hashtags = hashtagsString.split(/\s+/);
         const editObject = {title:title,text:text,difficultLevel:difficultLevel, hashtags}
-
+        setDeleteLoading(true)
         try {
             const data = await FetchApi(
                 "PATCH",
@@ -215,9 +271,12 @@ function PageAdmDashBoard() {
               })
 
               toggleEditMenu()
+              alert('editado com sucesso!')
          
         } catch (error) {
             console.log(error)
+        }finally{
+            setDeleteLoading(false)
         }
     }
 
@@ -281,18 +340,18 @@ function PageAdmDashBoard() {
                         </div>
                         <div className="display-buttons-box">
                             <div className="main-buttons-adm">
-                                <button className="change-operation" onClick={() => handleClick('invalid')}>Ideias invalidas</button>
-                                <button className="change-operation">Todas as ideias</button>
-                                <button className="change-operation">Todos os usuários</button>
+                                <button className="change-operation" onClick={() => handleClick('invalid','projects')}>Ideias invalidas</button>
+                                <button className="change-operation" onClick={()=> handleClick('valid','projects')}>Todas as ideias</button>
+                                <button className="change-operation" onClick={()=> handleClick('user','users')}>Todos os usuários</button>
                                 <button className="change-operation">Todos os adms</button>
                             </div>
 
                             <div className="itens-adm-box">
-                                <DataCard />
+                                {deleteLoading ? <Loading/>: <DataCard />}
                                 {!isLoading ? <Loading className="loading-data-admin" /> : null}
                             </div>
                             <div className="btn-div-adm">
-                                <button className="load-more-adm" onClick={() => handleNewUrl()}>Carrega Mais</button>
+                                <button className="load-more-adm" onClick={() => handlenextUrl()}>Carrega Mais</button>
                             </div>
                         </div>
 

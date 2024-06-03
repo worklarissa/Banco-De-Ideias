@@ -120,21 +120,14 @@ function IdeaCard({ editable, cards, url, offsetInitial, limitInitial }) {
 
       setRequestErrors("");
 
-
-      if (page === 'valid') {
-
-      }
-
-      if (page === 'standby') {
-
-      }
-
       if (newUrl === '/project/show-my?limit=10&offset=0' || newUrl === '/project/show-standby?limit=10&offset=0') {
         setOffset(10)
         setLimit(1)
         setNewUrl(`/project/${url}limit=1&offset=10`);
       } else {
         setNewUrl(get.nextUrl)
+        setOffset(get.offset + get.limit)
+        setLimit(get.limit)
       }
 
       setPosts((prevPosts) => {

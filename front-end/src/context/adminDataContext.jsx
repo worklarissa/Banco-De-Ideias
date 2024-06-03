@@ -10,6 +10,7 @@ export const AdminDataContext = createContext()
 function AdminDataProvider({ children }) {
 
     const [dataItems, setData] = useState([])
+    const [dataType,setDataType] = useState('')
     const [confirmation, setConfirmation] = useState(false)
     const [confirmationValue, setConfirmationValue] = useState(false)
     const [editMenu, setEditMenu] = useState(false)
@@ -53,6 +54,24 @@ function AdminDataProvider({ children }) {
        
     }
 
+    const switchDataType = (key) => {
+     
+        switch (key) {
+            case 'projects':
+           
+            setDataType('project')
+                break;
+
+            case 'users':
+               setDataType('user')
+                break;
+
+            default:
+                break;
+        }
+       
+    }
+
     const setItems = (values) => {
         setData(values)
         console.log(dataItems)
@@ -60,7 +79,7 @@ function AdminDataProvider({ children }) {
 
 
     return (
-        <AdminDataContext.Provider value={{ setItems, dataItems, operation, toggleConfirmation, confirmation, sendConfirmationValue, confirmationValue, toggleEditMenu,editMenu}}>{children}</AdminDataContext.Provider>
+        <AdminDataContext.Provider value={{ setItems, dataItems,dataType,switchDataType, operation, toggleConfirmation, confirmation, sendConfirmationValue, confirmationValue, toggleEditMenu,editMenu}}>{children}</AdminDataContext.Provider>
     )
 }
 
