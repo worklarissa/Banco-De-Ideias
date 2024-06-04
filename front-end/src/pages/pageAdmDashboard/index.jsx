@@ -13,7 +13,7 @@ import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 
 import DataCard from "../../components/admDataCard";
-import Loading from "../../components/loader/Loading";
+import Loading from "../../components/loader";
 import operationLoading from "../../assets/spinner-animation.svg"
 
 

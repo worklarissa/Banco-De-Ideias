@@ -3,7 +3,7 @@ import Carousel from "react-bootstrap/Carousel";
 import Card from "react-bootstrap/Card";
 import { FetchApi } from "../../utils/Fetch";
 import "./carousel.css"
-import Loading from "../loader/Loading";
+import Loading from "../loader";
 
 function IdeaCarousel({ url }) {
   const [posts, setPosts] = useState([]);
@@ -63,7 +63,7 @@ function IdeaCarousel({ url }) {
           {group.map((post, idx) => (
             <Card
               key={idx}
-              style={{ backgroundColor: "#" + post.postColor, flex: 1 }}
+              style={{ backgroundColor: "#" + post.postColor, flex: 1, maxHeight: '250px' }}
             >
               <Card.Body style={{ backgroundColor:  post.postColor, flex: 1 }}>
                 <Card.Title className="titleCarousel">{post.title}</Card.Title>

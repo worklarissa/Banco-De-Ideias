@@ -15,7 +15,7 @@ import Button from "react-bootstrap/Button";
 import ContentEditable from "react-contenteditable";
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
-import Loading from "../loader/Loading";
+import Loading from "../loader";
 import RequestLoadingSvg from "../../assets/small-spinner.svg"
 import LoadingMorePostsSvg from "../../assets/spinner-animation.svg"
 
@@ -352,6 +352,7 @@ function IdeaCard({ editable, cards, url, offsetInitial, limitInitial }) {
                   <div className="operation-icons-card">
                     <FaEdit
                       onClick={(event) => handleEdit(event, post)}
+                      hidden={requestLoading}
                       className="edit"
                     />
                     <FaTrash

@@ -121,7 +121,9 @@ margin: 0;
 
 }
 
-.main-title{
+.main-title-home{
+    font-size: 3rem;
+    font-weight: bold;
     margin: 20px;
 }
 
