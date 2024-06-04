@@ -2,11 +2,12 @@ import { useState, useEffect } from "react";
 import icon from "../../assets/ideaIcon.png";
 import "./searchBar.css";
 
-const SearchBar = () => {
-  const [searchTerm, setSearchTerm] = useState("");
+const SearchBar = ({ onSearchTermChange }) => {
+  const [searchTerm,setSearchTerm] = useState('')
   const [suggestions, setSuggestions] = useState([]);
 
   useEffect(() => {
+
     const fetchSuggestions = async () => {
       if (searchTerm.length > 1) {
         try {
@@ -14,7 +15,7 @@ const SearchBar = () => {
             `https://api.datamuse.com/sug?s=${searchTerm}`
           );
           const data = await response.json();
-
+       
           const wordSuggestions = data.map((suggestion) => suggestion.word);
           setSuggestions(wordSuggestions);
         } catch (error) {
@@ -29,16 +30,22 @@ const SearchBar = () => {
       fetchSuggestions();
     }, 300);
 
+
     return () => {
       clearTimeout(timeoutId);
     };
   }, [searchTerm]);
+
   const handleSuggestionClick = (suggestion) => {
     setSearchTerm(suggestion);
     setSuggestions([]);
+    onSearchTermChange(suggestion);
   };
+
   const handleChange = (e) => {
-    setSearchTerm(e.target.value);
+    const term  = e.target.value;
+    setSearchTerm(term);
+    onSearchTermChange(term)
   };
 
   return (

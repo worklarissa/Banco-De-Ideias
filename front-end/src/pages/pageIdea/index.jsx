@@ -7,10 +7,22 @@ import { useVerifyRole } from "../../utils/VerifyRole";
 import { StandbyContext } from "../../context/isStandbyContext";
 
 export const Ideas = () => {
-
+  const [searchTerm,setSearchTerm] = useState('')
   const [key, setKey] = useState(Date.now());
   const {selectPage} = useContext(StandbyContext)
   const isAdmOn = useVerifyRole()
+ 
+
+  const handleTermChange = (term) =>{
+    setSearchTerm(term)
+    console.log(term)
+  }
+ 
+  const url = searchTerm 
+  ? `show-searched?limit=6&offset=0&title=${searchTerm}`
+  : "show-valid?limit=6&offset=0";
+
+
 
   useEffect(() => {
     isAdmOn()
@@ -34,10 +46,17 @@ export const Ideas = () => {
       <div className="top-section">
     
       <h2 className="title2">Explore ideias de projetos!</h2>
-      <SearchBar/>
+      <SearchBar 
+      onSearchTermChange={handleTermChange} 
+      value={searchTerm} 
+      /> 
       </div>
       
-      <IdeaCard cards={4}  url="show-valid?limit=6&offset=0`"  key={key} />
+      <IdeaCard 
+      cards={4}  
+      url={url} 
+      key={key} 
+      />
     
     </div>
   );
