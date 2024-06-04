@@ -21,10 +21,15 @@
   
 }
 
-.card{
+.card {
     max-height: 250px;
     min-height: 250px;
     overflow-y: hidden;
+    max-width: 400px;
+    word-break: break-all;
+    color: white;
+    margin-top: 20px;
+    animation: float 2.5s ease-in-out infinite;
 }
 
 .double-article{
@@ -121,7 +126,9 @@ margin: 0;
 
 }
 
-.main-title{
+.main-title-home{
+    font-size: 3rem;
+    font-weight: bold;
     margin: 20px;
 }
 

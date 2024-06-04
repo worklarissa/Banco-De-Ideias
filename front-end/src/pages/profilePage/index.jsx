@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 import { StandbyContext } from "../../context/isStandbyContext";
 import { useVerifyRole } from "../../utils/VerifyRole";
+// import {ToastContainer} from 'react-toastify'
 
 const ProfilePage = () => {
   const [limit,setLimit] = useState(10)
@@ -47,6 +48,7 @@ const ProfilePage = () => {
 
   return (
     <div className="profile-page-div">
+        {/* <ToastContainer closeOnClick="true" /> */}
       <Header to1="/" link1="Home" to2="/ideias" link2="Todas ideias"/>
       <div>
         <h1 className="title">Perfil</h1>

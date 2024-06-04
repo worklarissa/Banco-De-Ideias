@@ -1,0 +1,12 @@
+.loader-page{
+    width: 100svw;
+    height: 100svh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loader{
+    height: 100px;
+    width: 100px;
+}

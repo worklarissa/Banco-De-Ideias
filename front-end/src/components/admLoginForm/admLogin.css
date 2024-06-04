@@ -12,8 +12,34 @@
     color: black;
 }
 
+
 .show-password > p{
     color: black;
+}
+.show-password{
+    display: flex;
+    flex-direction: row;
+    font-size: 1rem;
+    align-items: center;
+    justify-content: center;
+    margin-top: 30px;
+}
+.toggle-password{
+    height: 30px;
+    width: 30px;
+}
+
+.toggle-password:hover{
+   cursor: pointer;
+}
+
+.toggle-password{
+    height: 30px;
+    width: 30px;
+}
+
+.toggle-password:hover{
+   cursor: pointer;
 }
 
 .button-submit-adm{

@@ -2,9 +2,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 461px;
-
+    min-height: 461px;
     width: 350px;
+    max-height: fit-content;
     padding: 10px;
     border-radius: 10px;
     background-color: #D9D9D9;
@@ -48,7 +48,7 @@
     font-size: 1rem;
     align-items: center;
     justify-content: center;
-    margin: 5px;
+    margin-top: 5px;
 }
 .toggle-password{
     height: 30px;
