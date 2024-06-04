@@ -21,7 +21,7 @@ import LoadingMorePostsSvg from "../../assets/spinner-animation.svg"
 
 
 
-function IdeaCard({ editable, cards, url, offsetInitial, limitInitial,searchTerm}) {
+function IdeaCard({ editable, cards, url, offsetInitial, limitInitial }) {
 
   const [posts, setPosts] = useState([]);
   const [limit, setLimit] = useState(limitInitial)
@@ -124,7 +124,7 @@ function IdeaCard({ editable, cards, url, offsetInitial, limitInitial,searchTerm
 
       setRequestErrors("");
 
-      if (newUrl === '/project/show-my?limit=10&offset=0' || newUrl === '/project/show-standby?limit=10&offset=0' || newUrl === `/project/show-searched?limit=10&offset=0&title=${searchTerm}` ) {
+      if (newUrl === '/project/show-my?limit=10&offset=0' || newUrl === '/project/show-standby?limit=10&offset=0') {
         setOffset(10)
         setLimit(1)
         setNewUrl(`/project/${url}limit=1&offset=10`);

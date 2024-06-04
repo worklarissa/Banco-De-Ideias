@@ -55,7 +55,7 @@ export const Ideas = () => {
       <IdeaCard 
       cards={4}  
       url={url} 
-      key={url} 
+      key={key} 
       />
     
     </div>
