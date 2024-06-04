@@ -19,7 +19,7 @@ export const Ideas = () => {
   }
  
   const url = searchTerm 
-  ? `show-searched?limit=10&offset=0&title=${searchTerm}`
+  ? `show-searched?limit=6&offset=0&title=${searchTerm}`
   : "show-valid?limit=6&offset=0";
 
 
