@@ -8,8 +8,8 @@ import { StandbyContext } from "../../context/isStandbyContext";
 
 export const Ideas = () => {
   const [searchTerm,setSearchTerm] = useState('')
-  const [offset.setOffset] = (0)
-  const [limit,setLimit] = 6
+  const [offset.setOffset] = useState(0)
+  const [limit,setLimit] = useState(6)
   const [key, setKey] = useState(Date.now());
   const {selectPage} = useContext(StandbyContext)
   const isAdmOn = useVerifyRole()
