@@ -1,12 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import Router from "./routes/router";
 import createStore from "react-auth-kit/createStore";
 import AuthProvider from "react-auth-kit";
-
-import {ToastContainer} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.min.css';
-import AdminDataProvider from "./context/adminDataContext";
+import App from "./app";
+import { BrowserRouter } from "react-router-dom";
+
 
 
 const store = createStore({
@@ -18,13 +17,11 @@ const store = createStore({
 
 ReactDOM.createRoot(document.getElementById("root")).render(
 
-    <AuthProvider store={store}>
-      <AdminDataProvider>
-      <ToastContainer closeOnClick="true" />
-      <Router />
-      </AdminDataProvider>
-      
-    
-    </AuthProvider>
+  <AuthProvider store={store}>
+    <BrowserRouter>
+    <App />
+    </BrowserRouter>
+     
+  </AuthProvider>
 
 );

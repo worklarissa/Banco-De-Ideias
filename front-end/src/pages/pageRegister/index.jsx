@@ -1,6 +1,3 @@
-
-import Header from "../../components/header"
-
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated'
 import { Container } from "react-bootstrap"
 
@@ -10,6 +7,7 @@ import "./pageRegister.css"
 import { useEffect } from "react"
 import RegisterForm from "../../components/registerForm"
 import { useVerifyRole } from "../../utils/VerifyRole"
+import { motion as m } from "framer-motion";
 
 
 const PageRegister = () => {
@@ -17,23 +15,21 @@ const PageRegister = () => {
     const navigate = useNavigate()
     const isAuth = useIsAuthenticated()
     const isAdmOn = useVerifyRole()
-   useEffect(()=>{
-    isAdmOn()
-    if(isAuth){
-        navigate("/ideias")
-    }
+    useEffect(() => {
+        isAdmOn()
+        if (isAuth) {
+            navigate("/ideias")
+        }
 
-   }, [])
+    }, [])
 
     return (
-        <div className="register-page">
-            <Header
-                title="Ideias"
-                to1="/example"
-                link1="Cadastra-se"
-                to2="/Register"
-                link2="Register"
-            />
+        <m.div className="register-page"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.75, ease: 'easeOut' }}
+            exit={{ opacity: 0 }}
+        >
             <Container bsPrefix="register-page-container">
 
 
@@ -50,7 +46,7 @@ const PageRegister = () => {
 
 
 
-        </div>
+        </m.div>
     )
 }
 

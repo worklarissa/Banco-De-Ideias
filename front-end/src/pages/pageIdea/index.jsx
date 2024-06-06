@@ -1,10 +1,10 @@
-import Header from "../../components/header";
 import "./pageIdea.css";
 import IdeaCard from "../../components/ideaCard";
 import SearchBar from "../../components/searchBar"
 import { useContext, useEffect, useState } from "react";
 import { useVerifyRole } from "../../utils/VerifyRole";
 import { StandbyContext } from "../../context/isStandbyContext";
+import { motion as m } from "framer-motion";
 
 export const Ideas = () => {
   const [searchTerm,setSearchTerm] = useState('')
@@ -41,15 +41,12 @@ export const Ideas = () => {
 
   
   return (
-    <div className="page">
-      <Header
-        title="Ideias"
-        to1="/example"
-        link1="Cadastra-se"
-        to2="/login"
-        link2="Login"
-      />
-
+    <m.div className="page" 
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    transition={{ duration:0.75, ease: 'easeOut' }}
+    exit={{ opacity: 0}}
+    >
       <h1 className="title1">Ideias</h1>
      
       <div className="top-section">
@@ -70,7 +67,7 @@ export const Ideas = () => {
       key={key} 
       />
     
-    </div>
+    </m.div>
   );
 };
 

@@ -1,17 +1,12 @@
 import React from 'react'
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import RequireAuth from "@auth-kit/react-router/RequireAuth";
-// import Ideas from "../pages/pageIdea";
-// import ProfilePage from "../pages/profilePage";
-// import PageCreateIdea from "../pages/pageCreateIdea";
-// import PageLogin from "../pages/pageLogin";
-// import PageRegister from "../pages/pageRegister";
-// import Home from "../pages/pageHome";
-
 import StandbyProvider from "../context/isStandbyContext";
 import PageAdmLogin from "../pages/pageLoginAdm";
 import PageAdmDashBoard from "../pages/pageAdmDashboard";
 import LoadingPage from '../components/pageLoader';
+import { AnimatePresence } from "framer-motion";
+
 
 const LazyHome = React.lazy(() => import('../pages/pageHome'))
 const LazyLogin = React.lazy(() => import('../pages/pageLogin'))
@@ -22,12 +17,14 @@ const LazyCreateIdea = React.lazy(() => import('../pages/pageCreateIdea'))
 
 
 
-const Router = () => {
 
 
+  function Router(){
+    const local = useLocation()
   return (
-    <BrowserRouter>
-      <Routes>
+
+      <AnimatePresence mode={'wait'}>
+      <Routes key={local.pathname} location={local}>
         <Route path="/login" element={<React.Suspense fallback={<LoadingPage />}><LazyLogin /></React.Suspense>} />
         <Route path="/cadastro" element={<React.Suspense fallback={<LoadingPage />}><LazyRegister/></React.Suspense>} />
         <Route path="/admin/login" element={<PageAdmLogin />} />
@@ -65,8 +62,18 @@ const Router = () => {
           }
         />
       </Routes>
-    </BrowserRouter>
+      </AnimatePresence>
+
   );
 };
+
+
+// const Router = () => {
+//   return(
+//   <BrowserRouter>
+//     <AppRoutes />
+//   </BrowserRouter>
+//   )
+// }
 
 export default Router;
