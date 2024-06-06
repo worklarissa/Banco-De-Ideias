@@ -13,13 +13,19 @@ export const Ideas = () => {
   const isAdmOn = useVerifyRole()
  
 
+  const handleCLick = () => {
+    setKey(Date.now())
+   
+  }
   const handleTermChange = (term) =>{
     setSearchTerm(term)
-    console.log(term)
+    if(!term){
+      setKey(Date.now())
+    }
+   
   }
- 
   const url = searchTerm 
-  ? `show-searched?limit=6&offset=0&title=${searchTerm}`
+  ? `show-searched?term=${searchTerm}&limit=6&offset=0`
   : "show-valid?limit=6&offset=0";
 
 
@@ -49,6 +55,7 @@ export const Ideas = () => {
       <SearchBar 
       onSearchTermChange={handleTermChange} 
       value={searchTerm} 
+      onClickSearch={handleCLick}
       /> 
       </div>
       

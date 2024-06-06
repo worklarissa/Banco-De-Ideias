@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import icon from "../../assets/ideaIcon.png";
 import "./searchBar.css";
 
-const SearchBar = ({ onSearchTermChange }) => {
+const SearchBar = ({ onSearchTermChange,onClickSearch }) => {
   const [searchTerm,setSearchTerm] = useState('')
   const [suggestions, setSuggestions] = useState([]);
 
@@ -41,7 +41,8 @@ const SearchBar = ({ onSearchTermChange }) => {
     setSuggestions([]);
     onSearchTermChange(suggestion);
   };
-
+      
+ 
   const handleChange = (e) => {
     const term  = e.target.value;
     setSearchTerm(term);
@@ -58,7 +59,7 @@ const SearchBar = ({ onSearchTermChange }) => {
           value={searchTerm}
           onChange={handleChange}
         />
-        <button className="search-button">
+        <button className="search-button" onClick={onClickSearch}>
           <img src={icon} alt="Pesquisar" className="search-icon" />
         </button>
       </div>
