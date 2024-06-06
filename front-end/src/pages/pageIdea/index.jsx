@@ -8,7 +8,7 @@ import { StandbyContext } from "../../context/isStandbyContext";
 
 export const Ideas = () => {
   const [searchTerm,setSearchTerm] = useState('')
-  const [offset.setOffset] = useState(0)
+  const [offset,setOffset] = useState(0)
   const [limit,setLimit] = useState(6)
   const [key, setKey] = useState(Date.now());
   const {selectPage} = useContext(StandbyContext)
@@ -27,7 +27,7 @@ export const Ideas = () => {
    
   }
   const url = searchTerm 
-  ? `show-searched?term=${searchTerm}`
+  ? `show-searched?term=${searchTerm}&`
   : "show-valid?limit=6&offset=0";
 
 
