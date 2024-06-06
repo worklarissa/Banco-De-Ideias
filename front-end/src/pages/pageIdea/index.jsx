@@ -8,8 +8,6 @@ import { StandbyContext } from "../../context/isStandbyContext";
 
 export const Ideas = () => {
   const [searchTerm,setSearchTerm] = useState('')
-  const [offset,setOffset] = useState(0)
-  const [limit,setLimit] = useState(6)
   const [key, setKey] = useState(Date.now());
   const {selectPage} = useContext(StandbyContext)
   const isAdmOn = useVerifyRole()
@@ -21,13 +19,14 @@ export const Ideas = () => {
   }
   const handleTermChange = (term) =>{
     setSearchTerm(term)
+    console.log(term)
     if(!term){
       setKey(Date.now())
     }
    
   }
   const url = searchTerm 
-  ? `show-searched?term=${searchTerm}&`
+  ? `show-searched?term=${searchTerm}&limit=6&offset=0`
   : "show-valid?limit=6&offset=0";
 
 
@@ -62,9 +61,7 @@ export const Ideas = () => {
       </div>
       
       <IdeaCard 
-      cards={4}
-      limitInitial={limit}
-      offsetInitial={offset}  
+      cards={4}  
       url={url} 
       key={key} 
       />
