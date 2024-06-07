@@ -18,6 +18,7 @@ const Header = () => {
   const signOut = useSignOut();
   const useHeader = useAuthHeader("auth.token");
   const authUser = useAuthUser();
+  const navigate = useNavigate()
   const ApiUrl = import.meta.env.VITE_API_URL
 
   async function handleLogout() {
@@ -32,6 +33,7 @@ const Header = () => {
       );
     
       signOut();
+      navigate('/login')
     } catch (error) {
       console.error(error);
     } finally {
