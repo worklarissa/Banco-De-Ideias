@@ -3,10 +3,13 @@ import IdeaCard from "../../components/ideaCard";
 import Header from "../../components/header";
 
 import "./profilePage.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 import { StandbyContext } from "../../context/isStandbyContext";
 import { useVerifyRole } from "../../utils/VerifyRole";
+import { FetchApi } from "../../utils/Fetch";
+import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
+import useSignOut from "react-auth-kit/hooks/useSignOut";
 // import {ToastContainer} from 'react-toastify'
 
 const ProfilePage = () => {
@@ -17,7 +20,11 @@ const ProfilePage = () => {
   const [title, setTitle] = useState('Suas ideias de projetos');
   const [buttonText, setButtonText] = useState('Ideias a serem Aprovadas');
   const isAdmOn = useVerifyRole()
-
+  const ApiUrl = import.meta.env.VITE_API_URL
+  const headers = useAuthHeader()
+  const cleanToken = headers.replace("x-acess-token", "");
+  const navigate = useNavigate()
+  const signOut = useSignOut()
 
   const {selectPage,page } = useContext(StandbyContext)
 
@@ -41,6 +48,18 @@ const ProfilePage = () => {
     setKey(Date.now()); 
   }
 
+  const handleDeleteAcount = async () => {
+   try {
+    const data = await FetchApi('DELETE', `${ApiUrl}/user/delete/`, '',cleanToken)
+    console.log(data)
+    signOut()
+    navigate("/")
+   } catch (error) {
+    console.log(error)
+   }
+  }
+
+
   useEffect(()=>{
     isAdmOn()
     selectPage('valid')
@@ -59,6 +78,7 @@ const ProfilePage = () => {
               <div className="buttons-profile">
               <Link className="btn" to="/criar">Criar ideia</Link>
               <button className="btn" onClick={handleButtonClick}>{buttonText}</button>
+              <button className="btn" onClick={handleDeleteAcount}>Excluir Conta</button>
               </div>
              
             </div>
