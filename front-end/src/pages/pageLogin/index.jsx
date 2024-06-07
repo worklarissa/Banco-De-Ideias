@@ -1,4 +1,3 @@
-import Header from "../../components/header"
 import loginPng from "../../assets/login.png"
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated'
 import { Container } from "react-bootstrap"
@@ -7,28 +6,28 @@ import { useNavigate, Link } from "react-router-dom"
 import "./pageLogin.css"
 import { useEffect } from "react"
 import { useVerifyRole } from "../../utils/VerifyRole"
+import { motion as m } from "framer-motion";
 
 const PageLogin = () => {
 
     const navigate = useNavigate()
     const isAuth = useIsAuthenticated()
     const isAdmOn = useVerifyRole()
-   useEffect(()=>{
-    isAdmOn()
-    if(isAuth){
-        navigate("/ideias")
-    }
-   }, [])
+    useEffect(() => {
+        isAdmOn()
+        if (isAuth) {
+            navigate("/ideias")
+        }
+    }, [])
 
     return (
-        <div className="login-page">
-            <Header
-                title="Ideias"
-                to1="/example"
-                link1="Cadastra-se"
-                to2="/login"
-                link2="Login"
-            />
+        <m.div className="login-page"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.75, ease: 'easeOut' }}
+            exit={{ opacity: 0}}
+        >
+          
             <Container bsPrefix="login-page-container">
 
 
@@ -45,7 +44,7 @@ const PageLogin = () => {
 
 
 
-        </div>
+        </m.div>
     )
 }
 

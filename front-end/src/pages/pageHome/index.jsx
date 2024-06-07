@@ -1,11 +1,11 @@
 // import IdeaCarousel from "../../components/carousel"
 import "./pageHome.css";
-import Header from "../../components/header/index";
 import headerHome from "../../assets/header-animation1.svg";
 import articleImage from "../../assets/artigos.svg";
 import Footer from "../../components/footer";
 import IdeaCarousel from "../../components/carousel";
 import { useVerifyRole } from "../../utils/VerifyRole";
+import { motion as m } from "framer-motion";
 import { useEffect } from "react";
 
 export default function Home() {
@@ -18,15 +18,13 @@ export default function Home() {
 
   return (
     <>
-      <Header
-        title="Ideias"
-        to1="/example"
-        link1="Cadastra-se"
-        to2="/login"
-        link2="Login"
-      />
-
-      <div className="section-sobre-home">
+  
+      <m.div className="section-sobre-home"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration:0.75, ease: 'easeOut' }}
+        exit={{ opacity: 0}}
+      >
         <div className="text-sobre-home">
           <img
             src={headerHome}
@@ -49,7 +47,7 @@ export default function Home() {
             </p>
           </div>
         </div>
-      </div>
+      </m.div>
 
       <div className="cards">
         <h1 className="carrosel-title1">

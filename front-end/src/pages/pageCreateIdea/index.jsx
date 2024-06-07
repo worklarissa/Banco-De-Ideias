@@ -1,26 +1,29 @@
 import { IdeaForm } from "../../components/form";
-import Header from "../../components/header";
 import logo from "../../assets/banner.png";
 import "./pageCreateIdea.css";
 import { useEffect } from "react";
 import { useVerifyRole } from "../../utils/VerifyRole";
+import { motion as m } from "framer-motion";
 
 const PageCreateIdea = () => {
   const isAdmOn = useVerifyRole()
-  useEffect(()=>{
+  useEffect(() => {
     isAdmOn()
-  },[])
+  }, [])
   return (
-    <div className="pageCreateIdea">
-      <Header link1="Ideias" to1="/ideias" link2="Perfil" to2="/perfil" />
-
+    <m.div className="pageCreateIdea"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.75, ease: 'easeOut' }}
+      exit={{ opacity: 0 }}
+    >
       <h1 className="title-create-idea">Crie sua ideia!</h1>
       <div className="create">
         <IdeaForm />
 
         <img className="banner" src={logo} width={400} height={500} />
       </div>
-    </div>
+    </m.div>
   );
 };
 
