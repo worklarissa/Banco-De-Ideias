@@ -37,6 +37,8 @@
 - Futuras features:
   - [ ] filtrar projetos por tecnólogias
   - [ ] opção de foto de perfil ao usuário
+  - [ ] comentários e curtidas em posts
+  - [ ] foto com mais detalhes visuais do projeto
 
 --- 
 
