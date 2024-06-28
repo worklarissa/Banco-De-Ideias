@@ -156,6 +156,7 @@ export const IdeaForm = () => {
               height: "1.7rem",
               borderRadius: "50%",
             }}
+            className='colors'
             onChange={(e) => setColor(e.target.value)}
           />
           <Form.Check
@@ -169,6 +170,7 @@ export const IdeaForm = () => {
               height: "1.7rem",
               borderRadius: "50%",
             }}
+            className='colors'
             onChange={(e) => setColor(e.target.value)}
           />
           <Form.Check
@@ -182,6 +184,7 @@ export const IdeaForm = () => {
               height: "1.7rem",
               borderRadius: "50%",
             }}
+            className='colors'
             onChange={(e) => setColor(e.target.value)}
           />
         </div>
