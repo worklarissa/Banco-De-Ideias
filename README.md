@@ -32,7 +32,7 @@
 - [x] Visualizar ideias de projetos criadas pelo próprio usuário em espera
 - [x] Visualizar ideias de projetos criadas pelo próprio usuário  Aprovadas
 - [x] Barra de pesquisa para pesquisar por titulo as  ideias de projetos ja criados e aprovados
-- [X] Dar opção do usuário apagar o projeto
+- [X] Opção do usuário apagar o projeto
 - [x] Menu visual para o administrador gerenciar e aprovar ideias
 - Futuras features:
   - [ ] filtrar projetos por tecnólogias
