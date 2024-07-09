@@ -59,15 +59,16 @@ function IdeaCarousel({ url }) {
     
     {groupedPosts.map((group, idx) => (
       <Carousel.Item key={idx}>
-        <div className="d-flex justify-content-around">
+        <div className=" carousel d-flex justify-content-around">
           {group.map((post, idx) => (
             <Card
               key={idx}
-              style={{ backgroundColor: "#" + post.postColor, flex: 1, maxHeight: '250px' }}
+              style={{ backgroundColor: "#" + post.postColor}}
+              classname="cardE"
             >
               <Card.Body style={{ backgroundColor:  post.postColor, flex: 1 }}>
-                <Card.Title className="titleCarousel">{post.title}</Card.Title>
-                <Card.Text className="textCarousel">{post.text}</Card.Text>
+                <Card.Title>{post.title}</Card.Title>
+                <Card.Text>{post.text}</Card.Text>
               </Card.Body>
             </Card>
           ))}

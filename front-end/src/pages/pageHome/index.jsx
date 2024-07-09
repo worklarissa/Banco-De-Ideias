@@ -29,8 +29,7 @@ export default function Home() {
           <div className="middle-text">
             <h1 className="main-title-home">
               {" "}
-              <span className="yellow-text">&lt;&gt;</span>Banco de ideias
-              <span className="yellow-text">&lt;/&gt;</span>{" "}
+              <span className="yellow-text">&lt;&gt;</span>Banco de ideias<span className="yellow-text">&lt;/&gt;</span>{" "}
             </h1>
             <p className="text-middle-page">
               {" "}
@@ -44,7 +43,7 @@ export default function Home() {
         </div>
       </m.div>
 
-      <div className="cards">
+      <div className=" projectsCaroucel">
         <h1 className="carrosel-title1">
           Visualize as <span className="yellow-text">ideias</span> mais{" "}
           <span className="blue-text">populares</span> no momento!
@@ -65,7 +64,7 @@ export default function Home() {
             <div className="card-article">
               <p className="text-article-card">Feature em progresso!</p>
             </div>
-            <div className="card-article">
+            <div className="cazrd-article">
               <p className="text-article-card">Feature em progresso!</p>
             </div>
           </div>

@@ -31,13 +31,14 @@
 - [x] Visualizar perfil de usuário
 - [x] Visualizar ideias de projetos criadas pelo próprio usuário em espera
 - [x] Visualizar ideias de projetos criadas pelo próprio usuário  Aprovadas
-
+- [x] Barra de pesquisa para pesquisar por titulo as  ideias de projetos ja criados e aprovados
+- [X] Opção do usuário apagar o projeto
+- [x] Menu visual para o administrador gerenciar e aprovar ideias
 - Futuras features:
-  - [ ] Barra de pesquisa para pesquisar por titulo as  ideias de projetos ja criados e aprovados
   - [ ] filtrar projetos por tecnólogias
-  - [ ] Apagar Projeto
-  - [ ] Menu visual para o administrador gerenciar e aprovar ideias
   - [ ] opção de foto de perfil ao usuário
+  - [ ] comentários e curtidas em posts
+  - [ ] foto com mais detalhes visuais do projeto
 
 --- 
 

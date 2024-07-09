@@ -15,19 +15,50 @@
     width: auto;
   }
 
-  .carousel {
-    height: 70%;
+  .slide {
+    height: 100%;
+    width: 100%;
     display: flex;
     align-items: center;
+   
+ 
+
+}
+.card {
+  display: flex;
+  width: 292px;
+  height: 292px;
+  overflow-y: hidden;
+  color: white;
+  margin-top: 20px;
+  animation: float 2.5s ease-in-out infinite;
+  margin-inline-start:40px;
+}
+.carousel-item{
+  width: 70%;
+  height: 100%;
+  margin-left: 200px;
 }
 
-.card-title{
+.card-body{
+  text-align: center;
   font-weight: bold;
+  font-size: 1.13rem; 
 }
 
-.textCarousel{
+.card-text{
   padding: 10px;
-}
+  font-size: 0.95rem;
+  word-break: break-all;
+  white-space:  wrap;
+  overflow-y: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+   -webkit-line-clamp: 9;
+  -webkit-box-orient: vertical;
+
+}  
+
   
   .carousel-control-prev {
     left: auto;
@@ -37,13 +68,116 @@
     right: 10px;
   }
   @media(max-width:600px) {
-    .titleCarousel,.textCarousel{
-        font-size: 10px;
-      }
+   
 }
   
   
+@media only screen 
+and (min-device-width : 0px) 
+and (max-device-width : 480px) {
+  .card-title{
+    font-size: 7px;
+    font-weight: bold;
+  }.card-text{
+  font-size:6px;
+  word-break: normal;
+  white-space:  wrap;
+  overflow-y: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+   -webkit-line-clamp: 9;
+  -webkit-box-orient: vertical;
+  }
+  .carousel-item{
+    width:100%;
+    height:70%;
+    margin: auto;
+   
+  }.card{
+    display: flex;
+    height:150px;
+    width: 100px;
+    margin-inline-start:0px;
+  }.carousel{
+   
+    width: 100vw;
+    height: 40vh;
+  }
+   
+}
 
+
+/*   landscape no celular  */
+@media only screen and (max-width: 1000px) and (min-device-width:320px) and (orientation: landscape) {
+    .main-title{
+        font-size:1rem;
+    }
+   
+
+    .text-middle-page{
+        font-size:1.3rem;
+
+    }
+
+    .carrosel-title1{
+        font-size: 1rem;
+    }
+
+    .articles{
+        gap: 100px;
+    }
+    .card-article{
+        height: 80px;
+        width: 80px;
+    }
+ }
+
+
+/* pcs */
+@media only screen 
+and (min-width : 1224px) {
+  .card-title{
+    font-size: 25px;
+    font-weight: bold;
+  }.card-text{
+  font-size:20px;
+  font-weight: normal;
+  word-spacing: nowrap;
+  word-break: normal;
+  white-space:  normal;
+  overflow-y: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+   -webkit-line-clamp: 9;
+  -webkit-box-orient: vertical;
+  }
+  .carousel-item{
+    width:100%;
+    height:40%;
+    margin-left: 0;
+   
+  }.card{
+    display: flex;
+    height:70%;
+    width: 20%;
+    margin-inline-start:0px;
+  }.carousel{
+   
+    width: 100vw;
+    height: 50vh;
+  }
+   .cards{
+    height: 100vh;
+    width: 100vw;
+   }.slide{
+    margin-top: 120px;
+}
+}
+
+
+/*media  (min-width:menor que a tela do pc){
+    flex-wrap: wrap;
+}*/
   
   
 

@@ -29,3 +29,26 @@
         width: 250px;
     }
 }
+
+
+ @media only screen 
+and (min-device-width : 0) 
+and (max-device-width : 480px) {
+
+}
+
+/*   landscape no celular  */
+@media only screen and (max-width: 1000px) and (min-device-width:320px) and (orientation: landscape) {
+  
+ }
+
+
+/* pcs */
+@media only screen 
+and (min-width : 1224px) {
+
+}
+
+/*media  (min-width:menor que a tela do pc){
+    flex-wrap: wrap;
+}*/
