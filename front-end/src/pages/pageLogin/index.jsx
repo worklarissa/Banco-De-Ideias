@@ -5,16 +5,13 @@ import LoginForm from "../../components/loginForm"
 import { useNavigate, Link } from "react-router-dom"
 import "./pageLogin.css"
 import { useEffect } from "react"
-import { useVerifyRole } from "../../utils/VerifyRole"
 import { motion as m } from "framer-motion";
 
 const PageLogin = () => {
 
     const navigate = useNavigate()
     const isAuth = useIsAuthenticated()
-    const isAdmOn = useVerifyRole()
     useEffect(() => {
-        isAdmOn()
         if (isAuth) {
             navigate("/ideias")
         }

@@ -1,15 +1,10 @@
 import { IdeaForm } from "../../components/form";
 import logo from "../../assets/banner.png";
 import "./pageCreateIdea.css";
-import { useEffect } from "react";
-import { useVerifyRole } from "../../utils/VerifyRole";
 import { motion as m } from "framer-motion";
 
 const PageCreateIdea = () => {
-  const isAdmOn = useVerifyRole()
-  useEffect(() => {
-    isAdmOn()
-  }, [])
+ 
   return (
     <m.div className="pageCreateIdea"
       initial={{ opacity: 0 }}

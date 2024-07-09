@@ -2,7 +2,6 @@ import "./pageIdea.css";
 import IdeaCard from "../../components/ideaCard";
 import SearchBar from "../../components/searchBar"
 import { useContext, useEffect, useState } from "react";
-import { useVerifyRole } from "../../utils/VerifyRole";
 import { StandbyContext } from "../../context/isStandbyContext";
 import { motion as m } from "framer-motion";
 
@@ -12,7 +11,7 @@ export const Ideas = () => {
   const [offset,setOffset] = useState(0)
   const [key, setKey] = useState(Date.now());
   const {selectPage} = useContext(StandbyContext)
-  const isAdmOn = useVerifyRole()
+
  
 
   const handleCLick = () => {
@@ -34,7 +33,6 @@ export const Ideas = () => {
 
 
   useEffect(() => {
-    isAdmOn()
     selectPage('ideias')
     setKey(Date.now()); 
   }, []);

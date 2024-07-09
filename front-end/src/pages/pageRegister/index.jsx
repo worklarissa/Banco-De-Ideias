@@ -6,7 +6,6 @@ import { useNavigate, Link } from "react-router-dom"
 import "./pageRegister.css"
 import { useEffect } from "react"
 import RegisterForm from "../../components/registerForm"
-import { useVerifyRole } from "../../utils/VerifyRole"
 import { motion as m } from "framer-motion";
 
 
@@ -14,9 +13,8 @@ const PageRegister = () => {
 
     const navigate = useNavigate()
     const isAuth = useIsAuthenticated()
-    const isAdmOn = useVerifyRole()
+
     useEffect(() => {
-        isAdmOn()
         if (isAuth) {
             navigate("/ideias")
         }

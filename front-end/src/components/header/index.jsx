@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import { FetchApi } from "../../utils/Fetch";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import logo from "../../assets/logo.jpeg";
 import useIsAuthenticated from "react-auth-kit/hooks/useIsAuthenticated";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
@@ -10,6 +10,7 @@ import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 import "../../styles/customNavBar.css";
 import "./header.css";
 import "../../styles/global.css";
+
 
 
 const Header = () => {
@@ -32,6 +33,7 @@ const Header = () => {
         token
       );
     
+      
       signOut();
       navigate('/login')
     } catch (error) {
@@ -42,6 +44,7 @@ const Header = () => {
   }
 
   return (
+        
     <Navbar collapseOnSelect expand="lg" bsPrefix="navbar">
       <Container>
         <Navbar.Brand>

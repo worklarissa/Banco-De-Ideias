@@ -4,17 +4,12 @@ import headerHome from "../../assets/header-animation1.svg";
 import articleImage from "../../assets/artigos.svg";
 import Footer from "../../components/footer";
 import IdeaCarousel from "../../components/carousel";
-import { useVerifyRole } from "../../utils/VerifyRole";
 import { motion as m } from "framer-motion";
 import { useEffect } from "react";
 
 export default function Home() {
-  const isAdmOn = useVerifyRole()
   const ApiUrl = import.meta.env.VITE_API_URL
 
-  useEffect(() => {
-    isAdmOn()
-  }, [])
 
   return (
     <>

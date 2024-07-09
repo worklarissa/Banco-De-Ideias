@@ -4,6 +4,7 @@ import createStore from "react-auth-kit/createStore";
 import AuthProvider from "react-auth-kit";
 import 'react-toastify/dist/ReactToastify.min.css';
 import App from "./app";
+import StandbyProvider from "./context/isStandbyContext";
 import { BrowserRouter } from "react-router-dom";
 
 
@@ -18,9 +19,13 @@ const store = createStore({
 ReactDOM.createRoot(document.getElementById("root")).render(
 
   <AuthProvider store={store}>
+    <StandbyProvider>
+
     <BrowserRouter>
     <App />
     </BrowserRouter>
+
+    </StandbyProvider>
      
   </AuthProvider>
 

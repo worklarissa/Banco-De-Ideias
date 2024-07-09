@@ -3,5 +3,9 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    height: 100svh;
+    height: 50svh;
+}
+
+.admin-title{
+    font-size: 3rem;
 }

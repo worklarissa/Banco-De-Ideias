@@ -1,0 +1,14 @@
+
+.notFound-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    color: white;
+    font-size: 3rem;
+}
+
+.notFound-message{
+    margin: 20px;
+}

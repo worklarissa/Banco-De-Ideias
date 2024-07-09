@@ -5,7 +5,6 @@ import "./profilePage.css";
 import { Link, useNavigate } from "react-router-dom";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 import { StandbyContext } from "../../context/isStandbyContext";
-import { useVerifyRole } from "../../utils/VerifyRole";
 import { FetchApi } from "../../utils/Fetch";
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 import useSignOut from "react-auth-kit/hooks/useSignOut";
@@ -19,7 +18,6 @@ const ProfilePage = () => {
   const [key, setKey] = useState(Date.now())
   const [title, setTitle] = useState('Suas ideias de projetos');
   const [buttonText, setButtonText] = useState('Ideias a serem Aprovadas');
-  const isAdmOn = useVerifyRole()
   const ApiUrl = import.meta.env.VITE_API_URL
   const headers = useAuthHeader()
   const cleanToken = headers.replace("x-acess-token", "");
@@ -61,7 +59,6 @@ const ProfilePage = () => {
 
 
   useEffect(()=>{
-    isAdmOn()
     selectPage('valid')
   }, [])
 

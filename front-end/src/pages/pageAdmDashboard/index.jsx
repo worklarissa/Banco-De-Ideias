@@ -11,14 +11,14 @@ import "./admDash.css"
 
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
-
 import DataCard from "../../components/admDataCard";
 import Loading from "../../components/loader";
-import operationLoading from "../../assets/spinner-animation.svg"
+import { StandbyContext } from "../../context/isStandbyContext";
 
 
 function PageAdmDashBoard() {
     const { setItems, dataItems, confirmation, toggleConfirmation, confirmationValue, operation, editMenu, toggleEditMenu, dataType, switchDataType } = useContext(AdminDataContext)
+    const { page, selectPage } = useContext(StandbyContext)
     const [url, setUrl] = useState('')
     const [offset, setOffset] = useState(0)
     const [path, setPath] = useState('')
@@ -42,6 +42,7 @@ function PageAdmDashBoard() {
             console.log(authUser)
             navigate('/admin/login')
         }
+        selectPage('admDash')
     }
 
     const toggleUrl = (key) => {
@@ -97,6 +98,7 @@ function PageAdmDashBoard() {
                 cleanToken
             );
 
+            selectPage('')
             signOut()
             navigate('/admin/login')
         } catch (error) {
