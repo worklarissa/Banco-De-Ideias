@@ -159,7 +159,6 @@ and (min-width : 1224px) {
   }.card{
     display: flex;
     height:70%;
-    width: 20%;
     margin-inline-start:0px;
   }.carousel{
    
