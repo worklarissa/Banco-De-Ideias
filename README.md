@@ -35,6 +35,7 @@
 - [X] Opção do usuário apagar o projeto
 - [x] Menu visual para o administrador gerenciar e aprovar ideias
 - Futuras features:
+  - [ ] carrosel de artigos
   - [ ] filtrar projetos por tecnólogias
   - [ ] opção de foto de perfil ao usuário
   - [ ] comentários e curtidas em posts
