@@ -1,16 +1,25 @@
 .form{
     width: 45%;
-    height: 80%;
+    min-height: 80%;
+    max-height: fit-content;
     padding: 30px;
     border: 1px solid black;
     box-shadow: 5px 5px 10px 3px rgba(47, 45, 45, 1);
     border-radius: 3%;
     margin-left: 20px
 }
-.form-floating{
-    width: auto;
-    height: auto;
+.input{
+    font-size: 1rem;
 }
+
+.form-label{
+    font-size: 1rem;
+}
+
+.form-floating > label{
+ font-size: 1rem;
+}
+
 .error-input-create{
     color: white;
     margin: 5px;
@@ -41,17 +50,28 @@
     width: 50px;
 }
 
+.form-floating >.form-control{
+    min-height: 50px;
+    max-height: 113px;
+}
+
+.form-check-input{
+    padding: 5px;
+}
 
 .salvar{
-    width: 6rem;
-    height: 2.5rem;
-    font-size: 1.3rem;
-    margin-top: 15px;
-    border-radius: 15%;
-    color: white;
+    width: 70%;
+    padding: 0.5rem;
+    margin-left: 15%;
+    font-size: 20px;
+    border-radius: 30px;
+    margin-top: 10px;
     background-color: #FFD602;
+    transition: 0.2s ease-in-out;
 }
+
 .salvar:hover{
+    color: white;
     background-color: #00000000;
 }
 @media only screen 
@@ -59,13 +79,10 @@ and (min-device-width : 320px)
 and (max-device-width : 480px) {
     .form{
         width: 90%;
-        height: 100%;
-        margin-top: 5%;
+        min-height: 100%;
+        margin-top: 0;
     }
 
-    .form-check-input{
-        padding: 10px;
-    }
     .cores{
         width: auto;
         height: auto;
@@ -79,12 +96,7 @@ and (max-device-width : 480px) {
         height: auto;
         margin: 0;
     }
-    .salvar{
-        width: 60%;
-        margin-left: 20%;
-        font-size: 20px;
-        border-radius: 30px;
-     }
+
 
 
 }
@@ -101,13 +113,12 @@ Telas muito grandes e TVs (1201px e acima)
  and (max-width:768px){
     .form{
         width: 45%;
-        height: 90%;
+        min-height: 90%;
         margin-top: 5%;
     }
 
-    .form-check-input{
-        padding: 10px;
-    }
+
+
     .cores{
         width: auto;
         height: auto;
@@ -121,17 +132,8 @@ Telas muito grandes e TVs (1201px e acima)
         margin: 0;
     }
   
-    .salvar{
-        width: 70%;
-        margin-left: 15%;
-        font-size: 20px;
-        border-radius: 30px;
-    }
-    .input {
-        padding: 20px;
-        width: 100%;
-        margin-top: 60px;
-    }
+
+
     
 }
 
@@ -140,13 +142,10 @@ and (min-width: 769px)
 and (max-width:1024px){
     .form{
         width: 45%;
-        height: 75%;
-        margin-top: 5%;
+        min-height: 75%;
+        margin-top: 0;
     }
 
-    .form-check-input{
-        padding: 10px;
-    }
     .cores{
         width: auto;
         height: auto;
@@ -154,23 +153,14 @@ and (max-width:1024px){
         flex-direction: column;
         margin: 0;
     }
-    .check{
-        width: auto;
-        height: auto;
-        margin: 0;
-    }
+ 
     .form-floating{
         font-size: 1.75rem;
      }
      .input{
-        font-size: 1.75rem;
+        font-size: 1rem;
      }
-    .salvar{
-        width: 70%;
-        margin-left: 15%;
-        font-size: 20px;
-        border-radius: 30px;
-    }
+
     .input {
         padding: 20px;
         width: 100%;
@@ -186,13 +176,9 @@ and (min-width:1025px)
 and (max-width:1201px){
     .form{
         width: 45%;
-        height: 75%;
-        margin-top: 5%;
+        min-height: 75%;
     }
 
-    .form-check-input{
-        padding: 5px;
-    }
     .cores{
         width: auto;
         height: auto;
@@ -205,14 +191,7 @@ and (max-width:1201px){
         height: auto;
         margin: 0;
     }
-  
-    .salvar{
-        width: 70%;
-        margin-left: 15%;
-        font-size: 3rem;
-        border-radius: 30px;
-        height: 15%;
-    }
+
     .input {
         font-size: 2rem;
         padding: 20px;
@@ -223,21 +202,17 @@ and (max-width:1201px){
         font-size: 1.75rem;
      }
      .input{
-        font-size: 1.75rem;
+        font-size: 1rem;
      }
 }
 @media only screen 
  and (min-width:1201px){
     .form{
         width: 40%;
-        height: 80%;
-       
         padding: 40px;
+        min-height:90%;
     }
 
-    .form-check-input{
-        padding: 5px;
-    }
     .cores{
         width: auto;
         height: auto;
@@ -251,23 +226,17 @@ and (max-width:1201px){
         margin: 0;
     }
   
-    .salvar{
-        width: 70%;
-        margin-left: 15%;
-        font-size: 3rem;
-        border-radius: 30px;
-        height: 15%;
-    }
+
     .input {
-        font-size: 2rem;
+        font-size: 1rem;
         padding: 20px;
         width: 100%;
         margin-top: 40px;
     }
     .form-floating{
-        font-size: 1.75rem;
+        font-size: 1rem;
      }
      .input{
-        font-size: 1.75rem;
+        font-size: 1rem;
      }
  }
