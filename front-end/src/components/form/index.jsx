@@ -190,10 +190,10 @@ export const IdeaForm = () => {
         </div>
       </Form.Group>
 
-      <button type="submit" className="salvar" hidden={requestLoading} >
+      <button type="submit" className="salvar" disabled={requestLoading} >
         Criar
       </button>
-      {requestLoading ? <img src={LoadingSvg} alt="carregando" className='loading-create'/> : null}
+
     </Form>
   );
 };

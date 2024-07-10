@@ -64,7 +64,7 @@ export default function Home() {
             <div className="card-article">
               <p className="text-article-card">Feature em progresso!</p>
             </div>
-            <div className="cazrd-article">
+            <div className="card-article">
               <p className="text-article-card">Feature em progresso!</p>
             </div>
           </div>

@@ -65,7 +65,7 @@
     margin-left: 15%;
     font-size: 20px;
     border-radius: 30px;
-    margin-top: 10px;
+    margin-top: 50px;
     background-color: #FFD602;
     transition: 0.2s ease-in-out;
 }
@@ -122,7 +122,7 @@ Telas muito grandes e TVs (1201px e acima)
     .cores{
         width: auto;
         height: auto;
-        font-size: 0.75rem;
+        font-size: 1.2rem;
         flex-direction: column;
         margin: 0;
     }
@@ -149,7 +149,7 @@ and (max-width:1024px){
     .cores{
         width: auto;
         height: auto;
-        font-size: 0.75rem;
+        font-size: 1.2rem;
         flex-direction: column;
         margin: 0;
     }
@@ -182,7 +182,7 @@ and (max-width:1201px){
     .cores{
         width: auto;
         height: auto;
-        font-size: 2rem;
+        font-size: 1.2rem;
         flex-direction: column;
         margin: 0;
     }
@@ -216,7 +216,7 @@ and (max-width:1201px){
     .cores{
         width: auto;
         height: auto;
-        font-size: 2rem;
+        font-size: 1.2rem;
         flex-direction: column;
         margin: 0;
     }

@@ -2,7 +2,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 82vh;
     
 }
 
@@ -19,6 +19,18 @@
     flex-wrap: wrap;
  
   
+}
+
+.card {
+    max-height: 250px;
+    min-height: 250px;
+    overflow-y: hidden;
+    max-width: 400px;
+    word-break: break-all;
+    text-align: unset;
+    color: white;
+    margin-top: 20px;
+    animation: float 2.5s ease-in-out infinite;
 }
 
 .double-article{
@@ -63,17 +75,11 @@
     width: 50%;
     margin: 0;
 }
-.projectsCaroucel{
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-}
+
 .carrosel-title1{
     padding-top: 5%;
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-weight: bold;
-
 }
 
 .cards{
@@ -108,7 +114,6 @@ h1{
 p{
     color:#FFFFFF;
     font-weight: 500;
-    text-align: justify;
     text-wrap: pretty;
 
 }
@@ -129,42 +134,35 @@ margin: 0;
 
 /*celulares */
  @media only screen 
-and (min-device-width : 0) 
+and (min-device-width : 320px) 
 and (max-device-width : 480px) {
-    .main-title-home{
-        font-size:1.10rem;
-        word-break: normal;
-        word-wrap: normal;
-        padding: 20px;
-        white-space: nowrap;
-        text-align: center;
-        display: flex;
-        justify-content: center;        
-        align-items: center;  
-    } 
-     projectsCaroucel{
-       margin-top: 60px;
-       display: flex;
-       flex-direction: column;
-       width:100%;
-       height:100%;
-     } 
-     .text-middle-page{
+    .main-title{
         font-size:1rem;
-    }.carrosel-title1{
-        font-size: 1rem;    
-    }.articles{
+    }
+   
+
+    .text-middle-page{
+        font-size:1rem;
+
+    }
+
+    .carrosel-title1{
+        font-size: 1rem;
+    }
+
+    .articles{
         gap: 100px;
-    }.card-article{
+    }
+    .card-article{
         height: 80px;
         width: 80px;
     }
    .cards{
-    display: flex;
-    flex-direction: column;
-   }.section-sobre-home{
-    height: auto;
-    width:auto;
+    display: none;
+   }
+
+   .section-sobre-home{
+    height: 86vh
    }
 
 }
@@ -179,7 +177,9 @@ and (max-device-width : 480px) {
     .text-middle-page{
         font-size:1.3rem;
 
-    }.carrosel-title1{
+    }
+
+    .carrosel-title1{
         font-size: 1rem;
     }
 
@@ -190,30 +190,13 @@ and (max-device-width : 480px) {
         height: 80px;
         width: 80px;
     }
-    .projectsCaroucel{
-        margin: auto;
-        display: flex;
-       flex-direction: column;
-    
-    }
  }
 
 
 /* pcs */
 @media only screen 
 and (min-width : 1224px) {
-.cards{
-    height:120vh
-} .carrosel-title1{
-    margin-bottom: 60px;
 
-   }
-  
-}.carousel-control-next{
- margin-right: 40px ;
-
-}.carousel-control-prev , .carousel-control-next{
-    margin-bottom: 100px
 }
 
 
