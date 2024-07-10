@@ -137,13 +137,10 @@ and (max-device-width : 480px) {
 @media only screen 
 and (min-width : 1224px) {
   .card-title{
-    font-size: 25px;
+    font-size: 21px;
     font-weight: bold;
   }.card-text{
   font-size:20px;
-  font-weight: normal;
-  word-spacing: nowrap;
-  word-break: normal;
   white-space:  normal;
   overflow-y: hidden;
   text-overflow: ellipsis;
