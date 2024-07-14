@@ -45,7 +45,6 @@
 - [x] Option for users to delete their projects
 - [x] Visual menu for administrators to manage and approve ideas
 - Future features:
-  
   - [ ] Carousel of articles
   - [ ] Filter projects by technologies
   - [ ] Option for users to upload profile pictures
