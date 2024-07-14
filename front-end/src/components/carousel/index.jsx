@@ -64,7 +64,7 @@ function IdeaCarousel({ url }) {
             <Card
               key={idx}
               style={{ backgroundColor: "#" + post.postColor}}
-              classname="cardE"
+              classname="card"
             >
               <Card.Body style={{ backgroundColor:  post.postColor, flex: 1 }}>
                 <Card.Title>{post.title}</Card.Title>

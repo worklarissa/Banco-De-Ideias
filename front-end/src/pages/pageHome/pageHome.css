@@ -1,24 +1,36 @@
-.section-sobre-home{
+/* telas muito pequenas: 320px;
+  telas pequenas : 576px;
+  telas médias  : 768px;
+  telas grandes : 992px;
+  telas muito grandes: 1200px;*/
+html,
+body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+.section-sobre-home {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 82vh;
-    
+
 }
 
 
-.imagem-home{
+.imagem-home {
     width: 30%;
     transform: scaleX(-1);
 }
 
-.text-sobre-home{
-   display: flex;
-   justify-content: space-around;
-   flex-direction: row;
+.text-sobre-home {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
     flex-wrap: wrap;
- 
-  
+
+
 }
 
 .card {
@@ -33,18 +45,18 @@
     animation: float 2.5s ease-in-out infinite;
 }
 
-.double-article{
+.double-article {
     display: flex;
     flex-direction: column;
     gap: 100px;
 }
 
-.text-article-card{
+.text-article-card {
     text-align: center;
     color: white;
 }
 
-.card-article{
+.card-article {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -53,7 +65,7 @@
     background-color: gray;
 }
 
-.articles{
+.articles {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -63,30 +75,30 @@
 
 }
 
-.yellow-text{
+.yellow-text {
     color: #FFD602;
 }
 
-.blue-text{
+.blue-text {
     color: #7BEFFF;
 }
 
-.middle-text{
+.middle-text {
     width: 50%;
     margin: 0;
 }
 
-.carrosel-title1{
+.carrosel-title1 {
     padding-top: 5%;
     font-size: 2rem;
     font-weight: bold;
 }
 
-.cards{
+.cards {
     height: 100vh;
 }
 
-.example-cards{
+.example-cards {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -96,7 +108,7 @@
     height: 80%;
 }
 
-.card1{
+.card1 {
     height: 200px;
     width: 200px;
     background-color: gray;
@@ -104,93 +116,113 @@
 
 
 
-h1{
+h1 {
     font-size: 64px;
     font-weight: 800;
     text-align: center;
 }
 
 
-p{
-    color:#FFFFFF;
+p {
+    color: #FFFFFF;
     font-weight: 500;
     text-wrap: pretty;
 
 }
 
-.text-middle-page{
-font-size: 2rem;
-letter-spacing: n;
-padding: 0;
-margin: 0;
+.text-middle-page {
+    font-size: 2rem;
+    letter-spacing: n;
+    padding: 0;
+    margin: 0;
 
 }
 
-.main-title-home{
+.main-title-home {
     font-size: 3rem;
     font-weight: bold;
     margin: 20px;
 }
 
 /*celulares */
- @media only screen 
-and (min-device-width : 320px) 
-and (max-device-width : 480px) {
-    .main-title{
-        font-size:1rem;
+@media only screen and (min-width : 320px) and (max-width : 576px) {
+    .section-sobre-home{
+        height: 55vh;
     }
-   
-
-    .text-middle-page{
-        font-size:1rem;
-
+    .main-title-home {
+        font-size: 1.5rem;
     }
 
-    .carrosel-title1{
+    .middle-text {
+        width: 100%;
+
+    }
+
+    .text-middle-page {
+        font-size: 1rem;
+        text-align: justify;
+        white-space: normal;
+        padding: 15px;
+    }
+
+    .carrosel-title1 {
         font-size: 1rem;
     }
 
-    .articles{
+    .articles {
         gap: 100px;
     }
-    .card-article{
+
+    .card-article {
         height: 80px;
         width: 80px;
     }
-   .cards{
-    display: none;
-   }
 
-   .section-sobre-home{
-    height: 86vh
-   }
+    .cards {
+        display: none;
+    }
+
+    
 
 }
 
-/*   landscape no celular  */
-@media only screen and (max-width: 1000px) and (min-device-width:320px) and (orientation: landscape) {
-    .main-title{
-        font-size:1rem;
+@media only screen and (min-width: 768px) and (max-width: 992px){
+    .section-sobre-home{
+      height: 100vh;
     }
-   
-
-    .text-middle-page{
-        font-size:1.3rem;
-
+    .main-title-home {
+        font-size: 2.5rem;
+        width: 100%;
+    }
+    .text-middle-page {
+        font-size: 1.8rem;
+        text-align:justify ;
+        letter-spacing: normal;
+        padding: 0;
+        line-height: 1.5; 
+        
     }
 
-    .carrosel-title1{
-        font-size: 1rem;
+    .carrosel-title1 {
+        font-size: 2rem;
     }
 
-    .articles{
+    .articles {
         gap: 100px;
     }
-    .card-article{
+
+    .card-article {
         height: 80px;
         width: 80px;
     }
- }
+
+    .cards {
+        display: none;
+    }
+}
+
+/*   landscape no celular  */
+
 
 
 /* pcs */

@@ -28,6 +28,10 @@ body {
     font-family: "Raleway", sans-serif;
     overflow-x: hidden;
 	background-color: #0E1618;;
+	width: 100%;
+}
+* {
+    box-sizing: border-box; 
 }
 ol, ul {
 	list-style: none;
