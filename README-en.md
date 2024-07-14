@@ -41,12 +41,15 @@
 - [x] View user profile
 - [x] View projects ideas created by the user that are pending
 - [x] View projects ideas created by the user that are approved
+- [x] Search bar to search for approved project ideas by title
+- [x] Option for users to delete their projects
+- [x] Visual menu for administrators to manage and approve ideas
 - Future features:
-  - [ ] Search bar to search for project ideas by title
+  - [ ] Carousel of articles
   - [ ] Filter projects by technologies
-  - [ ] Delete project idea
-  - [ ] Visual menu for admin to manage and approve ideas
-  - [ ] Profile picture option for the user
+  - [ ] Option for users to upload profile pictures
+  - [ ] Comments and likes on posts
+  - [ ] Photo with more visual details of the project
 
 --- 
 
