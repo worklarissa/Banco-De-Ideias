@@ -246,8 +246,9 @@ and (max-device-width : 480px) {
     text-align: end;
   }
   .card{
-    max-width: 130px;
+    max-width: 168px;
     min-width: 130px;
+    margin: 25px;
   }
 
   .form-check-input{
