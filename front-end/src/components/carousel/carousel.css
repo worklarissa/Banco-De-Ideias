@@ -24,11 +24,13 @@
 
 
 }
-.card {
+.card-carousel {
+  padding: 20px;
   display: flex;
   width: 292px;
   height: 292px;
   overflow-y: hidden;
+  border-radius: 5px;
   color: white;
   margin-top: 20px;
   animation: float 2.5s ease-in-out infinite;
@@ -84,11 +86,18 @@ and (max-device-width : 576px) {
     height:auto ;
     margin: auto;
 
-  }.card{
+  }.card-carousel {
+    padding: 20px;
     display: flex;
-    height:70%;
-    width: 27%;
-    margin-inline-start:0px;
+    width: 120px;
+    height: 200px;
+    overflow-y: hidden;
+    border-radius: 5px;
+    color: white;
+    margin-top: 20px;
+    animation: float 2.5s ease-in-out infinite;
+    margin-inline-start:14px;
+    gap: 20px;
   }.carousel{
     align-items: center;
     height: 40vh;
@@ -161,7 +170,7 @@ and (min-width : 1224px) {
     height:40%;
     margin-left: 0;
 
-  }.card{
+  }.card-carousel {
     display: flex;
     height:70%;
     width: 20%;

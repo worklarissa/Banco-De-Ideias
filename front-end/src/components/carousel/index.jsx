@@ -61,16 +61,16 @@ function IdeaCarousel({ url }) {
       <Carousel.Item key={idx}>
         <div className=" carousel d-flex justify-content-around">
           {group.map((post, idx) => (
-            <Card
+            <div
               key={idx}
               style={{ backgroundColor: "#" + post.postColor}}
-              className="card"
+              className="card-carousel"
             >
-              <Card.Body style={{ backgroundColor:  post.postColor, flex: 1 }}>
+              <div style={{ backgroundColor:  post.postColor, flex: 1 }}>
                 <Card.Title>{post.title}</Card.Title>
                 <Card.Text>{post.text}</Card.Text>
-              </Card.Body>
-            </Card>
+              </div>
+            </div>
           ))}
         </div>
       </Carousel.Item>
