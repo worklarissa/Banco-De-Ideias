@@ -346,7 +346,7 @@ function IdeaCard({ editable, cards, url, offsetInitial, limitInitial,searchTerm
               alignItems: "center",
               justifyContent: "center",
             }}
-          >z
+          >
             <Card
               onClick={() => handleShow(post)}
               style={{ backgroundColor: `#${post.postColor}` }}

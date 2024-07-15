@@ -191,9 +191,6 @@
   align-items: center;
   flex-direction: column;
 }
-p{
-  word-break: break-all;
-}
 
 .loading-more-post-profile{
   display: flex;

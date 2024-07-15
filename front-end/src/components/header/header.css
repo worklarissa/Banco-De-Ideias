@@ -42,24 +42,28 @@ h1{
     background-color: rgb(144, 144, 144);
 }
 
-@media (max-width: 600px) {
+@media only screen and (max-width:320px) and (max-width:576){
     .link {
-        font-size: 1rem; /* Reduz o tamanho da fonte */
-        margin: 5px; /* Reduz a margem */
+        font-size: 1rem; 
+        margin: 5px; 
     }
     .navbar {
-        flex-direction: column; /* Muda a direção do flex para coluna */
+        flex-direction: column; 
     }
 
     .me-auto{
         margin: 0!important;
     }
     .navbar-toggler {
-        background-color: white; /* Defina a cor do ícone para branco */
+        background-color: white; 
       }
 
       .custom-toggler.navbar-toggler {
         border-color: transparent;
         color: white;
     }
+   
+}
+@media (max-width: 600px) {
+    
 }
