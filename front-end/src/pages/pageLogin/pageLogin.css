@@ -31,12 +31,6 @@
 }
 
 
- @media only screen 
-and (min-device-width : 0) 
-and (max-device-width : 480px) {
-
-}
-
 /*   landscape no celular  */
 @media only screen and (max-width: 1000px) and (min-device-width:320px) and (orientation: landscape) {
   

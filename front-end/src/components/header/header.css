@@ -31,7 +31,6 @@ h1{
 
 
 
-
 .logout-button{
     padding: 10px;
     border: none;
@@ -42,9 +41,9 @@ h1{
     background-color: rgb(144, 144, 144);
 }
 
-@media only screen and (max-width:320px) and (max-width:576){
+@media only screen and (min-width: 320px) and (max-width: 576px){
     .link {
-        font-size: 1rem; 
+        font-size: 1.5rem; 
         margin: 5px; 
     }
     .navbar {
@@ -54,6 +53,8 @@ h1{
     .me-auto{
         margin: 0!important;
     }
+    
+   
     .navbar-toggler {
         background-color: white; 
       }
