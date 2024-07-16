@@ -22,7 +22,7 @@ function App() {
 
     return (
         <>
-            <ToastContainer closeOnClick="true" />
+            <ToastContainer closeOnClick="true" className='p-5 md:p-0' />
             {render ? <Header /> : null}
             <AdminDataProvider>
                 <Router />

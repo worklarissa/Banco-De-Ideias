@@ -49,6 +49,12 @@ const SearchBar = ({ onSearchTermChange,onClickSearch }) => {
     onSearchTermChange(term)
   };
 
+  const handleEnter = (e) => {
+    if (e.key === 'Enter') {
+      onClickSearch();
+    }
+  };
+
   return (
     <div className="search">
       <div className="search-bar">
@@ -58,6 +64,7 @@ const SearchBar = ({ onSearchTermChange,onClickSearch }) => {
           placeholder="Pesquisar..."
           value={searchTerm}
           onChange={handleChange}
+          onKeyDown={handleEnter}
         />
         <button className="search-button" onClick={onClickSearch}>
           <img src={icon} alt="Pesquisar" className="search-icon" />

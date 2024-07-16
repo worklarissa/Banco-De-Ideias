@@ -1,7 +1,7 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import { FetchApi } from "../../utils/Fetch";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import logo from "../../assets/logo.jpeg";
 import useIsAuthenticated from "react-auth-kit/hooks/useIsAuthenticated";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
@@ -15,12 +15,14 @@ import "../../styles/global.css";
 
 const Header = () => {
   const [requestLoading, setRequestLoading] = useState(false)
+  const [expanded, setExpanded] = useState(false);
   const isAuth = useIsAuthenticated();
   const signOut = useSignOut();
   const useHeader = useAuthHeader("auth.token");
   const authUser = useAuthUser();
   const navigate = useNavigate()
   const ApiUrl = import.meta.env.VITE_API_URL
+  const location = useLocation();
 
   async function handleLogout() {
     try {
@@ -43,9 +45,13 @@ const Header = () => {
     }
   }
 
+  useEffect(() => {
+    setExpanded(false); // Close the navbar whenever the route changes
+  }, [location]);
+
   return (
         
-    <Navbar collapseOnSelect expand="lg" bsPrefix="navbar">
+    <Navbar expanded={expanded} onToggle={() => setExpanded(!expanded)} collapseOnSelect expand="lg" bsPrefix="navbar">
       <Container>
         <Navbar.Brand>
           <Link to="/">

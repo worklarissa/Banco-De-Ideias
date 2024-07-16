@@ -34,6 +34,7 @@ function IdeaCard({ editable, cards, url, offsetInitial, limitInitial,searchTerm
   const [editColor, setEditColor] = useState("");
   const [editDifficulty, setEditDifficulty] = useState(1);
   const [errors, setErrors] = useState([]);
+  const [notFound, setNotFound] = useState(false);
   const [requestErros, setRequestErrors] = useState(false);
   const [isEditing, setIsEditing] = useState(null);
   const [hashtagErros, setHashtagErrors] = useState("");
@@ -115,6 +116,7 @@ function IdeaCard({ editable, cards, url, offsetInitial, limitInitial,searchTerm
       console.log(get)
 
       if(get.projects === "projeto pesquisado não encontrado"){
+        setNotFound(true)
         setHasMore(false)
       }
       if (get.message === "project não encontrado, tente novamente com outros valores!") {
@@ -330,6 +332,8 @@ function IdeaCard({ editable, cards, url, offsetInitial, limitInitial,searchTerm
 
   return (
     <>
+
+      {notFound ? <p className="notFound-message-search">Nenhum Projeto Encontrado</p> : null}
       {requestErros && (
         <div className="error-notFound">
           Nenhum post encontrado, tente rolar a tela até a parte de baixo para

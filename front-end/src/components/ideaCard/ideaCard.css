@@ -49,6 +49,13 @@
         color: #FFFFFF;
       
   }
+
+  .notFound-message-search{
+    width: 100%;
+    text-align: center;
+    padding: 3rem;
+  }
+  
   .card{
       margin: 40px;
       padding: 15px;
@@ -254,6 +261,7 @@ and (max-device-width : 480px) {
   .form-check-input{
     padding: 15px;
 }
+
 
 
 p{
