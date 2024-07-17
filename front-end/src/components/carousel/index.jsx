@@ -33,9 +33,7 @@ function IdeaCarousel({ url }) {
     const updateItemsPerWidth = () => {
       const width = window.innerWidth;
       const items =
-        width <= 540
-          ? 1
-          : 3
+        width <= 540 ? 1  : 3;
       setItemsPerSlide(items);
     };
 
