@@ -72,13 +72,11 @@ and (min-device-width : 320px)
 and (max-device-width : 576px) {
 
   .card-title{
-    font-size: 0.85rem;
+    font-size: 1rem;
     font-weight: bold;   
     word-break: normal;
-    line-height: 1;
-    ;
   }.card-text{
-  font-size:0.7rem;
+  font-size:0.8rem;
   text-align: justify;
   overflow-y: hidden;
 
@@ -91,20 +89,21 @@ and (max-device-width : 576px) {
   }.card-carousel {
     padding: 20px;
     display: flex;
-    width: 130px;;;
+    width: 50vw;
+
     height: 60%;
     overflow-y: hidden;
     border-radius: 5px;
     color: white;
     animation: float 2.5s ease-in-out infinite;
-    margin-inline-start:0 auto;
+    margin-inline-start: 5.8rem;
     gap: 20px;
   }.carousel{
     align-items: center;
     height: 40vh;
   }
   .carousel-inner{
-    width: 100;
+    width: 100%;
     height:100%;
   }
 

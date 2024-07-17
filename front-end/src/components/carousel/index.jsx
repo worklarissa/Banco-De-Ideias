@@ -33,10 +33,8 @@ function IdeaCarousel({ url }) {
     const updateItemsPerWidth = () => {
       const width = window.innerWidth;
       const items =
-        width < 320
+        width <= 540
           ? 1
-          : width <= 540
-          ? 2
           : width <= 768
           ? 3
           : width >= 992
