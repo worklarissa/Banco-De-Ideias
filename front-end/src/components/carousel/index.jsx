@@ -35,11 +35,7 @@ function IdeaCarousel({ url }) {
       const items =
         width <= 540
           ? 1
-          : width <= 768
-          ? 3
-          : width >= 992
-          ? 4
-          : 3;
+          : 3
       setItemsPerSlide(items);
     };
 
