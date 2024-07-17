@@ -32,13 +32,21 @@ function IdeaCarousel({ url }) {
   useEffect(() => {
     const updateItemsPerWidth = () => {
       const width = window.innerWidth;
-      const items = width < 320 ? 1 : width <= 540 ? 2  :  width  <= 768 ? 3 : width  >= 992 ?  4 : 3 ;
+      const items =
+        width < 320
+          ? 1
+          : width <= 540
+          ? 2
+          : width <= 768
+          ? 3
+          : width >= 992
+          ? 4
+          : 3;
       setItemsPerSlide(items);
     };
 
     window.addEventListener("resize", updateItemsPerWidth);
     updateItemsPerWidth();
-    console.log(itemsPerSlide);
     return () => window.removeEventListener("resize", updateItemsPerWidth);
   }, []);
 
