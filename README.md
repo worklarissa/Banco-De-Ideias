@@ -65,7 +65,7 @@ um post válido contem recomendações de tecnologias, nível de dificuldade con
 
 Basta se cadastrar (não ponha uma senha que você pretenda usar de verdade)
 
-para acessar o Banco de ideias: work in progress (deploy feito com vercel)
+para acessar o Banco de ideias: https://banco-de-ideias-mu.vercel.app/ (deploy feito com vercel)
 
 O projeto contem um sistema de autenticação baseado em json web token, para lidar com a autenticação nossa equipe utilizou a biblioteca react-auth-kit que permite a fácil manipulação de cookies e rotas protegidas. O projeto conta também com a biblioteca react-router-dom que permite a separação de rotas por rotas protegidas e algumas outras funcionalidades.
 
